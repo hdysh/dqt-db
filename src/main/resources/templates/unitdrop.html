@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #unitdrop-static-resources},
+                                                ~{:: #unitdrop-header},
+                                                ~{:: #unitdrop-nav},
+                                                ~{:: #unitdrop-content},  
+                                                ~{:: #unitdrop-footer}
+                                               )}">
+
+<head>
+<title>Farmable Units</title>
+
+<th:block id="unitdrop-static-resources">
+	<link href="../static/css/style.css"
+		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+		
+	</script>
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+</th:block>
+
+</head>
+<body>
+
+	<div id="unitdrop-header">Farmable Units</div>
+
+	<div id="unitdrop-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="unitdrop-content">
+
+		<div>
+			<div class="units">
+				<div class="col-lg-10 mt-5 mb-5">
+					<table id="example" class="table table-bordered table-responsive"
+						style="width: 100%">
+						<thead>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Rank</th>
+							<th>Family</th>
+							<th>Stage</th>
+							 		<th>Rate</th>
+								<th>Stamina/Drop</th> 
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Rank</th>
+								<th>Family</th>
+							<th>Stage</th>
+							 	<th>Rate</th>
+								<th>Stamina/Drop</th>  
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+		<script>
+		$('#example')
+	    .DataTable({
+	        "paging": false,
+	        "ajax": {
+	            "url": "/unitdrop/q",
+	            "type": "POST",
+	            "dataType": "json",
+	            "dataSrc": "",
+	            "contentType": "application/json",
+	            "data": function(d) {
+	                return JSON.stringify(d);
+	            }
+	        },
+	        "columns": [
+
+	      {
+	                "data": "unitSplit",
+	                "render": function(data, type,
+	                    row, meta) {
+	                 
+	                    if (type === "sort" ||
+		                        type === 'type') {
+		                        return data[2];
+		                    } else {   return '<div class="icon_container_small"><img src="/img/icon/' + data[2] + '" /></div>';
+		                    }
+
+	                }
+	            }, 
+	            {
+	                "data": "unitSplit",
+	                "render": function(data, type,
+	                    row, meta) {
+	                    return '<a href="/unit/' + data[0] + '">' +
+	                        data[1] + '</a>';
+	                }
+	            },
+	            {
+	                "data": "unitSplit",
+	                "render": function(data, type,
+	                    row, meta) {
+	                    if (type === "sort" ||
+	                        type === 'type') {
+	                        return data[3];
+	                    } else {
+	                        return '<div class="icon_container_small"><img src="/img/icon/' + data[3] + '" /></div>';
+	                    }
+	                }
+	            }, 
+	            {
+	                "data": "unitSplit",
+	                "render": function(data, type,
+	                    row, meta) {
+	                    if (type === "sort" ||
+	                        type === 'type') {
+	                        return data[4];
+	                    } else if (type === "search") {
+	                        return data[4];
+	                    } else {
+	                        return '<div class="icon_container_small"><img src="/img/icon/' + data[4] + '" /></div>';
+	                    }
+
+	                }
+	            },
+	          
+	            {
+	                "data": "stageSplit",
+	                "render": function(data, type,
+	                    row, meta) {
+	                    return '<a href="/stages/' + data[0] + '">' +
+	                        data[1] +
+	                        '</a>';
+	                }
+	            },
+	            {
+	                "data": "rate",
+	                "render": function(data, type,
+	                    row, meta) {
+	                    return data / 100.0 + '%';
+	                }
+	            },
+	            {
+	                "data": "rate",
+	                "render": function(data, type,
+	                    row, meta) {
+	                    return Math.round((10000.0 / data * row['stamina'] + Number.EPSILON) * 100) / 100;
+	                }
+	            }
+	        ],
+	    });
+		</script>
+
+	</div>
+
+
+
+	<div id="unitdrop-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+</body>
+</html>

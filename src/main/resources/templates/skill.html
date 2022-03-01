@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #skill-static-resources},
+                                                ~{:: #skill-header},
+                                                ~{:: #skill-nav},
+                                                ~{:: #skill-content},  
+                                                ~{:: #skill-footer}
+                                               )}">
+
+<head>
+<title>[[${skill.name}]]</title>
+
+<th:block id="skill-static-resources">
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+		type="text/javascript"></script>
+	<script>
+		
+	</script>
+</th:block>
+
+</head>
+<body>
+
+	<div id="skill-header" class="flex_center_row">
+		<div>
+			<div
+				th:classappend="${skill.rarity.code==30} ? skill_frame : skill_frame2"
+				th:style="@{${'background-image: url(/img/icon/' + skill.button+');' }}">
+				<span class="skill_frame_centerer"></span><img
+					th:src="@{${'/img/icon/' + skill.icon }}" />
+			</div>
+		</div>
+		<div class="pad-left-10">[[${skill.name}]]</div>
+		<div class="pad-left-10">
+			<img th:src="@{${'/img/icon/' + skill.element.icon }}" />
+		</div>
+	</div>
+
+	<div id="skill-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="skill-content" class="grid">
+		<div class="flex_center_row pad-10">
+
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Shape" class="header"></span>
+				<div class="skill-sub-item">
+					<img th:src="@{${'/img/icon/' + skill.range }}" />
+				</div>
+			</div>
+
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Range" class="header"></span>
+				<div th:text="${skill.reach}" class="skill-sub-item">reach</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="MP" class="header"></span>
+				<div th:text="${skill.mp}" class="skill-sub-item">mp</div>
+			</div>
+			<div th:if="${skill.baseDamage}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Base Damage'" class="header"></span>
+				<div th:text="${skill.baseDamage}" class="skill-sub-item">base
+					dmg</div>
+			</div>
+			<div  th:if="${skill.minDamage}" class="skill-item bold flex-column pad-10">
+				<span th:text="'Min Damage'" class="header"></span>
+				<div th:text="${skill.minDamage}" class="skill-sub-item">min
+					dmg</div>
+			</div>
+			<div th:if="${skill.maxDamage}" class="skill-item bold flex-column pad-10">
+				<span th:text="'Max Damage'" class="header"></span>
+				<div th:text="${skill.maxDamage}" class="skill-sub-item">max
+					dmg</div>
+			</div>
+			<div th:if="${skill.accuracy}" class="skill-item bold flex-column pad-10">
+				<span th:text="Accuracy" class="header"></span>
+				<div th:text="${skill.accuracy}" class="skill-sub-item">acc</div>
+			</div>
+
+			<div th:if="${skill.multiplier}" class="skill-item bold flex-column pad-10">
+				<span th:text="Multiplier" class="header"></span>
+				<div th:text="${skill.strMul}" class="skill-sub-item">mul</div>
+			</div>
+			<div th:if="${skill.maxMul}" class="skill-item bold flex-column pad-10">
+				<span th:text="'+10 Multiplier'" class="header"></span>
+				<div th:text="${skill.strMaxMul}" class="skill-sub-item">max
+					mul</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Effect" class="header"></span>
+				<div th:text="${skill.description}" class="skill-sub-item">desc</div>
+			</div>
+		</div>
+
+		<div class="learned">
+			<div class="header bold">Learned by:</div>
+			<div class="flex_center_row">
+				<div th:each="unit : ${units}" th:remove="tag">
+					<div class="frame-container">
+						<div class="framez">
+							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
+						</div>
+						<div class="prof">
+							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+
+						</div>
+						<div class="framez">
+							<a th:href="@{${'/unit/' + unit.code}}"> <img
+								th:src="@{${'/img/icon/' + unit.rarity.frame }}" /></a>
+						</div>
+						<div class="rarity">
+							<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
+						</div>
+
+					</div>
+					<!-- 	<a class="learned-item" th:href="@{${'/unit/' + unit.code}}"><img
+						th:src="@{${'/img/icon/' + unit.icon }}" /></a> -->
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="skill-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+
+
+</body>
+</html>

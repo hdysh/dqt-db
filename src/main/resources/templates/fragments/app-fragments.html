@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>App Fragments</title>
+</head>
+<body>
+
+	<ul th:fragment="nav-default">
+		<li><div class="nav-list">
+				<a th:href="@{/units}">UNITS</a>
+			</div></li>
+		<li><div class="nav-list">
+				<a th:href="@{/skills}">SKILLS</a>
+			</div></li>
+		<li><div class="nav-list">
+				<a th:href="@{/event}">EVENTS</a>
+			</div></li>
+		<li><div class="nav-list">
+				<a th:href="@{/story}">STORY QUESTS</a>
+			</div></li>
+		<li><div class="nav-list">
+				<a th:href="@{/unitdrop}">FARMABLE UNITS</a>
+			</div></li>
+	</ul>
+	<div th:fragment="copyright"></div>
+</body>
+</html>

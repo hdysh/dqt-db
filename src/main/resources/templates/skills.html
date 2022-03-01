@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #skill-static-resources},
+                                                ~{:: #skill-header},
+                                                ~{:: #skill-nav},
+                                                ~{:: #skill-content},  
+                                                ~{:: #skill-footer}
+                                               )}">
+
+<head>
+<title>Skill list</title>
+
+<th:block id="skill-static-resources">
+	<link href="../static/css/style.css"
+		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+		
+	</script>
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css" />
+
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+</th:block>
+
+</head>
+<body>
+
+	<div id="skill-header">Skill List</div>
+
+	<div id="skill-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="skill-content">
+
+
+		<div>
+			<div class="units">
+				<div class="col-lg-10 mt-5 mb-5">
+					<table id="example" class="table table-bordered table-responsive"
+						style="width: 100%">
+						<thead>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Rarity</th>
+								<th>Element</th>
+								<th>MP</th>
+								<th>Base Damage</th>
+								<th>Min Damage</th>
+								<th>Max Damage</th>
+								<th>Accuracy</th>
+								<th>Multiplier</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Rarity</th>
+								<th>Element</th>
+								<th>MP</th>
+								<th>Base Damage</th>
+								<th>Min Damage</th>
+								<th>Max Damage</th>
+								<th>Accuracy</th>
+								<th>Multiplier</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+		<script>
+			$('#example')
+					.DataTable(
+							{
+								"paging" : false,
+								"ajax" : {
+									"url" : "/skills/q",
+									"type" : "POST",
+									"dataType" : "json",
+									"dataSrc" : "",
+									"contentType" : "application/json",
+									"data" : function(d) {
+										return JSON.stringify(d);
+									}
+								},
+								"columns" : [
+										{
+											"data" : "icon",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type'||type==='filter') {
+													return '['+data+']';
+												}
+												return '<div style="background-image: url(/img/icon/'
+														+ row['button']
+														+ ');" class="'
+														+ (row['rarity']['code'] == 30 ? 'skill_frame'
+																: 'skill_frame2')
+														+ '"><span class="skill_frame_centerer"></span><img src="/img/icon/'+data+'"></div>';
+											}
+
+										},
+										{
+											"data" : "code",
+											"render" : function(data, type,
+													row, meta) {
+												return '<a href="/skill/'+data+'">'
+														+ row['name'] + '</a>';
+											}
+										},
+										{
+											"data" : "rarity",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type') {
+													return data['code'];
+												} else {
+													return '<div class="icon_container_small"><img src="/img/icon/'+data['icon']+'" /></div>';
+												}
+											}
+										},
+										{
+											"data" : "element",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type') {
+													return data['code'];
+												} else {
+													return '<div class="icon_container_small"><img src="/img/icon/'+data['icon']+'" /></div>';
+												}
+											}
+										},
+										{
+											"data" : "mp",
+										},
+										{
+											"data" : "baseDamage",
+										},
+										{
+											"data" : "minDamage",
+										},
+										{
+											"data" : "maxDamage",
+										},
+										{
+											"data" : "accuracy",
+										},
+										{
+											"data" : "multiplier",
+											"render" : function(data, type,
+													row, meta) {
+												return data / 10 + '%';
+											}
+										} ],
+							});
+		</script>
+	</div>
+
+
+
+
+	<div id="skill-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+
+
+</body>
+</html>

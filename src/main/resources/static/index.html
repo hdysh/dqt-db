@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Home page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+</head>
+<body>
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+		
+	</script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script> 
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-10 mt-5 mb-5">
+				<table id="example" class="table table-bordered table-responsive"
+					style="width: 100%">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Position</th>
+							<th>Office</th>
+							<th>Start date</th>
+							<th>Salary</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>Name</th>
+							<th>Position</th>
+							<th>Office</th>
+							<th>Start date</th>
+							<th>Salary</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<script>
+		$('#example').DataTable({  
+			"ajax" : {
+				"url" : "/units/q",
+				"type" : "POST",
+				"dataType" : "json",
+				"dataSrc" : "",
+				"contentType" : "application/json",
+				"data" : function(d) {
+					return JSON.stringify(d);
+				}
+			},
+			"columns" : [ {
+				"data" : "name",
+				"width" : "20%"
+			}, {
+				"data" : "code",
+				"width" : "20%"
+			}, {
+				"data" : "role",
+				"width" : "20%"
+			}, {
+				"data" : "icon",
+				"width" : "20%"
+			}, {
+				"data" : "family",
+				"width" : "20%"
+			} ]
+		});
+	</script>
+</body>
+</html>

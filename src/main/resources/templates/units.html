@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #unit-static-resources},
+                                                ~{:: #unit-header},
+                                                ~{:: #unit-nav},
+                                                ~{:: #unit-content},  
+                                                ~{:: #unit-footer}
+                                               )}">
+
+<head>
+<title>Unit list</title>
+
+<th:block id="unit-static-resources">
+	<link href="../static/css/style.css"
+		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+		
+	</script>
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+</th:block>
+
+</head>
+<body>
+
+	<div id="unit-header">Unit List</div>
+
+	<div id="unit-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="unit-content">
+
+
+		<div>
+			<div class="units">
+				<div class="col-lg-10 mt-5 mb-5">
+					<table id="example" class="table table-bordered table-responsive"
+						style="width: 100%">
+						<thead>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Rarity</th>
+								<th>Familly</th>
+								<th>Level</th>
+								<th>HP</th>
+								<th>MP</th>
+								<th>ATK</th>
+								<th>DEF</th>
+								<th>INT</th>
+								<th>AGI</th>
+								<th>MOV</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Rarity</th>
+								<th>Familly</th>
+								<th>Level</th>
+								<th>HP</th>
+								<th>MP</th>
+								<th>ATK</th>
+								<th>DEF</th>
+								<th>INT</th>
+								<th>AGI</th>
+								<th>MOV</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+		<script>
+			$('#example')
+					.DataTable(
+							{
+								"paging" : false,
+								"ajax" : {
+									"url" : "/units/q",
+									"type" : "POST",
+									"dataType" : "json",
+									"dataSrc" : "",
+									"contentType" : "application/json",
+									"data" : function(d) {
+										return JSON.stringify(d);
+									}
+								},
+								"columns" : [
+										{
+											"data" : "icon",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type') {
+													return data;
+												} else {
+													return '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/' +
+													row.rarity['background'] + '" /></div><div class="prof-s"><img src="/img/icon/' + data +
+	                            					'" /></div><div class="framez-s"><img src="/img/icon/' + row.rarity['frame'] + 
+	                            					'" /></div></div>';
+												}
+											}
+										},
+										{
+											"data" : "code",
+											"render" : function(data, type,
+													row, meta) {
+												return '<a href="/unit/' + data + '">'
+														+ row['name'] + '</a>';
+											}
+										},
+										{
+											"data" : "rarity",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type') {
+													return data['code'];
+												} else {
+													return '<div class="icon_container_small"><img src="/img/icon/' + data['icon'] + '" /></div>';
+												}
+											}
+										},
+										{
+											"data" : "family",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type') {
+													return data['code'];
+												} else {
+													return '<div class="icon_container_small"><img src="/img/icon/' + data['icon'] + '" /></div>';
+												}
+											}
+										}, {
+											"data" : "stats[0].level",
+										}, {
+											"data" : "stats[0].hp",
+										}, {
+											"data" : "stats[0].mp",
+										}, {
+											"data" : "stats[0].attack",
+										}, {
+											"data" : "stats[0].defense",
+										}, {
+											"data" : "stats[0].intelligence",
+										}, {
+											"data" : "stats[0].agility",
+										}, {
+											"data" : "stats[0].mobility",
+										} ],
+							});
+		</script>
+	</div>
+
+
+
+
+	<div id="unit-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+
+
+</body>
+</html>

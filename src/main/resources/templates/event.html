@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #event-static-resources},
+                                                ~{:: #event-header},
+                                                ~{:: #event-nav},
+                                                ~{:: #event-main-content},  
+                                                ~{:: #event-footer}
+                                               )}">
+
+<head>
+<title>Events</title>
+
+<th:block id="event-static-resources">
+
+	<script type="text/javascript" src="../static/home.js"
+		th:src="@{/home.js}"></script>
+	<link rel="stylesheet" type="text/css" href="../static/home.css"
+		th:href="@{/home.css}" />
+
+</th:block>
+
+</head>
+<body>
+
+	<div id="event-header">Events</div>
+
+	<div id="event-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Home Nav
+	</div>
+
+	<div id="event-main-content">
+		<div class="event">
+			<div th:each="ev,iter : ${lists}" th:remove="tag">
+<!-- 				<a th:href="@{${'http://localhost:5000/dqt/?p=stages/' + ev.code}}" -->
+				<a th:href="@{${'/event/' + ev.code}}"
+					class="event-banner margin-10 drop-item bold  pad-10"> <img
+					th:src="@{${'/img/icon/' + ev.icon }}" /> <span
+					th:text="${ev.name}" class="skill-sub-item">desc</span></a>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div id="event-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+
+
+</body>
+</html>

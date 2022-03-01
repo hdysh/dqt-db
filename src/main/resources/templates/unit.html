@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #unit-static-resources},
+                                                ~{:: #unit-header},
+                                                ~{:: #unit-nav},
+                                                ~{:: #unit-content},  
+                                                ~{:: #unit-footer}
+                                               )}">
+
+<head>
+<title>[[${unit.name}]]</title>
+
+<th:block id="unit-static-resources">
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+		type="text/javascript"></script>
+	<script>
+		var pass  = [(${passAdd})]  ;
+		var stats =  [(${stats})];
+		var rank = 7;
+		var awak=0;
+		var awakAdd =[(${awaAdd})];
+		var awakMul =[(${awaMul})];
+		var masterStats =[(${master})];
+		var master=0;
+		
+		
+		function passive(level){
+			for(i=0;i<pass.length;i++){
+				if(pass[i].level<=level){
+					if(pass[i].passive.stats !=null){
+if(pass[i].passive.stats.stype=='ADD'){
+	
+}
+						console.log( );
+					}
+
+				}
+			}
+		} 
+		function applyStats() { 
+			var level = stats[rank].level;
+  		    $('#lvl').text(': ' + (stats[rank].level + (awakAdd[awak] ? awakAdd[awak].level : 0) + (pass[level] ? pass[level].level : 0)));
+		    $('#hp').text(': ' +  mul((stats[rank].hp + (awakAdd[awak] ? awakAdd[awak].hp : 0)+ (pass[level] ? pass[level].hp : 0)),awakMul[awak].hp,masterStats[master].hp));
+		    $('#mp').text(': ' +  mul((stats[rank].mp + (awakAdd[awak] ? awakAdd[awak].mp : 0)+ (pass[level] ? pass[level].mp : 0)),awakMul[awak].mp,masterStats[master].mp));
+		    $('#atk').text(': ' +  mul((stats[rank].attack + (awakAdd[awak] ? awakAdd[awak].attack : 0) + (pass[level] ? pass[level].attack : 0)),awakMul[awak].attack,masterStats[master].attack));
+		    $('#def').text(': ' +  mul((stats[rank].defense + (awakAdd[awak] ? awakAdd[awak].defense : 0) + (pass[level]  ? pass[level].defense : 0)),awakMul[awak].defense,masterStats[master].defense));
+		    $('#agi').text(': ' +  mul((stats[rank].agility + (awakAdd[awak] ? awakAdd[awak].agility : 0)+ (pass[level] ? pass[level].agility : 0)),awakMul[awak].agility,masterStats[master].agility));
+		    $('#int').text(': ' +  mul((stats[rank].intelligence + (awakAdd[awak] ? awakAdd[awak].intelligence : 0)+ (pass[level]  ? pass[level].intelligence : 0)),awakMul[awak].intelligence,masterStats[master].intelligence));
+		    $('#mov').text(': ' + (stats[rank].mobility + (awakAdd[awak] ? awakAdd[awak].mobility : 0)+ (pass[level] ? pass[level].mobility : 0))); 
+
+		}
+		function mul(val,mul1,mul2){
+			return Math.floor(val+(val*(mul1+mul2)/100));
+		}
+		$(document).ready(function() {
+			 applyStats();
+		    $("#rankSelect").on("change", function() {
+		        rank = $(this).val();
+		        applyStats();
+		    });
+		    $("#awakeningSelect").on("change", function() {
+		    	awak= $(this).val();
+		        applyStats();
+		    });
+		    $("#masterSelect").on("change", function() {
+		    	master= $(this).val();
+		        applyStats();
+		    });
+		    passive(120);
+		});
+
+	</script>
+	<script>
+		function resLevel(val) {
+	    var res = [{
+	            "min": -2147483648,
+	            "max": -66,
+	            "icon": "ResistanceLevel_ChouZyakuten.png"
+	        },
+	        {
+	            "min": -66,
+	            "max": -33,
+	            "icon": "ResistanceLevel_DaiZyakuten.png"
+	        },
+	        {
+	            "min": -33,
+	            "max": 0,
+	            "icon": "ResistanceLevel_Zyakuten.png"
+	        },
+	        {
+	            "min": 0,
+	            "max": 1,
+	            "icon": "ResistanceLevel_Hutuu.png"
+	        },
+	        {
+	            "min": 1,
+	            "max": 34,
+	            "icon": "ResistanceLevel_Keigen.png"
+	        },
+	        {
+	            "min": 34,
+	            "max": 67,
+	            "icon": "ResistanceLevel_Hangen.png"
+	        },
+	        {
+	            "min": 67,
+	            "max": 100,
+	            "icon": "ResistanceLevel_Gekigen.png"
+	        },
+	        {
+	            "min": 100,
+	            "max": 2147483647,
+	            "icon": "ResistanceLevel_Mukou.png"
+	        }
+	    ]
+	    for (i = 0; i < res.length; i++) {
+	        if (val > res[i].min && val < res[i].max) {
+	            console.log(res[i].icon);
+	        }
+	    }
+	}
+	</script>
+</th:block>
+
+</head>
+<body>
+
+	<div id="unit-header">[[${unit.name}]]</div>
+
+	<div id="unit-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="unit-content">
+
+		<div class="content">
+			<div class="grid-container">
+				<div class="pp">
+					<div
+						th:style="'display: flex;flex-direction: column;background-color:#d0d0d0; padding:20px;align-items: center;width:200px;border-radius: .8rem;'">
+
+						<div
+							th:style="'display: flex;flex-direction: row; padding:4px 0;height: 30px;'">
+							<div>
+								<img th:src="@{${'/img/icon/' + unit.family.icon }}" />
+							</div>
+							<div>
+								<img th:style="'height:30px;'"
+									th:src="@{${'/img/icon/' + unit.role.icon }}" />
+							</div>
+						</div>
+						<div class="frame-container">
+							<div class="framez">
+								<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
+							</div>
+							<div class="prof">
+								<img th:src="@{${'/img/icon/' + unit.icon }}" />
+
+							</div>
+							<div class="framez">
+								<img th:src="@{${'/img/icon/' + unit.rarity.frame }}" />
+							</div>
+							<div class="rarity">
+								<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
+							</div>
+
+						</div>
+						<div th:style="' '">
+							<div
+								th:style="'text-align: center;font-size:25px;font-weight:bold;'">[[${unit.name}]]</div>
+						</div>
+					</div>
+				</div>
+				<div class="sk">
+					<div class="skills">
+						<div class="header bold">Skills</div>
+						<table class="w100">
+							<tr>
+								<th>Level</th>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>MP</th>
+								<th>Element</th>
+								<th>Range</th>
+								<th>Effect</th>
+							</tr>
+
+							<tr th:each="us  : ${unit.skills}">
+								<td th:text="${us.level}">level</td>
+								<td>
+									<div
+										th:classappend="${us.skill.rarity.code==30} ? skill_frame : skill_frame2"
+										th:style="@{${'background-image: url(/img/icon/' + us.skill.button+');' }}">
+										<span class="skill_frame_centerer"></span><img
+											th:src="@{${'/img/icon/' + us.skill.icon }}" />
+									</div>
+								</td>
+								<td><a th:href="@{${'/skill/' + us.skill.code }}"
+									th:text="${us.skill.name}"></a></td>
+								<td th:text="${us.skill.mp}">mp</td>
+								<td><img
+									th:src="@{${'/img/icon/' + us.skill.element.icon }}" /></td>
+								<td><div th:text="${us.skill.reach}"></div> <img
+									th:src="@{${'/img/icon/' + us.skill.range }}" /></td>
+								<td th:text="${us.skill.description}">name</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+
+				<div class="ps" th:if="${unit.passives}">
+					<div class="skills">
+						<div class="header bold">Passive</div>
+						<div class="passive_awak_container" th:if="${unit.passives}">
+							<div class="passive_item bold">Level</div>
+							<div class="passive_item bold">Name</div>
+							<div class="passive_item bold">Description</div>
+
+							<div th:each="up,iter : ${unit.passives}" th:remove="tag">
+								<div class="passive_item" th:text="${up.level}"></div>
+								<div class="passive_item" th:text="${up.passive.name}"></div>
+								<div class="passive_item" th:text="${up.passive.description}"></div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="ak" th:if="${unit.awakenings}">
+
+					<div class="skills">
+						<div class="header bold">Awakening</div>
+
+						<div class="passive_awak_container" th:if="${unit.awakenings}">
+							<div class="passive_item bold">Awakening</div>
+							<div class="passive_item bold">Name</div>
+							<div class="passive_item bold">Description</div>
+							<div th:each="ua,iter : ${unit.awakenings}" th:remove="tag">
+								<div class="passive_item" th:text="${ua.level}"></div>
+								<div class="passive_item" th:text="${ua.awakening.name}"></div>
+								<div class="passive_item" th:text="${ua.awakening.description}"></div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				<div class="er">
+					<div class="resistance">
+						<div class="header bold">Element Resistance</div>
+						<div th:each="re: ${eleres}">
+							<div class="res bold w200px">
+								<img class="w15" th:src="@{${'/img/icon/' +re.ele.icon }}" /><span
+									th:text="${re.ele.name }"></span> <img
+									th:src="@{${'/img/icon/' + re.icon  }}" />
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="ar">
+					<div class="resistance">
+						<div class="header bold w300px">Status Ailment Resistance</div>
+						<!-- <div th:each="res: ${unit.ailres.ail1}" class="" th:remove="tag"> -->
+						<div th:each="awak,iter : ${strAilment}" th:remove="tag">
+							<div class="res bold w300px pad5">
+								<img class="w10"
+									th:src="@{${'/img/icon/' +ailment.get(awak).icon }}" /><span
+									th:text="${ailment.get(awak).name }"></span> <img
+									th:id="${awak}"
+									th:src="@{${'/img/icon/' +ailres[iter.index].icon }}" />
+							</div>
+							<!-- 	
+							</div> -->
+						</div>
+
+					</div>
+				</div>
+				<div class="ss">
+
+					<div class="stats_item_cont bold">
+						<span class="stats_item">LVL</span> <span class="stats_item val"
+							id="lvl" th:text="${ ': '+ unit.stats[7].level}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">HP</span> <span class="stats_item val"
+							id="hp" th:text="${ ': '+ unit.stats[7].hp}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">MP</span> <span class="stats_item val"
+							id="mp" th:text="${ ': '+ unit.stats[7].mp}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">ATK</span> <span class="stats_item val"
+							id="atk" th:text="${ ': '+ unit.stats[7].attack}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">DEF</span> <span class="stats_item val"
+							id="def" th:text="${ ': '+ unit.stats[7].defense}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">AGL</span> <span class="stats_item val"
+							id="agi" th:text="${ ': '+ unit.stats[7].agility}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">WIS</span> <span class="stats_item val"
+							id="int" th:text="${ ': '+ unit.stats[7].intelligence}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">MOV</span> <span class="stats_item val"
+							id="mov" th:text="${ ': '+ unit.stats[7].mobility}"></span>
+					</div>
+
+					<div class="form-group"></div>
+					<div class="flex_center_row">
+						<div class="form-group">
+							<select class="form-control" id="rankSelect" autocomplete="off">
+								<option th:each="i: ${#numbers.sequence(0, 7)}"
+									th:selected="${i == 7}" th:value="${i}" th:text="${'Rank '+i}"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<select class="form-control" id="awakeningSelect"
+								autocomplete="off">
+								<option th:each="i: ${#numbers.sequence(0, 5)}"
+									th:selected="${i == 0}" th:value="${i}"
+									th:text="${'Awakening '+i}"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<select class="form-control" id="masterSelect" autocomplete="off">
+								<option th:each="i: ${#numbers.sequence(0, 40)}"
+									th:selected="${i == 0}" th:value="${i}"
+									th:text="${'Master Rank '+i}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="ld" th:if="${unit.leader}">
+					<div class="header">Leader Skill</div>
+					<div class="passive_item" th:text="${unit.leader.name}"></div>
+					<div class="leader_container">
+						<img th:src="@{${'/img/icon/' + unit.leader.leadericon }}" />
+					</div>
+					<div class="passive_item" th:text="${unit.leader.description}"></div>
+
+				</div>
+			</div>
+
+			<div class="container">
+
+
+				<div class="passive"></div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div id="unit-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+
+
+</body>
+</html>
