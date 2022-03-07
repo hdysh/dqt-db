@@ -15,10 +15,10 @@ import lombok.Data;
 @Data
 public class Drop {
 	private @Id BigInteger id;
-	private  BigInteger code;
+	private BigInteger code;
 	@OneToOne(targetEntity = Item.class)
 	@JoinColumn(name = "item")
 	private Item item;
-	private int minroll, maxroll, rate,quantity;
+	private int minroll, maxroll, rate, quantity;
 	private boolean first;
 }

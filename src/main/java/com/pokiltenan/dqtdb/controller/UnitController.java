@@ -31,6 +31,7 @@ import com.pokiltenan.dqtdb.model.StatsRank;
 import com.pokiltenan.dqtdb.model.Unit;
 import com.pokiltenan.dqtdb.model.UnitAwakening;
 import com.pokiltenan.dqtdb.model.UnitPassive;
+import com.pokiltenan.dqtdb.model.UnitTalent;
 import com.pokiltenan.dqtdb.service.UnitService;
 
 @Controller
@@ -118,12 +119,24 @@ public class UnitController {
 		Map<BigInteger, StatsRank> sortedAwaAdd = mergeStats(mapAwaAdd);
 		Map<BigInteger, StatsRank> sortedPassMul = mergeStats(mapPassMul);
 		Map<BigInteger, StatsRank> sortedPassAdd = mergeStats(mapPassAdd);
-
+		StatsRank talentStats = new StatsRank(null);
+		for (UnitTalent ut : unit.getTalents()) {
+			if (ut.getAilRes() != null) {
+			}
+			if (ut.getEleRes() != null) {
+			}
+			if (ut.getSkill() != null) {
+			}
+			if (ut.getStats() != null) {
+				 talentStats.add(ut.getStats());
+			}
+		}
 		try {
 			modelAndView.addObject("awaAdd", mapper.writeValueAsString(sortedAwaAdd));
 			modelAndView.addObject("awaMul", mapper.writeValueAsString(sortedAwaMul));
 			modelAndView.addObject("passAdd", mapper.writeValueAsString(sortedPassAdd));
 			modelAndView.addObject("passMul", mapper.writeValueAsString(sortedPassMul));
+			modelAndView.addObject("talentStats", mapper.writeValueAsString(talentStats));
 			List<Stats> st = unitService.findByCodezz(id);
 			String stats = mapper.writeValueAsString(st);
 			modelAndView.addObject("stats", stats);

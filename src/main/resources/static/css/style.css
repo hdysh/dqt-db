@@ -415,6 +415,7 @@ table td {
 
 .units {
 	background-color: #a3b6bb;
+	width: fit-content;
 }
 
 .font-20 {
@@ -588,4 +589,26 @@ table td {
 
 .framez-s {
 	grid-area: 1/1;
+}
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+  	width:32px;
+	height:32px;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img { 
+  	width:32px;
+	height:32px;
+	background: url(/img/icon/ColorCodingTexture_Move.png) no-repeat; 
+	  background-size: 32px;
 }

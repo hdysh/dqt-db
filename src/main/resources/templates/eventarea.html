@@ -38,7 +38,8 @@
 				<a th:href="@{${'/event/' + portal.code }}">[[${portal.name}]]</a>
 			</div>
 			<div class="pad-left-5">/</div>
-			<div class="pad-left-5">
+			<div th:if="${group != null and group.code != 402}"
+				class="pad-left-5">
 				<a th:href="@{${'/event/group/' + group.code }}">[[${group.name}]]</a>
 			</div>
 		</div>
@@ -46,13 +47,47 @@
 		<div th:if="${group} and ${group.atype}==1"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
-				<a th:href="@{${'/story/'  }}">Story</a>
+				<a th:href="@{${'/story'  }}">Story</a>
 			</div>
 			<div class="pad-left-5">/</div>
 			<div class="pad-left-5">
-				<a th:href="@{${'/story/'  }}">[[${group.name}]]</a>
+				<a th:href="@{${'/event/group/' +group.code }}">[[${group.name}]]</a>
 			</div>
 			<div class="pad-left-5">/</div>
+		</div>
+		<div th:if="${group} and ${group.atype}==4"
+			class="flex flex-row pad-left-10 font-20">
+			<div class="pad-left-5">
+				<a th:href="@{${'/battleroad'  }}">Battle Road</a>
+			</div>
+			<div class="pad-left-5">/</div>
+			<div class="pad-left-5">
+				<a th:href="@{${'/event/group/' +group.code }}">[[${group.name}]]</a>
+			</div>
+			<div class="pad-left-5">/</div>
+		</div>
+		<div
+			th:if="${portal }==null and (${area.atype}==2 or ${area.atype}==6 or ${area.atype}==9)"
+			class="flex flex-row pad-left-10 font-20">
+			<div class="pad-left-5">
+				<a th:href="@{${'/extra'  }}">Extra</a>
+			</div>
+			<div class="pad-left-5">/</div>
+			<div th:if="${group }" class="pad-left-5">
+				<a th:href="@{${'/event/group/'+group.code  }}">[[${group.name}]]</a>
+			</div>
+			<div th:if="${group }" class="pad-left-5">/</div>
+		</div>
+		<div th:if="${portal }==null and ${area.atype}==5"
+			class="flex flex-row pad-left-10 font-20">
+			<div class="pad-left-5">
+				<a th:href="@{${'/daily'  }}">Daily</a>
+			</div>
+			<div class="pad-left-5">/</div>
+			<div th:if="${group }" class="pad-left-5">
+				<a th:href="@{${'/event/group/'+group.code  }}">[[${group.name}]]</a>
+			</div>
+			<div th:if="${group }" class="pad-left-5">/</div>
 		</div>
 
 		<div>[[${area.name}]]</div>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pokiltenan.dqtdb.model.Drop;
 import com.pokiltenan.dqtdb.model.EventArea;
 import com.pokiltenan.dqtdb.model.EventPortal;
 import com.pokiltenan.dqtdb.model.Stage;
@@ -49,7 +50,9 @@ public class StagesController {
 		ModelAndView modelAndView = new ModelAndView("stage");
 		Stage stage = stagesService.getStage(id);
 		modelAndView.addObject("stage", stage);
-
+		for (Drop d : stage.getDrops()) {
+			System.out.println(d);
+		}
 		EventArea area = stagesService.getArea(stage.getArea());
 		modelAndView.addObject("area", area);
 		EventPortal portal = stagesService.getPortal(area.getEventPortal());

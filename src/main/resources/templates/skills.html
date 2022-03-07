@@ -42,6 +42,59 @@
 		<div>
 			<div class="units">
 				<div class="col-lg-10 mt-5 mb-5">
+					<!-- <label>name : <input type="search" class="" placeholder=""
+						aria-controls="example"></label>
+					<div></div> -->
+					<form name="fele" style="padding: 1px">
+						Element : <label><input type="radio" name="ele"
+							value="Mera"> <img title="Frizz"
+							src="/img/icon/SpellIcon_Mera.png"></label> <label><input
+							type="radio" name="ele" value="Gira"> <img title="Sizz"
+							src="/img/icon/SpellIcon_Gira.png"></label><label><input
+							type="radio" name="ele" value="Hyado"> <img title="Crack"
+							src="/img/icon/SpellIcon_Hyado.png"></label><label><input
+							type="radio" name="ele" value="Bagi"> <img title="Woosh"
+							src="/img/icon/SpellIcon_Bagi.png"></label><label><input
+							type="radio" name="ele" value="Io"> <img title="Bang"
+							src="/img/icon/SpellIcon_Io.png"></label><label><input
+							type="radio" name="ele" value="Dein"> <img title="Zap"
+							src="/img/icon/SpellIcon_Dein.png"></label><label><input
+							type="radio" name="ele" value="Dorma"> <img title="Zam"
+							src="/img/icon/Spellcon_Dorma.png"></label><label><input
+							type="radio" name="ele" value="Mu"> <img title="Typeless"
+							src="/img/icon/SpellIcon_Mu.png"></label><label><input
+							type="radio" name="ele" value="" checked="checked"> <img
+							title="All" src="/img/icon/all.png"></label>
+					</form>
+					<div></div>
+
+					<form name="ftype" style="padding: 1px">
+						Type : <label><input type="radio" name="type"
+							value="Physics"><img title="Physics"
+							src="/img/icon/SkillTypeIcon_Physics.png"></label><label><input
+							type="radio" name="type" value="Breath"><img
+							title="Breath" src="/img/icon/SkillTypeIcon_Breath.png"></label><label><input
+							type="radio" name="type" value="Spell"><img title="Spell"
+							src="/img/icon/SkillTypeIcon_Spell.png"></label><label><input
+							type="radio" name="type" value="Technique"><img
+							title="Technique" src="/img/icon/SkillTypeIcon_Technique.png"></label><label><input
+							type="radio" name="type" value="" checked="checked"><img
+							title="All" src="/img/icon/all.png"></label>
+					</form>
+
+					<div></div>
+					<form name="frank" style="padding: 1px">
+						Rarity : <label><input type="radio" name="rank"
+							value="MonsterRankIcon_A"><img title="A"
+							src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_B"><img
+							title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_C"><img
+							title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+							type="radio" name="rank" value="" checked="checked"><img
+							title="All" src="/img/icon/all.png"></label>
+					</form>
+					<div></div>
 					<table id="example" class="table table-bordered table-responsive"
 						style="width: 100%">
 						<thead>
@@ -82,7 +135,9 @@
 			$('#example')
 					.DataTable(
 							{
-								"paging" : false,
+								"paging" : true,
+								"order" : [ 1, "asc" ],
+								"pageLength" : 25,
 								"ajax" : {
 									"url" : "/skills/q",
 									"type" : "POST",
@@ -99,15 +154,16 @@
 											"render" : function(data, type,
 													row, meta) {
 												if (type === "sort"
-														|| type === 'type'||type==='filter') {
-													return '['+data+']';
+														|| type === 'type'
+														|| type === 'filter') {
+													return '[' + data + ']';
 												}
 												return '<div style="background-image: url(/img/icon/'
 														+ row['button']
 														+ ');" class="'
 														+ (row['rarity']['code'] == 30 ? 'skill_frame'
 																: 'skill_frame2')
-														+ '"><span class="skill_frame_centerer"></span><img src="/img/icon/'+data+'"></div>';
+														+ '"><span class="skill_frame_centerer"></span><img src="/img/icon/' + data + '"></div>';
 											}
 
 										},
@@ -115,7 +171,7 @@
 											"data" : "code",
 											"render" : function(data, type,
 													row, meta) {
-												return '<a href="/skill/'+data+'">'
+												return '<a href="/skill/' + data + '">'
 														+ row['name'] + '</a>';
 											}
 										},
@@ -127,7 +183,7 @@
 														|| type === 'type') {
 													return data['code'];
 												} else {
-													return '<div class="icon_container_small"><img src="/img/icon/'+data['icon']+'" /></div>';
+													return '<div class="icon_container_small"><img src="/img/icon/' + data['icon'] + '" /></div>';
 												}
 											}
 										},
@@ -139,7 +195,7 @@
 														|| type === 'type') {
 													return data['code'];
 												} else {
-													return '<div class="icon_container_small"><img src="/img/icon/'+data['icon']+'" /></div>';
+													return '<div class="icon_container_small"><img src="/img/icon/' + data['icon'] + '" /></div>';
 												}
 											}
 										},
@@ -166,6 +222,24 @@
 											}
 										} ],
 							});
+			$('input:radio[name=type]').change(function() {
+				console.log(this.value);
+				$('#example').DataTable().columns(0).search(this.value).draw();
+			});
+
+			$('input:radio[name=ele]').change(function() {
+				console.log(this.value);
+				$('#example').DataTable().columns(3).search(this.value).draw();
+			});
+			$('input:radio[name=rank]').change(function() {
+				console.log(this.value);
+				$('#example').DataTable().columns(2).search(this.value).draw();
+			});
+			window.onload = function() {
+				fele.reset();
+				ftype.reset();
+				frank.reset();
+			}
 		</script>
 	</div>
 

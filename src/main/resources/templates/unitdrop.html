@@ -40,7 +40,55 @@
 
 		<div>
 			<div class="units">
-				<div class="col-lg-10 mt-5 mb-5">
+				<div class="mt-5 mb-5">
+					<form name="frank" style="padding: 1px">
+						Rarity : <label><input type="radio" name="rank"
+							value="MonsterRankIcon_S"><img title="S"
+							src="/img/icon/MonsterRankIcon_S.png"></label><label><input
+							type="radio" name="rank" value="MonsterRankIcon_A"><img
+							title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_B"><img
+							title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_C"><img
+							title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_D"><img
+							title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_E"><img
+							title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_F"><img
+							title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
+							type="radio" name="rank" value="" checked="checked"><img
+							title="All" src="/img/icon/all.png"></label>
+					</form>
+					<form name="ffam" style="padding: 1px">
+						Family : <label><input type="radio" name="family"
+							value="Slime"><img title="Slime"
+							src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
+							type="radio" name="family" value="Dragon"><img
+							title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
+						<label><input type="radio" name="family" value="Nature"><img
+							title="Nature" src="/img/icon/EquipmentIcon_NatureFamilly.png"></label>
+						<label><input type="radio" name="family" value="Beast"><img
+							title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
+						<label><input type="radio" name="family" value="Material"><img
+							title="Inorganic"
+							src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
+							type="radio" name="family" value="Devil"><img
+							title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
+						<label><input type="radio" name="family" value="Zombie"><img
+							title="Undead" src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label>
+						<label><input type="radio" name="family" value="Special"><img
+							title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
+						<label><input type="radio" name="family" value="Hero"><img
+							title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
+						<label><input type="radio" name="family" value=""
+							checked="checked"><img title="All"
+							src="/img/icon/all.png"></label>
+					</form>
+					<form name="fopt" style="padding: 1px">
+						<label><input type="checkbox" name="family" id="optimal"
+							value="yes">Show only optimal stamina per drop</label>
+					</form>
 					<table id="example" class="table table-bordered table-responsive"
 						style="width: 100%">
 						<thead>
@@ -48,10 +96,11 @@
 								<th>Icon</th>
 								<th>Name</th>
 								<th>Rank</th>
-							<th>Family</th>
-							<th>Stage</th>
-							 		<th>Rate</th>
-								<th>Stamina/Drop</th> 
+								<th>Family</th>
+								<th>Stage</th>
+								<th>Rate</th>
+								<th>Stamina</th>
+								<th>Best</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -60,9 +109,10 @@
 								<th>Name</th>
 								<th>Rank</th>
 								<th>Family</th>
-							<th>Stage</th>
-							 	<th>Rate</th>
-								<th>Stamina/Drop</th>  
+								<th>Stage</th>
+								<th>Rate</th>
+								<th>Stamina</th>
+								<th>Best</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -72,95 +122,136 @@
 
 
 		<script>
-		$('#example')
-	    .DataTable({
-	        "paging": false,
-	        "ajax": {
-	            "url": "/unitdrop/q",
-	            "type": "POST",
-	            "dataType": "json",
-	            "dataSrc": "",
-	            "contentType": "application/json",
-	            "data": function(d) {
-	                return JSON.stringify(d);
-	            }
-	        },
-	        "columns": [
+			$('#example')
+					.DataTable(
+							{
+								"paging" : true,
+								"order" : [ 1, "asc" ],
+								"pageLength" : 25,
+								"ajax" : {
+									"url" : "/unitdrop/q",
+									"type" : "POST",
+									"dataType" : "json",
+									"dataSrc" : "",
+									"contentType" : "application/json",
+									"data" : function(d) {
+										return JSON.stringify(d);
+									}
+								},
+								"columns" : [
 
-	      {
-	                "data": "unitSplit",
-	                "render": function(data, type,
-	                    row, meta) {
-	                 
-	                    if (type === "sort" ||
-		                        type === 'type') {
-		                        return data[2];
-		                    } else {   return '<div class="icon_container_small"><img src="/img/icon/' + data[2] + '" /></div>';
-		                    }
+										{
+											"data" : "unitSplit",
+											"render" : function(data, type,
+													row, meta) {
 
-	                }
-	            }, 
-	            {
-	                "data": "unitSplit",
-	                "render": function(data, type,
-	                    row, meta) {
-	                    return '<a href="/unit/' + data[0] + '">' +
-	                        data[1] + '</a>';
-	                }
-	            },
-	            {
-	                "data": "unitSplit",
-	                "render": function(data, type,
-	                    row, meta) {
-	                    if (type === "sort" ||
-	                        type === 'type') {
-	                        return data[3];
-	                    } else {
-	                        return '<div class="icon_container_small"><img src="/img/icon/' + data[3] + '" /></div>';
-	                    }
-	                }
-	            }, 
-	            {
-	                "data": "unitSplit",
-	                "render": function(data, type,
-	                    row, meta) {
-	                    if (type === "sort" ||
-	                        type === 'type') {
-	                        return data[4];
-	                    } else if (type === "search") {
-	                        return data[4];
-	                    } else {
-	                        return '<div class="icon_container_small"><img src="/img/icon/' + data[4] + '" /></div>';
-	                    }
+												if (type === "sort"
+														|| type === 'type') {
+													return data[2];
+												} else {
+													return '<div class="icon_container_small"><img src="/img/icon/' + data[2] + '" /></div>';
+												}
 
-	                }
-	            },
-	          
-	            {
-	                "data": "stageSplit",
-	                "render": function(data, type,
-	                    row, meta) {
-	                    return '<a href="/stages/' + data[0] + '">' +
-	                        data[1] +
-	                        '</a>';
-	                }
-	            },
-	            {
-	                "data": "rate",
-	                "render": function(data, type,
-	                    row, meta) {
-	                    return data / 100.0 + '%';
-	                }
-	            },
-	            {
-	                "data": "rate",
-	                "render": function(data, type,
-	                    row, meta) {
-	                    return Math.round((10000.0 / data * row['stamina'] + Number.EPSILON) * 100) / 100;
-	                }
-	            }
-	        ],
-	    });
+											}
+										},
+										{
+											"data" : "unitSplit",
+											"render" : function(data, type,
+													row, meta) {
+												return '<a href="/unit/' + data[0] + '">'
+														+ data[1] + '</a>';
+											}
+										},
+										{
+											"data" : "unitSplit",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type') {
+													return data[3];
+												} else {
+													return '<div class="icon_container_small"><img src="/img/icon/' + data[3] + '" /></div>';
+												}
+											}
+										},
+										{
+											"data" : "unitSplit",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type') {
+													return data[4];
+												} else if (type === "search") {
+													return data[4];
+												} else {
+													return '<div class="icon_container_small"><img src="/img/icon/' + data[4] + '" /></div>';
+												}
+
+											}
+										},
+
+										{
+											"data" : "stageSplit",
+											"render" : function(data, type,
+													row, meta) {
+												return '<a href="/stages/' + data[0] + '">'
+														+ data[1] + '</a>';
+											}
+										},
+										{
+											"data" : "rate",
+											"render" : function(data, type,
+													row, meta) {
+												return data / 100.0 + '%';
+											}
+										},
+										/*     {
+										        "data": "rate",
+										        "render": function(data, type,
+										            row, meta) {
+										            return Math.round((10000.0 / data * row['stamina']) * 100) / 100;
+										        }
+										    }, */
+										{
+											"data" : "stamrate",
+											"render" : function(data, type,
+													row, meta) {
+												return Math.round(data*100) / 100;
+											}
+										},
+										{
+											"data" : "best",
+											"render" : function(data, type,
+													row, meta) {
+												if (data)
+													return 'yes';
+												else
+													return '';
+											}
+										} ],
+							});
+			$('input:radio[name=rank]').change(function() {
+				$('#example').DataTable().columns(2).search(this.value).draw();
+			});
+
+			$('input:radio[name=family]').change(function() {
+				$('#example').DataTable().columns(3).search(this.value).draw();
+			});
+			$('#optimal').change(
+					function() {
+						if ($(this).is(':checked')) {
+							$('#example').DataTable().columns(7).search(
+									this.value).draw();
+						} else {
+							$('#example').DataTable().columns(7).search("")
+									.draw();
+						}
+					});
+			window.onload = function() {
+				frank.reset();
+				ffam.reset();
+				fopt.reset();
+			}
 		</script>
 
 	</div>

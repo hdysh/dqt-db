@@ -19,58 +19,62 @@
 		type="text/javascript"></script>
 	<script>
 		var pass  = [(${passAdd})]  ;
-		var stats =  [(${stats})];
+		var stats = [(${stats})];
 		var rank = 7;
-		var awak=0;
-		var awakAdd =[(${awaAdd})];
-		var awakMul =[(${awaMul})];
-		var masterStats =[(${master})];
-		var master=0;
-		
-		
-		function passive(level){
-			for(i=0;i<pass.length;i++){
-				if(pass[i].level<=level){
-					if(pass[i].passive.stats !=null){
-if(pass[i].passive.stats.stype=='ADD'){
-	
-}
-						console.log( );
-					}
+		var awak = 0;
+		var awakAdd = [(${awaAdd})];
+		var awakMul = [(${awaMul})];
+		var masterStats = [(${master})];
+		var master = 0;
+		var talentStats = [(${talentStats})];
+		var fullTalent = false;
 
-				}
-			}
-		} 
-		function applyStats() { 
-			var level = stats[rank].level;
-  		    $('#lvl').text(': ' + (stats[rank].level + (awakAdd[awak] ? awakAdd[awak].level : 0) + (pass[level] ? pass[level].level : 0)));
-		    $('#hp').text(': ' +  mul((stats[rank].hp + (awakAdd[awak] ? awakAdd[awak].hp : 0)+ (pass[level] ? pass[level].hp : 0)),awakMul[awak].hp,masterStats[master].hp));
-		    $('#mp').text(': ' +  mul((stats[rank].mp + (awakAdd[awak] ? awakAdd[awak].mp : 0)+ (pass[level] ? pass[level].mp : 0)),awakMul[awak].mp,masterStats[master].mp));
-		    $('#atk').text(': ' +  mul((stats[rank].attack + (awakAdd[awak] ? awakAdd[awak].attack : 0) + (pass[level] ? pass[level].attack : 0)),awakMul[awak].attack,masterStats[master].attack));
-		    $('#def').text(': ' +  mul((stats[rank].defense + (awakAdd[awak] ? awakAdd[awak].defense : 0) + (pass[level]  ? pass[level].defense : 0)),awakMul[awak].defense,masterStats[master].defense));
-		    $('#agi').text(': ' +  mul((stats[rank].agility + (awakAdd[awak] ? awakAdd[awak].agility : 0)+ (pass[level] ? pass[level].agility : 0)),awakMul[awak].agility,masterStats[master].agility));
-		    $('#int').text(': ' +  mul((stats[rank].intelligence + (awakAdd[awak] ? awakAdd[awak].intelligence : 0)+ (pass[level]  ? pass[level].intelligence : 0)),awakMul[awak].intelligence,masterStats[master].intelligence));
-		    $('#mov').text(': ' + (stats[rank].mobility + (awakAdd[awak] ? awakAdd[awak].mobility : 0)+ (pass[level] ? pass[level].mobility : 0))); 
+		function applyStats() {
+		    var level = stats[rank].level;
+		    $('#lvl').text(': ' + (stats[rank].level + (awakAdd[awak] ? awakAdd[awak].level : 0) + (pass[level] ? pass[level].level : 0)));
+		    $('#hp').text(': ' + mul((stats[rank].hp + (awakAdd[awak] ? awakAdd[awak].hp : 0) + (pass[level] ? pass[level].hp : 0) + (fullTalent ? talentStats.hp : 0)), awakMul[awak].hp, masterStats[master].hp));
+		    $('#mp').text(': ' + mul((stats[rank].mp + (awakAdd[awak] ? awakAdd[awak].mp : 0) + (pass[level] ? pass[level].mp : 0) + (fullTalent ? talentStats.mp : 0)), awakMul[awak].mp, masterStats[master].mp));
+		    $('#atk').text(': ' + mul((stats[rank].attack + (awakAdd[awak] ? awakAdd[awak].attack : 0) + (pass[level] ? pass[level].attack : 0) + (fullTalent ? talentStats.attack : 0)), awakMul[awak].attack, masterStats[master].attack));
+		    $('#def').text(': ' + mul((stats[rank].defense + (awakAdd[awak] ? awakAdd[awak].defense : 0) + (pass[level] ? pass[level].defense : 0) + (fullTalent ? talentStats.defense : 0)), awakMul[awak].defense, masterStats[master].defense));
+		    $('#agi').text(': ' + mul((stats[rank].agility + (awakAdd[awak] ? awakAdd[awak].agility : 0) + (pass[level] ? pass[level].agility : 0) + (fullTalent ? talentStats.agility : 0)), awakMul[awak].agility, masterStats[master].agility));
+		    $('#int').text(': ' + mul((stats[rank].intelligence + (awakAdd[awak] ? awakAdd[awak].intelligence : 0) + (pass[level] ? pass[level].intelligence : 0) + (fullTalent ? talentStats.intelligence : 0)), awakMul[awak].intelligence, masterStats[master].intelligence));
+		    $('#mov').text(': ' + (stats[rank].mobility + (awakAdd[awak] ? awakAdd[awak].mobility : 0) + (pass[level] ? pass[level].mobility : 0) + (fullTalent ? talentStats.mobility : 0)));
 
 		}
-		function mul(val,mul1,mul2){
-			return Math.floor(val+(val*(mul1+mul2)/100));
+
+		function mul(val, mul1, mul2) {
+		    return Math.floor(val + (val * (mul1 + mul2) / 100));
 		}
 		$(document).ready(function() {
-			 applyStats();
+		    applyStats();
 		    $("#rankSelect").on("change", function() {
 		        rank = $(this).val();
 		        applyStats();
 		    });
 		    $("#awakeningSelect").on("change", function() {
-		    	awak= $(this).val();
+		        awak = $(this).val();
 		        applyStats();
 		    });
 		    $("#masterSelect").on("change", function() {
-		    	master= $(this).val();
+		        master = $(this).val();
 		        applyStats();
 		    });
-		    passive(120);
+		    if ($("#talent").is(":checked")) {
+		        fullTalent = true;
+		        applyStats();
+		    } else {
+		        fullTalent = false;
+		        applyStats();
+		    }
+		    $("#talent").change(function() {
+		        if ($(this).is(":checked")) {
+		            fullTalent = true;
+		            applyStats();
+		        } else {
+		            fullTalent = false;
+		            applyStats();
+		        }
+		    });
 		});
 
 	</script>
@@ -189,7 +193,10 @@ if(pass[i].passive.stats.stype=='ADD'){
 							</tr>
 
 							<tr th:each="us  : ${unit.skills}">
-								<td th:text="${us.level}">level</td>
+								<td th:if="${us.level>-1}" th:text="${us.level}">level</td>
+								<td th:if="${us.level==-1}"><img th:style="'height:25px;'"
+									title="Talent Blossom"
+									src="/img/icon/TrainingPointIcon_Large.png" /></td>
 								<td>
 									<div
 										th:classappend="${us.skill.rarity.code==30} ? skill_frame : skill_frame2"
@@ -201,7 +208,7 @@ if(pass[i].passive.stats.stype=='ADD'){
 								<td><a th:href="@{${'/skill/' + us.skill.code }}"
 									th:text="${us.skill.name}"></a></td>
 								<td th:text="${us.skill.mp}">mp</td>
-								<td><img
+								<td><img th:title="${us.skill.element.name}"
 									th:src="@{${'/img/icon/' + us.skill.element.icon }}" /></td>
 								<td><div th:text="${us.skill.reach}"></div> <img
 									th:src="@{${'/img/icon/' + us.skill.range }}" /></td>
@@ -338,6 +345,10 @@ if(pass[i].passive.stats.stype=='ADD'){
 									th:selected="${i == 0}" th:value="${i}"
 									th:text="${'Master Rank '+i}"></option>
 							</select>
+						</div>
+						<div th:if="${#lists.size(unit.talents) > 0}">
+							<label><input type="checkbox" name="active" id="talent"
+								th:checked="false" />Full Talent Blossom</label>
 						</div>
 					</div>
 				</div>

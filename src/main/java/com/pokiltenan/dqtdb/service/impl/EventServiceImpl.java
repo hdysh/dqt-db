@@ -30,7 +30,12 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public List<Stage> getEventStages(BigInteger id) { 
+	public List<EventArea> getEventAreasByPortal(BigInteger id) {
+		return eventRepository.findAllEventAreaByPortal(id);
+	}
+
+	@Override
+	public List<Stage> getEventStages(BigInteger id) {
 		return eventRepository.findAllEventStage(id);
 	}
 
@@ -52,6 +57,31 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public List<EventGroup> getStoryGroups(BigInteger id) {
 		return eventRepository.findAllStoryGroup(id);
+	}
+
+	@Override
+	public List<EventGroup> getBattleroads() {
+		return eventRepository.findAllBattleroads();
+	}
+
+	@Override
+	public List<EventGroup> getGroupDailies() {
+		return eventRepository.findGroupDailies();
+	}
+
+	@Override
+	public List<EventArea> getAreaDailies() {
+		return eventRepository.findAreaDailies();
+	}
+
+	@Override
+	public List<EventArea> getExtraArea() {
+		return eventRepository.findExtraArea();
+	}
+
+	@Override
+	public List<EventGroup> getExtraGroup() {
+		return eventRepository.findExtraGroup();
 	}
 
 }

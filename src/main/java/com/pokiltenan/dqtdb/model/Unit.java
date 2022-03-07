@@ -15,6 +15,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -25,7 +27,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @SecondaryTable(name = "unit_rate", pkJoinColumns = @PrimaryKeyJoinColumn(name = "code", referencedColumnName = "code"))
-public class Unit extends AbstractUnit { 
+public class Unit extends AbstractUnit {
 	private @Id BigInteger code;
 	private String name;
 	@ManyToOne(targetEntity = Family.class)
@@ -36,7 +38,7 @@ public class Unit extends AbstractUnit {
 	private Role role;
 	@ManyToOne(targetEntity = Rarity.class)
 	@JoinColumn(name = "rarity")
-	private Rarity rarity; 
+	private Rarity rarity;
 	private String icon;
 
 	@OneToOne(targetEntity = EleRes.class)
@@ -68,5 +70,8 @@ public class Unit extends AbstractUnit {
 	@OneToOne(targetEntity = Passive.class)
 	@JoinColumn(name = "leader")
 	private Passive leader;
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "code")
+	private List<UnitTalent> talents;
 
 }

@@ -42,6 +42,50 @@
 		<div>
 			<div class="units">
 				<div class="col-lg-10 mt-5 mb-5">
+					<form name="frank" style="padding: 1px">
+						Rarity : <label><input type="radio" name="rank"
+							value="MonsterRankIcon_S"><img title="S"
+							src="/img/icon/MonsterRankIcon_S.png"></label><label><input
+							type="radio" name="rank" value="MonsterRankIcon_A"><img
+							title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_B"><img
+							title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_C"><img
+							title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_D"><img
+							title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_E"><img
+							title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_F"><img
+							title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
+							type="radio" name="rank" value="" checked="checked"><img
+							title="All" src="/img/icon/all.png"></label>
+					</form>
+					<form name="ffam" style="padding: 1px">
+						Family : <label><input type="radio" name="family"
+							value="Slime"><img title="Slime"
+							src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
+							type="radio" name="family" value="Dragon"><img
+							title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
+						<label><input type="radio" name="family" value="Nature"><img
+							title="Nature" src="/img/icon/EquipmentIcon_NatureFamilly.png"></label>
+						<label><input type="radio" name="family" value="Beast"><img
+							title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
+						<label><input type="radio" name="family" value="Material"><img
+							title="Inorganic"
+							src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
+							type="radio" name="family" value="Devil"><img
+							title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
+						<label><input type="radio" name="family" value="Zombie"><img
+							title="Undead" src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label>
+						<label><input type="radio" name="family" value="Special"><img
+							title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
+						<label><input type="radio" name="family" value="Hero"><img
+							title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
+						<label><input type="radio" name="family" value=""
+							checked="checked"><img title="All"
+							src="/img/icon/all.png"></label>
+					</form>
 					<table id="example" class="table table-bordered table-responsive"
 						style="width: 100%">
 						<thead>
@@ -86,7 +130,9 @@
 			$('#example')
 					.DataTable(
 							{
-								"paging" : false,
+								"paging" : true,
+								"pageLength" : 25,
+								"order" : [ 1, "asc" ],
 								"ajax" : {
 									"url" : "/units/q",
 									"type" : "POST",
@@ -107,9 +153,9 @@
 													return data;
 												} else {
 													return '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/' +
-													row.rarity['background'] + '" /></div><div class="prof-s"><img src="/img/icon/' + data +
-	                            					'" /></div><div class="framez-s"><img src="/img/icon/' + row.rarity['frame'] + 
-	                            					'" /></div></div>';
+	                            row.rarity['background'] + '" /></div><div class="prof-s"><img src="/img/icon/' + data +
+	                            '" /></div><div class="framez-s"><img src="/img/icon/' + row.rarity['frame'] +
+	                            '" /></div></div>';
 												}
 											}
 										},
@@ -162,6 +208,17 @@
 											"data" : "stats[0].mobility",
 										} ],
 							});
+			$('input:radio[name=rank]').change(function() {
+				$('#example').DataTable().columns(2).search(this.value).draw();
+			});
+
+			$('input:radio[name=family]').change(function() {
+				$('#example').DataTable().columns(3).search(this.value).draw();
+			});
+			window.onload = function() {
+				frank.reset();
+				ffam.reset();
+			}
 		</script>
 	</div>
 

@@ -50,8 +50,8 @@ public class EventController {
 	@GetMapping("/{id}")
 	public ModelAndView showEvent(@PathVariable(value = "id") BigInteger id) {
 		ModelAndView modelAndView = new ModelAndView("eventportal");
-		List<EventArea> areas = eventService.getEventAreas(id);
-		List<EventGroup> group = eventService.getEventGroups(id); 
+		List<EventArea> areas = eventService.getEventAreasByPortal(id);
+		List<EventGroup> group = eventService.getEventGroups(id);
 		modelAndView.addObject("areas", areas);
 		modelAndView.addObject("group", group);
 		EventPortal portal = stagesService.getPortal(id);
@@ -81,7 +81,14 @@ public class EventController {
 		EventGroup group = stagesService.getGroup(area.getAreaGroup());
 		if (group != null) {
 			modelAndView.addObject("group", group);
-			EventPortal portal = stagesService.getPortal(group.getEventPortal());
+		} 
+		if (area.getEventPortal() == null) {
+			if (group != null) {
+				EventPortal portal = stagesService.getPortal(group.getEventPortal());
+				modelAndView.addObject("portal", portal);
+			}
+		} else {
+			EventPortal portal = stagesService.getPortal(area.getEventPortal());
 			modelAndView.addObject("portal", portal);
 		}
 		return modelAndView;

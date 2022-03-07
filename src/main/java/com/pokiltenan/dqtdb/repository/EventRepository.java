@@ -21,8 +21,11 @@ public interface EventRepository extends CrudRepository<EventPortal, Integer> {
 	EventPortal findEventById(BigInteger code);
 
 	@Query("select ea from EventArea ea where ea.areaGroup= ?1")
-	List<EventArea> findAllEventArea(BigInteger eventPortal);
- 
+	List<EventArea> findAllEventArea(BigInteger eventGroup);
+
+	@Query("select ea from EventArea ea where ea.eventPortal= ?1 and (ea.areaGroup is NULL or ea.areaGroup = 402)")
+	List<EventArea> findAllEventAreaByPortal(BigInteger eventPortal);
+
 	@Query("select ea from Stage ea where ea.area= ?1")
 	List<Stage> findAllEventStage(BigInteger eventArea);
 
@@ -31,10 +34,25 @@ public interface EventRepository extends CrudRepository<EventPortal, Integer> {
 
 	@Query("select ea from Stage ea where ea.area= ?1")
 	List<Stage> findAllStoryStage(BigInteger eventArea);
- 
+
 	@Query("select ea from EventGroup ea where ea.eventPortal= ?1")
 	List<EventGroup> findAllEventGroup(BigInteger id);
 
 	@Query("select ea from EventGroup ea where ea.atype= ?1")
 	List<EventGroup> findAllStoryGroup(BigInteger id);
+
+	@Query("select ea from EventGroup ea where ea.atype= 4 and ea.eventPortal is null")
+	List<EventGroup> findAllBattleroads();
+
+	@Query("select ea from EventGroup ea where ea.atype= 5 and ea.eventPortal is null")
+	List<EventGroup> findGroupDailies();
+
+	@Query("select ea from EventArea ea where ea.atype= 5 and ea.areaGroup is null and ea.eventPortal is null")
+	List<EventArea> findAreaDailies();
+
+	@Query("select ea from EventArea ea where (ea.atype= 6 or ea.atype= 9 or ea.atype= 2) and ea.areaGroup is null and ea.eventPortal is null")
+	List<EventArea> findExtraArea();
+
+	@Query("select ea from EventGroup ea where ea.atype= 2 and ea.eventPortal is null")
+	List<EventGroup> findExtraGroup();
 }

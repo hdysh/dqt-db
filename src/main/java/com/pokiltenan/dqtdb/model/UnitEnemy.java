@@ -22,7 +22,7 @@ import lombok.ToString;
 @Table(name = "enemy")
 @Data
 @ToString
-@SecondaryTable(name = "unit_rate", pkJoinColumns = @PrimaryKeyJoinColumn(name = "code", referencedColumnName = "code"))
+@SecondaryTable(name = "unit_rate", pkJoinColumns = @PrimaryKeyJoinColumn(name = "code"))
 public class UnitEnemy {
 	public @Id BigInteger code;
 	public String name; 

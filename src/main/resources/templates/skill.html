@@ -79,7 +79,7 @@
 			</div>
 			<div th:if="${skill.accuracy}" class="skill-item bold flex-column pad-10">
 				<span th:text="Accuracy" class="header"></span>
-				<div th:text="${skill.accuracy}" class="skill-sub-item">acc</div>
+				<div th:text="${skill.accuracy + '%'}" class="skill-sub-item">acc</div>
 			</div>
 
 			<div th:if="${skill.multiplier}" class="skill-item bold flex-column pad-10">
@@ -101,7 +101,7 @@
 			<div class="header bold">Learned by:</div>
 			<div class="flex_center_row">
 				<div th:each="unit : ${units}" th:remove="tag">
-					<div class="frame-container">
+					<div class="frame-container" th:title="${unit.name}">
 						<div class="framez">
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>

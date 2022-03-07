@@ -2,7 +2,9 @@ package com.pokiltenan.dqtdb.controller;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pokiltenan.dqtdb.model.EventArea;
 import com.pokiltenan.dqtdb.model.EventGroup;
 import com.pokiltenan.dqtdb.model.UnitDrop;
 import com.pokiltenan.dqtdb.service.EventService;
@@ -41,6 +44,31 @@ public class MainController {
 	public ResponseEntity<List<UnitDrop>> getAll() {
 		List<String> temp = new ArrayList<>();
 		List<UnitDrop> units = unitService.getAllUnitDrop();
+		Map<String, List<UnitDrop>> best = new HashMap<>();
+		for (UnitDrop u : units) {
+			String id = u.getUnitSplit()[0];
+			double curentRate = 10000.0 / u.getRate() * u.getStamina();
+			u.setStamrate(curentRate);
+			if (best.containsKey(id)) {
+				double bestRate = best.get(id).get(0).getStamrate();
+				if (curentRate < bestRate) {
+					u.setBest(true);
+					for (UnitDrop unitDrop : best.get(id)) {
+						unitDrop.setBest(false);
+					}
+					best.get(id).clear();
+					best.get(id).add(u);
+				} else if (curentRate == bestRate) {
+					u.setBest(true);
+					best.get(id).add(u);
+				}
+			} else {
+				u.setBest(true);
+				List<UnitDrop> list = new ArrayList<>();
+				list.add(u);
+				best.put(id, list);
+			}
+		}
 		List<UnitDrop> u2 = new ArrayList<>();
 		for (UnitDrop u : units) {
 			if (!temp.contains(u.getUnitSplit()[0] + u.getStageSplit()[0] + u.getRate())) {
@@ -84,8 +112,33 @@ public class MainController {
 	public ModelAndView showDaily() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("daily");
-		List<EventGroup> units = eventService.getStoryGroups(new BigInteger("4"));
-		modelAndView.addObject("lists", units);
+		List<EventGroup> groups = eventService.getGroupDailies();
+		modelAndView.addObject("groups", groups);
+		List<EventArea> areas = eventService.getAreaDailies();
+		modelAndView.addObject("areas", areas);
+		System.out.println(groups);
+		return modelAndView;
+	}
+
+	@GetMapping("/battleroad")
+	@ResponseBody
+	public ModelAndView showBattleroad() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("battleroad");
+		List<EventGroup> groups = eventService.getBattleroads();
+		modelAndView.addObject("groups", groups);
+		return modelAndView;
+	}
+
+	@GetMapping("/extra")
+	@ResponseBody
+	public ModelAndView showExtra() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("extra");
+		List<EventArea> areas = eventService.getExtraArea();
+		modelAndView.addObject("areas", areas);
+		List<EventGroup> groups = eventService.getExtraGroup();
+		modelAndView.addObject("groups", groups);
 		return modelAndView;
 	}
 }
