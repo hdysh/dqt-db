@@ -7,9 +7,9 @@
 		<version>2.4.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.pokiltenan</groupId>
+	<groupId>com.github.hdysh</groupId>
 	<artifactId>dqt-db</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>dqt-db</name>
 	<description>DB website for Dragon Quest Tact</description>
 

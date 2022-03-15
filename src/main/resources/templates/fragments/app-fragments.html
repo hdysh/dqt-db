@@ -14,6 +14,12 @@
 				<a th:href="@{/skills}">SKILLS</a>
 			</div></li>
 		<li><div class="nav-list">
+				<a th:href="@{/ailments}">AILMENTS</a>
+			</div></li>
+		<li><div class="nav-list">
+				<a th:href="@{/buffs}">BUFF / DEBUFF</a>
+			</div></li>
+		<li><div class="nav-list">
 				<a th:href="@{/event}">EVENTS</a>
 			</div></li>
 		<li><div class="nav-list">
@@ -30,6 +36,11 @@
 			</div></li>
 		<li><div class="nav-list">
 				<a th:href="@{/unitdrop}">FARMABLE UNITS</a>
+			</div></li>
+		<li><div
+				style="padding: 5px; background-color: #fcfffa; display: flex; border-radius: 0.3rem; margin: 5px; font-weight: bold;">
+				Lang: <a th:href="@{''(lang=en)}">en</a>/<a th:href="@{''(lang=ja)}">ja</a>/<a
+					th:href="@{''(lang=fr)}">fr</a>
 			</div></li>
 	</ul>
 	<div th:fragment="copyright"></div>

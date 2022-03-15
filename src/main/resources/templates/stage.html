@@ -12,7 +12,7 @@
                                                )}">
 
 <head>
-<title>[[${stage.name}]]</title>
+<title th:text="#{${stage.name }}"></title>
 
 <th:block id="stage-static-resources">
 
@@ -35,7 +35,8 @@
 
 			<div class="pad-left-5">/</div>
 			<div class="pad-left-5">
-				<a th:href="@{${'/event/area/' + area.code }}">[[${area.name}]]</a>
+				<a th:href="@{${'/event/area/' + area.code }}"
+					th:text="#{${area.name }}"> </a>
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
@@ -46,11 +47,12 @@
 
 			<div class="pad-left-5">/</div>
 			<div class="pad-left-5">
-				<a th:href="@{${'/event/area/' + area.code }}">[[${area.name}]]</a>
+				<a th:href="@{${'/event/area/' + area.code }}"
+					th:text="#{${area.name }}"> </a>
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
-		<div>[[${stage.name}]]</div>
+		<div th:text="#{${stage.name }}"></div>
 	</div>
 
 	<div id="stage-nav"
@@ -68,92 +70,157 @@
 						class="drop-item bold flex-column pad5 h50px"></span>
 				</div>
 				<div th:if="${stage.missionList.code!=9999}">
-					<div th:text="'Mission'" class="drop-header"></div>
+					<div th:text="'Mission'" class="drop-header">Mission</div>
 					<div class="flex_center_row">
-
 						<div class="drop-item bold flex-column pad-5 w50">
-							<div th:text="${stage.missionList.mission1.condition}"
-								class="drop-sub-item">mp</div>
+							<div
+								th:each="con,iter : ${stage.missionList.mission1.conditions}"
+								th:remove="tag">
+								<div th:with="condition=#{${con}}">
+									<div
+										th:with="condition1=${#strings.replace(condition,'{0}',stage.missionList.mission1.nums[iter.index])}"
+										class="drop-sub-item">
+										<div
+											th:if="${#strings.isEmpty(stage.missionList.mission1.objs[0])}"
+											th:text="${#strings.replace(condition1,'{1}',stage.missionList.mission1.objs[0])}"
+											class="drop-sub-item"></div>
+											<div
+											th:unless="${#strings.isEmpty(stage.missionList.mission1.objs[0])}"
+											th:with="translate=#{${stage.missionList.mission1.objs[0]}}">
+											<div
+												th:text="${#strings.replace(condition1,'{1}',translate)}"
+												class="drop-sub-item"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="drop-item bold flex-column pad-5">
 							<div class="drop-sub-item w50px item-text"
-								th:title="${stage.missionList.mission1.reward.description}">
+								th:title="#{${stage.missionList.mission1.reward.description}}">
 								<img
 									th:src="@{${'/img/icon/' + stage.missionList.mission1.reward.icon }}" />
-								<div th:text="${stage.missionList.mission1.quantity}"
-									class="drop-sub-item">mp</div>
+								<div th:text=" ${stage.missionList.mission1.quantity} "
+									class="drop-sub-item"></div>
 							</div>
 						</div>
 					</div>
 					<div class="flex_center_row">
 
 						<div class="drop-item bold flex-column pad-5 w50">
-							<div th:text="${stage.missionList.mission2.condition}"
-								class="drop-sub-item">mp</div>
+							<div
+								th:each="con,iter : ${stage.missionList.mission2.conditions}"
+								th:remove="tag">
+								<div th:with="condition=#{${con}}">
+									<div
+										th:with="condition1=${#strings.replace(condition,'{0}',stage.missionList.mission2.nums[iter.index])}"
+										class="drop-sub-item">
+										<div
+											th:if="${#strings.isEmpty(stage.missionList.mission2.objs[0])}"
+											th:text="${#strings.replace(condition1,'{1}',stage.missionList.mission2.objs[0])}"
+											class="drop-sub-item"></div>
+											<div
+											th:unless="${#strings.isEmpty(stage.missionList.mission2.objs[0])}"
+											th:with="translate=#{${stage.missionList.mission2.objs[0]}}">
+											<div
+												th:text="${#strings.replace(condition1,'{1}',translate)}"
+												class="drop-sub-item"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="drop-item bold flex-column pad-5">
 							<div class="drop-sub-item w50px item-text"
 								th:title="${stage.missionList.mission2.reward.description}">
 								<img
 									th:src="@{${'/img/icon/' + stage.missionList.mission2.reward.icon }}" />
-								<div th:text="${stage.missionList.mission2.quantity}"
-									class="drop-sub-item">mp</div>
+								<div th:text=" ${stage.missionList.mission2.quantity} "
+									class="drop-sub-item"></div>
 							</div>
 						</div>
 					</div>
 					<div class="flex_center_row">
 
 						<div class="drop-item bold flex-column pad-5 w50">
-							<div th:text="${stage.missionList.mission3.condition}"
-								class="drop-sub-item">mp</div>
+							<div
+								th:each="con,iter : ${stage.missionList.mission3.conditions}"
+								th:remove="tag">
+								<div th:with="condition=#{${con}}">
+									<div
+										th:with="condition1=${#strings.replace(condition,'{0}',stage.missionList.mission3.nums[iter.index])}"
+										class="drop-sub-item">
+										<div
+											th:if="${#strings.isEmpty(stage.missionList.mission3.objs[0])}"
+											th:text="${#strings.replace(condition1,'{1}',stage.missionList.mission3.objs[0])}"
+											class="drop-sub-item"></div>
+										<div
+											th:unless="${#strings.isEmpty(stage.missionList.mission3.objs[0])}"
+											th:with="translate=#{${stage.missionList.mission3.objs[0]}}">
+											<div
+												th:text="${#strings.replace(condition1,'{1}',translate)}"
+												class="drop-sub-item"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="drop-item bold flex-column pad-5">
 							<div class="drop-sub-item w50px item-text"
-								th:title="${stage.missionList.mission3.reward.description}">
+								th:title="#{${stage.missionList.mission3.reward.description}}">
 								<img
 									th:src="@{${'/img/icon/' + stage.missionList.mission3.reward.icon }}" />
 								<div th:text="${stage.missionList.mission3.quantity}"
-									class="drop-sub-item">mp</div>
+									class="drop-sub-item"></div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-					<div th:text="'First Clear Reward'" class="drop-header"></div>
-					<div class="flex_center_row">
-						<div class="drop-item bold flex-column pad-5 w20">
-							<span th:text="name" class="header w100"></span>
-						</div>
-						<div class="drop-item bold flex-column pad-5 w50px">
-							<span th:text="icon" class="header w100"></span>
-						</div>
-						<!-- 	<div class="drop-item bold flex-column pad-5 w50px">
+
+				<div th:text="'First Clear Reward'" class="drop-header">First
+					Clear Reward</div>
+				<div class="flex_center_row">
+					<div class="drop-item bold flex-column pad-5 w20">
+						<span th:text="name" class="header w100"></span>
+					</div>
+					<div class="drop-item bold flex-column pad-5 w50px">
+						<span th:text="icon" class="header w100"></span>
+					</div>
+					<!-- 	<div class="drop-item bold flex-column pad-5 w50px">
 						<span th:text="min" class="header w100"></span>
 					</div>
 					<div class="drop-item bold flex-column pad-5 w50px">
 						<span th:text="max" class="header w100"></span>
 					</div> -->
-						<div class="drop-item bold flex-column pad-5 w50px">
-							<span th:text="qty" class="header w100"></span>
-						</div>
-						<div class="drop-item bold flex-column pad-5 w50px">
-							<span th:text="rate" class="header w100"></span>
-						</div>
+					<div class="drop-item bold flex-column pad-5 w50px">
+						<span th:text="qty" class="header w100"></span>
 					</div>
-					<div th:each="d  : ${stage.drops}" class="flex_center_row"
-						th:if="${d.first}">
+					<div class="drop-item bold flex-column pad-5 w50px">
+						<span th:text="rate" class="header w100"></span>
+					</div>
+				</div>
+				<div th:each="d  : ${stage.drops}" class="flex_center_row"
+					th:if="${d.first}">
 
-						<div class="drop-item bold flex-column pad-5 w20">
-							<div th:text="${d.item.name}" class="drop-sub-item"
-								th:title="${d.item.description}">mp</div>
+					<div class="drop-item bold flex-column pad-5 w20">
+						<div th:if="${#strings.isEmpty(d.item.description)}"
+							th:text="#{${d.item.name}}" class="drop-sub-item"></div>
+						<div th:unless="${#strings.isEmpty(d.item.description)}"
+							th:text="#{${d.item.name}}" class="drop-sub-item"
+							th:title="#{${d.item.description}}"></div>
+					</div>
+					<div class="drop-item bold flex-column pad-5">
+						<div th:if="${#strings.isEmpty(d.item.description)}"
+							class="drop-sub-item w50px">
+							<img th:src="@{${'/img/icon/' + d.item.icon }}" />
 						</div>
-						<div class="drop-item bold flex-column pad-5">
-							<div class="drop-sub-item w50px" th:title="${d.item.description}">
-								<img th:src="@{${'/img/icon/' + d.item.icon }}" />
-							</div>
+						<div th:unless="${#strings.isEmpty(d.item.description)}"
+							class="drop-sub-item w50px" th:title="#{${d.item.description}}">
+							<img th:src="@{${'/img/icon/' + d.item.icon }}" />
+						</div>
 
-						</div>
-						<!-- 	<div class="skill-item bold flex-column pad-10">
+					</div>
+					<!-- 	<div class="skill-item bold flex-column pad-10">
 						<span th:text="desc" class="header"></span>
 						<div th:text="${d.item.description}" class="drop-sub-item">mp</div>
 					</div>
@@ -163,25 +230,27 @@
 					<div class="drop-item bold flex-column pad-5 w50px">
 						<div th:text="${d.maxroll}" class="drop-sub-item">mp</div>
 					</div> -->
-						<div class="drop-item bold flex-column pad-5 w50px">
-							<div th:text="${d.quantity}" class="drop-sub-item">mp</div>
-						</div>
+					<div class="drop-item bold flex-column pad-5 w50px">
+						<div th:text="${d.quantity}" class="drop-sub-item"></div>
+					</div>
 
-						<div class="drop-item bold flex-column pad-5 w50px">
-							<div th:text="${d.rate}?${d.rate}+'%':'-'" class="drop-sub-item">desc</div>
+					<div class="drop-item bold flex-column pad-5 w50px">
+						<div th:text="${d.rate}?${d.rate}+'%':'-'" class="drop-sub-item">
 						</div>
-					</div> 
+					</div>
+				</div>
 
-				<div th:text="'Clear Reward'" class="drop-header"></div>
+				<div th:text="'Clear Reward'" class="drop-header">Clear Reward</div>
 				<div th:each="d  : ${stage.drops}" class="flex_center_row"
 					th:if="${!d.first}">
 
 					<div class="drop-item bold flex-column pad-5 w20">
-						<div th:text="${d.item.name}" class="drop-sub-item"
-							th:title="${d.item.description}">mp</div>
+						<div th:text="#{${d.item.name}}" class="drop-sub-item"
+							th:title="#{${d.item.description}}"></div>
 					</div>
 					<div class="drop-item bold flex-column pad-5">
-						<div class="drop-sub-item w50px" th:title="${d.item.description}">
+						<div class="drop-sub-item w50px"
+							th:title="#{${d.item.description}}">
 							<img th:src="@{${'/img/icon/' + d.item.icon }}" />
 						</div>
 
@@ -197,15 +266,16 @@
 						<div th:text="${d.maxroll}" class="drop-sub-item">mp</div>
 					</div>-->
 					<div class="drop-item bold flex-column pad-5 w50px">
-						<div th:text="${d.quantity}" class="drop-sub-item">mp</div>
+						<div th:text="${d.quantity}" class="drop-sub-item"></div>
 					</div>
 
 					<div class="drop-item bold flex-column pad-5 w50px">
-						<div th:text="${d.rate}?${d.rate}+'%':'-'" class="drop-sub-item">desc</div>
+						<div th:text="${d.rate}?${d.rate}+'%':'-'" class="drop-sub-item">
+						</div>
 					</div>
 				</div>
 			</div>
-			<div th:text="Enemies" class="drop-header"></div>
+			<div th:text="Enemies" class="drop-header">Enemies</div>
 
 			<div th:each="u,iter : ${stage.enemies}" th:remove="tag">
 				<div id="skill-content" class="grid">
@@ -221,46 +291,49 @@
 
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="level" class="header"></span>
-							<div th:text="${u?.enemy?.stats[0]?.level}" class="skill-sub-item">mp</div>
+							<div th:text="${u?.enemy?.stats[0]?.level}"
+								class="skill-sub-item"></div>
 						</div>
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="HP" class="header"></span>
-							<div th:text="${u?.enemy?.stats[0]?.hp}" class="skill-sub-item">mp</div>
+							<div th:text="${u?.enemy?.stats[0]?.hp}" class="skill-sub-item">
+							</div>
 						</div>
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="MP" class="header"></span>
-							<div th:text="${u?.enemy?.stats[0]?.mp}" class="skill-sub-item">base
-								dmg</div>
+							<div th:text="${u?.enemy?.stats[0]?.mp}" class="skill-sub-item">
+							</div>
 						</div>
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="attack" class="header"></span>
-							<div th:text="${u?.enemy?.stats[0]?.attack}" class="skill-sub-item">min
-								dmg</div>
+							<div th:text="${u?.enemy?.stats[0]?.attack}"
+								class="skill-sub-item"></div>
 						</div>
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="def" class="header"></span>
-							<div th:text="${u?.enemy?.stats[0]?.defense}" class="skill-sub-item">max
-								dmg</div>
+							<div th:text="${u?.enemy?.stats[0]?.defense}"
+								class="skill-sub-item"></div>
 						</div>
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="int" class="header"></span>
 							<div th:text="${u?.enemy?.stats[0]?.intelligence}"
-								class="skill-sub-item">acc</div>
+								class="skill-sub-item"></div>
 						</div>
 
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="agi" class="header"></span>
-							<div th:text="${u?.enemy?.stats[0]?.agility}" class="skill-sub-item">mul</div>
+							<div th:text="${u?.enemy?.stats[0]?.agility}"
+								class="skill-sub-item"></div>
 						</div>
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="move" class="header"></span>
 							<div th:text="${u?.enemy?.stats[0]?.mobility}"
-								class="skill-sub-item">desc</div>
+								class="skill-sub-item"></div>
 						</div>
 						<div class="skill-item bold flex-column pad-10">
 							<span th:text="'drop rate'" class="header"></span>
 							<div th:text="${u?.enemy?.rate}?${u?.enemy?.rate/100}+'%':'-'"
-								class="skill-sub-item">desc</div>
+								class="skill-sub-item"></div>
 						</div>
 					</div>
 				</div>

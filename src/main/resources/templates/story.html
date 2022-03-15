@@ -33,9 +33,9 @@
 	</div>
 
 	<div id="story-main-content">
-		<div class="event">
+		<div class="event flex-wrap">
 			<div th:each="ev,iter : ${lists}" class="event-banner drop-item bold margin-10 pad-10">
-				<div th:text="${ev.name}" class="skill-sub-item">desc</div>
+				<div th:text="#{${ev.name}}">desc</div>
 				<a class="h100px pad5" th:href="@{${'/event/group/' + ev.code}}"> <img  th:src="@{${'/img/icon/' + ev.icon }}" /></a>
 
 			</div>

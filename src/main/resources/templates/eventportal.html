@@ -12,7 +12,7 @@
                                                )}">
 
 <head>
-<title>[[${portal.name}]]</title>
+<title th:text="#{${portal.name}}"></title>
 
 <th:block id="event-static-resources">
 
@@ -34,7 +34,7 @@
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
-		<div>[[${portal.name}]]</div>
+		<div th:text="#{${portal.name}}"></div>
 	</div>
 
 	<div id="event-nav"
@@ -42,20 +42,20 @@
 	</div>
 
 	<div id="event-main-content">
-		<div class="event">
+		<div class="event flex-wrap">
 
 			<div th:each="ev,iter : ${group}"
 				class="event-banner drop-item bold margin-10 pad-10">
 				<a th:href="@{${'/event/group/' + ev.code}}"
 					class="banner-container"> <span
-					class="flex_center_row banner-text" th:text="${ev.name}"></span> <img
-					class="h100px pad5" th:src="@{${'/img/icon/' + ev.icon }}" />
+					class="flex_center_row banner-text" th:text="#{${ev.name}}"></span>
+					<img class="h100px pad5" th:src="@{${'/img/icon/' + ev.icon }}" />
 				</a>
 			</div>
 			<div th:each="ev,iter : ${areas}"
 				class="event-banner drop-item bold margin-10 pad-10">
 				<a th:href="@{${'/event/area/' + ev.code}}" class="banner-container">
-					<span class="flex_center_row banner-text" th:text="${ev.name }"></span>
+					<span class="flex_center_row banner-text" th:text="#{${ev.name }}"></span>
 					<img class="h100px pad5" th:src="@{${'/img/icon/' + ev.icon }}" />
 				</a>
 			</div>

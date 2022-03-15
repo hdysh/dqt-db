@@ -12,7 +12,7 @@
                                                )}">
 
 <head>
-<title>[[${skill.name}]]</title>
+<title th:text="#{${skill.name}}"></title>
 
 <th:block id="skill-static-resources">
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
@@ -34,7 +34,7 @@
 					th:src="@{${'/img/icon/' + skill.icon }}" />
 			</div>
 		</div>
-		<div class="pad-left-10">[[${skill.name}]]</div>
+		<div th:text="#{${skill.name}}" class="pad-left-10"></div>
 		<div class="pad-left-10">
 			<img th:src="@{${'/img/icon/' + skill.element.icon }}" />
 		</div>
@@ -47,6 +47,13 @@
 		<div class="flex_center_row pad-10">
 
 			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Rarity" class="header"></span>
+				<div class="skill-sub-item icon_container_small">
+					<img class="center"
+						th:src="@{${'/img/icon/' + skill.rarity.icon }}" />
+				</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10">
 				<span th:text="Shape" class="header"></span>
 				<div class="skill-sub-item">
 					<img th:src="@{${'/img/icon/' + skill.range }}" />
@@ -55,7 +62,7 @@
 
 			<div class="skill-item bold flex-column pad-10">
 				<span th:text="Range" class="header"></span>
-				<div th:text="${skill.reach}" class="skill-sub-item">reach</div>
+				<div th:text="#{${skill.reach}}" class="skill-sub-item">reach</div>
 			</div>
 			<div class="skill-item bold flex-column pad-10">
 				<span th:text="MP" class="header"></span>
@@ -63,38 +70,122 @@
 			</div>
 			<div th:if="${skill.baseDamage}"
 				class="skill-item bold flex-column pad-10">
-				<span th:text="'Base Damage'" class="header"></span>
+				<span
+					th:text="${skill.damageCalculation ==4|| skill.damageCalculation ==7} ? 'Base Heal' : 'Base Damage' "
+					class="header"></span>
 				<div th:text="${skill.baseDamage}" class="skill-sub-item">base
 					dmg</div>
 			</div>
-			<div  th:if="${skill.minDamage}" class="skill-item bold flex-column pad-10">
-				<span th:text="'Min Damage'" class="header"></span>
+			<div th:if="${skill.minDamage}"
+				class="skill-item bold flex-column pad-10">
+				<span
+					th:text="${skill.damageCalculation ==5|| skill.damageCalculation ==7} ? 'Min Heal' : 'Min Damage' "
+					class="header"></span>
 				<div th:text="${skill.minDamage}" class="skill-sub-item">min
 					dmg</div>
 			</div>
-			<div th:if="${skill.maxDamage}" class="skill-item bold flex-column pad-10">
-				<span th:text="'Max Damage'" class="header"></span>
+			<div th:if="${skill.maxDamage}"
+				class="skill-item bold flex-column pad-10">
+				<span
+					th:text="${skill.damageCalculation ==5 || skill.damageCalculation ==7} ? 'Max Heal' : 'Max Damage' "
+					class="header"></span>
 				<div th:text="${skill.maxDamage}" class="skill-sub-item">max
 					dmg</div>
 			</div>
-			<div th:if="${skill.accuracy}" class="skill-item bold flex-column pad-10">
-				<span th:text="Accuracy" class="header"></span>
+			<div th:if="${skill.accuracy}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Hit Rate'" class="header"></span>
 				<div th:text="${skill.accuracy + '%'}" class="skill-sub-item">acc</div>
 			</div>
 
-			<div th:if="${skill.multiplier}" class="skill-item bold flex-column pad-10">
+			<div th:if="${skill.multiplier}"
+				class="skill-item bold flex-column pad-10">
 				<span th:text="Multiplier" class="header"></span>
-				<div th:text="${skill.strMul}" class="skill-sub-item">mul</div>
+				<div th:text="${skill.strMul+'%'}" class="skill-sub-item">mul</div>
 			</div>
-			<div th:if="${skill.maxMul}" class="skill-item bold flex-column pad-10">
+			<div th:if="${skill.maxMul}"
+				class="skill-item bold flex-column pad-10">
 				<span th:text="'+10 Multiplier'" class="header"></span>
-				<div th:text="${skill.strMaxMul}" class="skill-sub-item">max
+				<div th:text="${skill.strMaxMul+'%'}" class="skill-sub-item">max
 					mul</div>
 			</div>
-			<div class="skill-item bold flex-column pad-10">
-				<span th:text="Effect" class="header"></span>
-				<div th:text="${skill.description}" class="skill-sub-item">desc</div>
+			<div th:if="not ${#lists.isEmpty(skill.buffs)}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Status Change'" class="header"></span>
+				<div th:each="sb,iter : ${skill.buffs}" th:remove="tag">
+					<div class="skill-sub-item" th:with=desc=#{${sb.buff.descFormat}}>
+						<div th:text="${sb.accuracy} +'% chance'"></div>
+						<div th:text="${sb.duration}"></div>
+						<div th:with=name=#{${sb.buff.name}}>
+							<div th:with=suffix=#{${sb.suffix}}>
+								<span th:text="${sb.buff.level[sb.level]}"></span> <span
+									th:with="desc=${#strings.replace(desc,'<effectValue>', '')}">
+									<span
+									th:with="desc=${#strings.replace(desc,'<statusChangeTo>', suffix)}">
+										<a th:href="@{${'/buff/' + sb.buff.code }}"
+										th:text="${#strings.replace(desc,'<statusName>', name)}"
+										class="skill-sub-item"> </a>
+								</span>
+								</span>
+							</div>
+						</div>
+
+					</div>
+				</div>
 			</div>
+			<div th:if="not ${#lists.isEmpty(skill.ailments)}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Status Ailment'" class="header"></span>
+				<div th:each="sa,iter : ${skill.ailments}" th:remove="tag">
+					<div class="skill-sub-item">
+						<div th:text=" ${sa.accuracy} +'% chance' "></div>
+						<div th:text="${sa.duration} "></div>
+						<a th:href="@{${'/ailment/' + sa.ailment.code }}"
+							th:text="#{${sa.ailment.name}} ">status ailment</a>
+
+					</div>
+				</div>
+			</div>
+			<div th:if="not ${#lists.isEmpty(skill.effects)}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Other Effect'" class="header"></span>
+				<div th:each="se,iter : ${skill.effects}" th:remove="tag">
+					<div class="skill-sub-item" th:if="${skill.activeSkillAction ==3}"
+						th:with="type=${se.damageCalculation}==7?' mp':' hp'">
+						<div th:if="${se.duration > 0}" th:text="${se.strDuration} "></div>
+						<div th:if="${skill.activeSkill ==4}"
+							th:text="${se.duration == 0 ? 'recover '+se.minDamage+'-'+se.maxDamage+type :  se.minDamage+'-'+se.maxDamage+type+' regen' } ">other
+							effect</div>
+						<div th:if="${skill.activeSkill ==3}"
+							th:text="${se.duration == 0 ? 'recover '+se.baseDamage + type :  se.baseDamage+type+' regen' } ">other
+							effect</div>
+					</div>
+					<div class="skill-sub-item" th:if="${skill.activeSkillAction ==2}">
+						<div
+							th:text="${'recover hp by '+(se.healMul/10)+'% damage inflicted' } ">other
+							effect</div>
+					</div>
+				</div>
+			</div>
+			<div th:with="desctr=#{${skill.description}}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="Description" class="header"></span>
+				<div
+					th:with="desc1=${#strings.replace(desctr,'<damagePhysics>', skill.strMul)}">
+					<div
+						th:with="desc2=${#strings.replace(desc1,'<specialCoolTurn>', skill.turn)}">
+						<div th:if="not ${#lists.isEmpty(skill.buffs)}"
+							th:with="desc3=${#strings.replace(desc2,'<Turn1>',skill.buffs[0].maxDur)}">
+							<div th:text="${desc3}" class="skill-sub-item">desc</div>
+						</div>
+						<div th:if="${#lists.isEmpty(skill.buffs)}">
+							<div th:text="${desc2}" class="skill-sub-item">desc</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
 		</div>
 
 		<div class="learned">

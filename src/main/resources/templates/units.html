@@ -18,14 +18,21 @@
 	<link href="../static/css/style.css"
 		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 	<script type="text/javascript"
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+		src="https://code.jquery.com/jquery-3.5.1.js">
 		
 	</script>
-	<link rel="stylesheet" type="text/css"
-		href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
 
 	<script type="text/javascript" charset="utf8"
-		src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js"></script>
+
+	<link rel="stylesheet" type="text/css"
+		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.11.5/css/dataTables.jqueryui.min.css">
+
 </th:block>
 
 </head>
@@ -41,7 +48,7 @@
 
 		<div>
 			<div class="units">
-				<div class="col-lg-10 mt-5 mb-5">
+				<div>
 					<form name="frank" style="padding: 1px">
 						Rarity : <label><input type="radio" name="rank"
 							value="MonsterRankIcon_S"><img title="S"
@@ -86,8 +93,7 @@
 							checked="checked"><img title="All"
 							src="/img/icon/all.png"></label>
 					</form>
-					<table id="example" class="table table-bordered table-responsive"
-						style="width: 100%">
+					<table id="example" class="display cell-border" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Icon</th>
@@ -99,7 +105,7 @@
 								<th>MP</th>
 								<th>ATK</th>
 								<th>DEF</th>
-								<th>INT</th>
+								<th>WIS</th>
 								<th>AGI</th>
 								<th>MOV</th>
 							</tr>
@@ -115,7 +121,7 @@
 								<th>MP</th>
 								<th>ATK</th>
 								<th>DEF</th>
-								<th>INT</th>
+								<th>WIS</th>
 								<th>AGI</th>
 								<th>MOV</th>
 							</tr>
@@ -125,8 +131,9 @@
 			</div>
 		</div>
 
-
+		<script type="text/javascript" src="json/name.json"></script>
 		<script>
+			var loc = "[[${#locale}]]";
 			$('#example')
 					.DataTable(
 							{
@@ -163,8 +170,18 @@
 											"data" : "code",
 											"render" : function(data, type,
 													row, meta) {
+												var name = '';
+												if (loc === 'ja') {
+													name = name_ja[row['name']];
+												} else if (loc === 'fr') {
+													name = name_fr[row['name']] ? name_fr[row['name']]
+															: name_ja[row['name']];
+												} else {
+													name = name_en[row['name']] ? name_en[row['name']]
+															: name_ja[row['name']];
+												}
 												return '<a href="/unit/' + data + '">'
-														+ row['name'] + '</a>';
+														+ name + '</a>';
 											}
 										},
 										{
@@ -175,7 +192,7 @@
 														|| type === 'type') {
 													return data['code'];
 												} else {
-													return '<div class="icon_container_small"><img src="/img/icon/' + data['icon'] + '" /></div>';
+													return '<div class="icon_container_very_small"><img src="/img/icon/' + data['icon'] + '" /></div>';
 												}
 											}
 										},

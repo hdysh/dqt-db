@@ -33,20 +33,21 @@
 	</div>
 
 	<div id="daily-main-content">
-		<div class="event">
+		<div class="event flex-wrap">
 			<div th:each="ev,iter : ${groups}"
 				class="event-banner drop-item bold margin-10 pad-10">
-				<div th:text="${ev.name}" class="skill-sub-item">desc</div>
-				<a class="h100px pad5" th:href="@{${'/event/group/' + ev.code}}">
+				<a class="h100px pad5 banner-container"
+					th:href="@{${'/event/group/' + ev.code}}"> <span
+					class="flex_center_row banner-text" th:text="#{${ev.name }}">name</span>
 					<img th:src="@{${'/img/icon/' + ev.icon }}" />
 				</a>
-
 			</div>
 			<div th:each="ev,iter : ${areas}"
 				class="event-banner drop-item bold margin-10 pad-10">
-				<div th:text="${ev.name}" class="skill-sub-item">desc</div>
-				<a class="h100px pad5" th:href="@{${'/event/area/' + ev.code}}">
-					<img th:src="@{${'/img/icon/' + ev.icon }}" />
+				<a class="h100px pad5 banner-container"
+					th:href="@{${'/event/area/' + ev.code}}"> <span
+					class="flex_center_row banner-text" th:text="#{${ev.name }}">name</span> <img
+					th:src="@{${'/img/icon/' + ev.icon }}" />
 				</a>
 
 			</div>

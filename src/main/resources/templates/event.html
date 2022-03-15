@@ -33,14 +33,23 @@
 	</div>
 
 	<div id="event-main-content">
-		<div class="event">
-			<div th:each="ev,iter : ${lists}" th:remove="tag">
-<!-- 				<a th:href="@{${'http://localhost:5000/dqt/?p=stages/' + ev.code}}" -->
+		<div class="event flex-wrap">
+			<div th:each="ev,iter : ${portals}" th:remove="tag">
 				<a th:href="@{${'/event/' + ev.code}}"
 					class="event-banner margin-10 drop-item bold  pad-10"> <img
-					th:src="@{${'/img/icon/' + ev.icon }}" /> <span
-					th:text="${ev.name}" class="skill-sub-item">desc</span></a>
-
+					th:src="@{${'/img/icon/' + ev.icon }}" /> <!-- <span
+					th:text="#{${ev.name}}" class="skill-sub-item">desc</span> --></a>
+			</div>
+		</div>
+		<div class="pad-10">
+			<div class="event-banner drop-item bold pad-10" style="font-size: 30px;">Reminiscence</div>
+		</div>
+		<div class="event flex-wrap">
+			<div th:each="ev,iter : ${remi}" th:remove="tag">
+				<a th:href="@{${'/event/' + ev.code}}"
+					class="event-banner margin-10 drop-item bold  pad-10"> <img
+					th:src="@{${'/img/icon/' + ev.icon }}" />
+				</a>
 			</div>
 		</div>
 	</div>

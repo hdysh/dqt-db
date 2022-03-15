@@ -18,14 +18,20 @@
 	<link href="../static/css/style.css"
 		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 	<script type="text/javascript"
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+		src="https://code.jquery.com/jquery-3.5.1.js">
 		
 	</script>
-	<link rel="stylesheet" type="text/css"
-		href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
 
 	<script type="text/javascript" charset="utf8"
-		src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js"></script>
+
+	<link rel="stylesheet" type="text/css"
+		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.11.5/css/dataTables.jqueryui.min.css">
 </th:block>
 
 </head>
@@ -40,7 +46,7 @@
 
 		<div>
 			<div class="units">
-				<div class="mt-5 mb-5">
+				<div>
 					<form name="frank" style="padding: 1px">
 						Rarity : <label><input type="radio" name="rank"
 							value="MonsterRankIcon_S"><img title="S"
@@ -89,8 +95,7 @@
 						<label><input type="checkbox" name="family" id="optimal"
 							value="yes">Show only optimal stamina per drop</label>
 					</form>
-					<table id="example" class="table table-bordered table-responsive"
-						style="width: 100%">
+					<table id="example" class="display cell-border" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Icon</th>
@@ -121,7 +126,10 @@
 		</div>
 
 
+		<script type="text/javascript" src="json/name.json"></script>
+		<script type="text/javascript" src="json/stage.json"></script>
 		<script>
+			var loc = "[[${#locale}]]";
 			$('#example')
 					.DataTable(
 							{
@@ -158,8 +166,18 @@
 											"data" : "unitSplit",
 											"render" : function(data, type,
 													row, meta) {
+												var name = '';
+												if (loc === 'ja') {
+													name = name_ja[data[1]];
+												} else if (loc === 'fr') {
+													name = name_fr[data[1]] ? name_fr[data[1]]
+															: name_ja[data[1]];
+												} else {
+													name = name_en[data[1]] ? name_en[data[1]]
+															: name_ja[data[1]];
+												}
 												return '<a href="/unit/' + data[0] + '">'
-														+ data[1] + '</a>';
+														+ name + '</a>';
 											}
 										},
 										{
@@ -170,7 +188,7 @@
 														|| type === 'type') {
 													return data[3];
 												} else {
-													return '<div class="icon_container_small"><img src="/img/icon/' + data[3] + '" /></div>';
+													return '<div class="icon_container_very_small"><img src="/img/icon/' + data[3] + '" /></div>';
 												}
 											}
 										},
@@ -194,8 +212,18 @@
 											"data" : "stageSplit",
 											"render" : function(data, type,
 													row, meta) {
+												var stage_name = '';
+												if (loc === 'ja') {
+													stage_name = stage_ja[data[1]];
+												} else if (loc === 'fr') {
+													stage_name = stage_fr[data[1]] ? stage_fr[data[1]]
+															: stage_ja[data[1]];
+												} else {
+													stage_name = stage_en[data[1]] ? stage_en[data[1]]
+															: stage_ja[data[1]];
+												}
 												return '<a href="/stages/' + data[0] + '">'
-														+ data[1] + '</a>';
+														+ stage_name + '</a>';
 											}
 										},
 										{
@@ -216,7 +244,7 @@
 											"data" : "stamrate",
 											"render" : function(data, type,
 													row, meta) {
-												return Math.round(data*100) / 100;
+												return Math.round(data * 100) / 100;
 											}
 										},
 										{

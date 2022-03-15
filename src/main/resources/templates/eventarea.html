@@ -12,7 +12,7 @@
                                                )}">
 
 <head>
-<title>[[${area.name}]]</title>
+<title th:text="#{${area.name}}"></title>
 
 <th:block id="event-static-resources">
 
@@ -35,12 +35,14 @@
 			</div>
 			<div class="pad-left-5">/</div>
 			<div class="pad-left-5">
-				<a th:href="@{${'/event/' + portal.code }}">[[${portal.name}]]</a>
+				<a th:href="@{${'/event/' + portal.code }}"
+					th:text="#{${portal.name}}"> </a>
 			</div>
 			<div class="pad-left-5">/</div>
 			<div th:if="${group != null and group.code != 402}"
 				class="pad-left-5">
-				<a th:href="@{${'/event/group/' + group.code }}">[[${group.name}]]</a>
+				<a th:href="@{${'/event/group/' + group.code }}"
+					th:text="#{${group.name}}"> </a>
 			</div>
 		</div>
 
@@ -51,7 +53,8 @@
 			</div>
 			<div class="pad-left-5">/</div>
 			<div class="pad-left-5">
-				<a th:href="@{${'/event/group/' +group.code }}">[[${group.name}]]</a>
+				<a th:href="@{${'/event/group/' +group.code }}"
+					th:text="#{${group.name}}"> </a>
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
@@ -62,7 +65,8 @@
 			</div>
 			<div class="pad-left-5">/</div>
 			<div class="pad-left-5">
-				<a th:href="@{${'/event/group/' +group.code }}">[[${group.name}]]</a>
+				<a th:href="@{${'/event/group/' +group.code }}"
+					th:text="#{${group.name}}"> </a>
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
@@ -74,7 +78,8 @@
 			</div>
 			<div class="pad-left-5">/</div>
 			<div th:if="${group }" class="pad-left-5">
-				<a th:href="@{${'/event/group/'+group.code  }}">[[${group.name}]]</a>
+				<a th:href="@{${'/event/group/'+group.code  }}"
+					th:text="#{${group.name}}"> </a>
 			</div>
 			<div th:if="${group }" class="pad-left-5">/</div>
 		</div>
@@ -85,12 +90,13 @@
 			</div>
 			<div class="pad-left-5">/</div>
 			<div th:if="${group }" class="pad-left-5">
-				<a th:href="@{${'/event/group/'+group.code  }}">[[${group.name}]]</a>
+				<a th:href="@{${'/event/group/'+group.code  }}"
+					th:text="#{${group.name}}"> </a>
 			</div>
 			<div th:if="${group }" class="pad-left-5">/</div>
 		</div>
 
-		<div>[[${area.name}]]</div>
+		<div th:text="#{${area.name}}"></div>
 	</div>
 
 	<div id="event-nav"
@@ -98,12 +104,12 @@
 	</div>
 
 	<div id="event-main-content">
-		<div class="event">
+		<div class="event flex-wrap">
 
 			<div th:each="ev,iter : ${stages}"
 				class="event-banner drop-item bold margin-10 pad-10">
 				<a th:href="@{${'/stages/' + ev.code}}" class="banner-container">
-					<span class="flex_center_row banner-text" th:text="${ev.name}"></span>
+					<span class="flex_center_row banner-text" th:text="#{${ev.name}}"></span>
 					<img class="h100px pad5" th:src="@{${'/img/icon/' + ev.icon }}" />
 				</a>
 			</div>
