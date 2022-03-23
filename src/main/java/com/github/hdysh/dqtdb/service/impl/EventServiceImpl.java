@@ -88,4 +88,14 @@ public class EventServiceImpl implements EventService {
 	public List<EventGroup> getExtraGroup() {
 		return eventRepository.findExtraGroup();
 	}
+
+	@Override
+	public List<EventGroup> getMiscGroup() {
+		return eventRepository.findMiscGroup();
+	}
+
+	@Override
+	public List<EventArea> getMiscArea() {
+		return eventRepository.findMiscArea();
+	}
 }

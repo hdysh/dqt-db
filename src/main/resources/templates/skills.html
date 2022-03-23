@@ -15,8 +15,6 @@
 <title>Skill list</title>
 
 <th:block id="skill-static-resources">
-	<link href="../static/css/style.css"
-		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
@@ -54,51 +52,50 @@
 					<form name="fele" style="padding: 1px">
 						Element : <label><input type="radio" name="ele"
 							value="Mera"> <img title="Frizz"
-							src="/img/icon/SpellIcon_Mera.png"></label> <label><input
+								src="/img/icon/SpellIcon_Mera.png"></label> <label><input
 							type="radio" name="ele" value="Gira"> <img title="Sizz"
-							src="/img/icon/SpellIcon_Gira.png"></label><label><input
+								src="/img/icon/SpellIcon_Gira.png"></label><label><input
 							type="radio" name="ele" value="Hyado"> <img title="Crack"
-							src="/img/icon/SpellIcon_Hyado.png"></label><label><input
+								src="/img/icon/SpellIcon_Hyado.png"></label><label><input
 							type="radio" name="ele" value="Bagi"> <img title="Woosh"
-							src="/img/icon/SpellIcon_Bagi.png"></label><label><input
+								src="/img/icon/SpellIcon_Bagi.png"></label><label><input
 							type="radio" name="ele" value="Io"> <img title="Bang"
-							src="/img/icon/SpellIcon_Io.png"></label><label><input
+								src="/img/icon/SpellIcon_Io.png"></label><label><input
 							type="radio" name="ele" value="Dein"> <img title="Zap"
-							src="/img/icon/SpellIcon_Dein.png"></label><label><input
+								src="/img/icon/SpellIcon_Dein.png"></label><label><input
 							type="radio" name="ele" value="Dorma"> <img title="Zam"
-							src="/img/icon/Spellcon_Dorma.png"></label><label><input
+								src="/img/icon/Spellcon_Dorma.png"></label><label><input
 							type="radio" name="ele" value="Mu"> <img title="Typeless"
-							src="/img/icon/SpellIcon_Mu.png"></label><label><input
+								src="/img/icon/SpellIcon_Mu.png"></label><label><input
 							type="radio" name="ele" value="" checked="checked"> <img
-							title="All" src="/img/icon/all.png"></label>
+								title="All" src="/img/icon/all.png"></label>
 					</form>
 					<div></div>
 
 					<form name="ftype" style="padding: 1px">
 						Type : <label><input type="radio" name="type"
-							value="Physics"><img title="Physics"
-							src="/img/icon/SkillTypeIcon_Physics.png"></label><label><input
-							type="radio" name="type" value="Breath"><img
-							title="Breath" src="/img/icon/SkillTypeIcon_Breath.png"></label><label><input
-							type="radio" name="type" value="Spell"><img title="Spell"
-							src="/img/icon/SkillTypeIcon_Spell.png"></label><label><input
-							type="radio" name="type" value="Technique"><img
-							title="Technique" src="/img/icon/SkillTypeIcon_Technique.png"></label><label><input
-							type="radio" name="type" value="" checked="checked"><img
-							title="All" src="/img/icon/all.png"></label>
+							value="Physics">
+						<img title="Physics" src="/img/icon/SkillTypeIcon_Physics.png"></label><label><input
+							type="radio" name="type" value="Breath">
+						<img title="Breath" src="/img/icon/SkillTypeIcon_Breath.png"></label><label><input
+							type="radio" name="type" value="Spell">
+						<img title="Spell" src="/img/icon/SkillTypeIcon_Spell.png"></label><label><input
+							type="radio" name="type" value="Technique">
+						<img title="Technique" src="/img/icon/SkillTypeIcon_Technique.png"></label><label><input
+							type="radio" name="type" value="" checked="checked">
+						<img title="All" src="/img/icon/all.png"></label>
 					</form>
 
 					<div></div>
 					<form name="frank" style="padding: 1px">
-						Rarity : <label><input type="radio" name="rank"
-							value="MonsterRankIcon_A"><img title="A"
-							src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_B"><img
-							title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_C"><img
-							title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
-							type="radio" name="rank" value="" checked="checked"><img
-							title="All" src="/img/icon/all.png"></label>
+						Rarity : <label><input type="radio" name="rank" value="30">
+						<img title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+							type="radio" name="rank" value="20">
+						<img title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+							type="radio" name="rank" value="10">
+						<img title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+							type="radio" name="rank" value="" checked="checked">
+						<img title="All" src="/img/icon/all.png"></label>
 					</form>
 					<div></div>
 					<table id="example" class="display cell-border" style="width: 100%">
@@ -109,10 +106,9 @@
 								<th>Rarity</th>
 								<th>Element</th>
 								<th>MP</th>
-								<th>Base Damage</th>
-								<th>Min Damage</th>
-								<th>Max Damage</th>
-								<th>Accuracy</th>
+								<th>Base Dmg</th>
+								<th>Min Dmg</th>
+								<th>Max Dmg</th>
 								<th>Multiplier</th>
 							</tr>
 						</thead>
@@ -123,10 +119,9 @@
 								<th>Rarity</th>
 								<th>Element</th>
 								<th>MP</th>
-								<th>Base Damage</th>
-								<th>Min Damage</th>
-								<th>Max Damage</th>
-								<th>Accuracy</th>
+								<th>Base Dmg</th>
+								<th>Min Dmg</th>
+								<th>Max Dmg</th>
 								<th>Multiplier</th>
 							</tr>
 						</tfoot>
@@ -136,7 +131,7 @@
 		</div>
 
 
-		<script type="text/javascript" src="json/skill.json"></script>
+		<script type="text/javascript" src="json/skill_name.js"></script>
 		<script>
 			var loc = "[[${#locale}]]";
 			$('#example')
@@ -222,15 +217,15 @@
 										},
 										{
 											"data" : "baseDamage",
+											"width" : "10px"
 										},
 										{
 											"data" : "minDamage",
+											"width" : "10px"
 										},
 										{
 											"data" : "maxDamage",
-										},
-										{
-											"data" : "accuracy",
+											"width" : "10px"
 										},
 										{
 											"data" : "multiplier",
@@ -241,16 +236,13 @@
 										} ],
 							});
 			$('input:radio[name=type]').change(function() {
-				console.log(this.value);
 				$('#example').DataTable().columns(0).search(this.value).draw();
 			});
 
 			$('input:radio[name=ele]').change(function() {
-				console.log(this.value);
 				$('#example').DataTable().columns(3).search(this.value).draw();
 			});
 			$('input:radio[name=rank]').change(function() {
-				console.log(this.value);
 				$('#example').DataTable().columns(2).search(this.value).draw();
 			});
 			window.onload = function() {

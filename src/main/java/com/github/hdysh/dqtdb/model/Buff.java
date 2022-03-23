@@ -26,6 +26,8 @@ public class Buff {
 	private String descFormat;
 	private String suffixUp;
 	private String suffixDown;
+	private int statusChangeOverride;
+	private int statusChange;
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "code")
 	private List<LevelStatus> levelStatus;
@@ -85,7 +87,20 @@ public class Buff {
 
 	public Map<BigInteger, BigInteger> getLevel() {
 		Map<BigInteger, BigInteger> map = new HashMap<>();
+		BigInteger zero = new BigInteger("0");
 		for (LevelStatus lv : levelStatus) {
+			if (lv.getLevel().intValue() == 0) {
+				zero = lv.getValue();
+			}
+		}
+		for (LevelStatus lv : levelStatus) {
+			if (zero.intValue() != 0) {
+				lv.setValue(lv.getValue().add(zero.negate()));
+			}
+			int lvlval = lv.getValue().intValue();
+			if (Math.abs(lvlval) > 500) {
+				lv.setValue(lv.getValue().divide(new BigInteger("100")));
+			}
 			map.put(lv.getLevel(), lv.getValue());
 			if (lv.getLevel().intValue() > 0) {
 				this.iconUp = lv.getIcon();

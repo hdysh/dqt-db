@@ -13,29 +13,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.hdysh.dqtdb.model.Skill;
+import com.github.hdysh.dqtdb.model.SkillMin;
 import com.github.hdysh.dqtdb.service.SkillsService;
 
 @Controller
 @RequestMapping("/skills")
 public class SkillsController {
-
+ 
 	@Autowired
 	private SkillsService skillsService;
 
 	@PostMapping("/q")
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<Skill>> getAll() {
-		List<Skill> skills = skillsService.getAllSkill();
+	public ResponseEntity<List<SkillMin>> getAll() {
+		List<SkillMin> skills = skillsService.getAllSkill();
 		return ResponseEntity.ok(skills);
 	}
 
 	@GetMapping("/q")
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<Skill>> getAll2() {
-		List<Skill> skills = skillsService.getAllSkill();
+	public ResponseEntity<List<SkillMin>> getAll2() {
+		List<SkillMin> skills = skillsService.getAllSkill();
 		return ResponseEntity.ok(skills);
 	}
 

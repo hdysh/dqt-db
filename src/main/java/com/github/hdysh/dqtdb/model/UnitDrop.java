@@ -7,13 +7,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "unit_drop")
+@Data
 public class UnitDrop {
 
 	private @Id BigInteger code;
+	private BigInteger uid;
 	private String unit;
 	private String stage;
+	private String portal;
 	private int rate;
 	private int stamina;
 	@Transient
@@ -22,7 +27,7 @@ public class UnitDrop {
 	private double stamrate;
 
 	public double getStamrate() {
-		return stamrate;
+		return 10000.0 / rate * stamina;
 	}
 
 	public void setStamrate(double stamrate) {
@@ -67,6 +72,10 @@ public class UnitDrop {
 
 	public String[] getUnitSplit() {
 		return unit.split("~");
+	}
+
+	public String[] getPortalSplit() {
+		return portal.split("~");
 	}
 
 }

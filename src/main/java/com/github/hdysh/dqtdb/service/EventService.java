@@ -36,4 +36,8 @@ public interface EventService {
 	List<EventArea> getExtraArea();
 
 	List<EventGroup> getExtraGroup();
+
+	List<EventGroup> getMiscGroup();
+
+	List<EventArea> getMiscArea();
 }

@@ -15,8 +15,6 @@
 <title>Farmable Units</title>
 
 <th:block id="unitdrop-static-resources">
-	<link href="../static/css/style.css"
-		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
@@ -49,47 +47,49 @@
 				<div>
 					<form name="frank" style="padding: 1px">
 						Rarity : <label><input type="radio" name="rank"
-							value="MonsterRankIcon_S"><img title="S"
-							src="/img/icon/MonsterRankIcon_S.png"></label><label><input
-							type="radio" name="rank" value="MonsterRankIcon_A"><img
-							title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_B"><img
-							title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_C"><img
-							title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_D"><img
-							title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_E"><img
-							title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_F"><img
-							title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
-							type="radio" name="rank" value="" checked="checked"><img
-							title="All" src="/img/icon/all.png"></label>
+							value="MonsterRankIcon_S"> <img title="S"
+								src="/img/icon/MonsterRankIcon_S.png"></label><label><input
+							type="radio" name="rank" value="MonsterRankIcon_A"> <img
+								title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_B"> <img
+								title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_C"> <img
+								title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_D"> <img
+								title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_E"> <img
+								title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_F"> <img
+								title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
+							type="radio" name="rank" value="" checked="checked"> <img
+								title="All" src="/img/icon/all.png"></label>
 					</form>
 					<form name="ffam" style="padding: 1px">
 						Family : <label><input type="radio" name="family"
-							value="Slime"><img title="Slime"
-							src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
-							type="radio" name="family" value="Dragon"><img
-							title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
-						<label><input type="radio" name="family" value="Nature"><img
-							title="Nature" src="/img/icon/EquipmentIcon_NatureFamilly.png"></label>
-						<label><input type="radio" name="family" value="Beast"><img
-							title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
-						<label><input type="radio" name="family" value="Material"><img
-							title="Inorganic"
-							src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
-							type="radio" name="family" value="Devil"><img
-							title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
-						<label><input type="radio" name="family" value="Zombie"><img
-							title="Undead" src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label>
-						<label><input type="radio" name="family" value="Special"><img
-							title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
-						<label><input type="radio" name="family" value="Hero"><img
-							title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
+							value="Slime"> <img title="Slime"
+								src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
+							type="radio" name="family" value="Dragon"> <img
+								title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
+						<label><input type="radio" name="family" value="Nature">
+							<img title="Nature"
+								src="/img/icon/EquipmentIcon_NatureFamilly.png"></label> <label><input
+							type="radio" name="family" value="Beast"> <img
+								title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
+						<label><input type="radio" name="family" value="Material">
+							<img title="Inorganic"
+								src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
+							type="radio" name="family" value="Devil"> <img
+								title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
+						<label><input type="radio" name="family" value="Zombie">
+							<img title="Undead"
+								src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label> <label><input
+							type="radio" name="family" value="Special"> <img
+								title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
+						<label><input type="radio" name="family" value="Hero">
+							<img title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
 						<label><input type="radio" name="family" value=""
-							checked="checked"><img title="All"
-							src="/img/icon/all.png"></label>
+							checked="checked"> <img title="All"
+								src="/img/icon/all.png"></label>
 					</form>
 					<form name="fopt" style="padding: 1px">
 						<label><input type="checkbox" name="family" id="optimal"
@@ -126,8 +126,10 @@
 		</div>
 
 
-		<script type="text/javascript" src="json/name.json"></script>
-		<script type="text/javascript" src="json/stage.json"></script>
+		<script type="text/javascript" src="json/unit.js"></script>
+		<script type="text/javascript" src="json/stage.js"></script>
+		<script type="text/javascript" src="json/event_group.js"></script>
+		<script type="text/javascript" src="json/event_portal.js"></script>
 		<script>
 			var loc = "[[${#locale}]]";
 			$('#example')
@@ -168,13 +170,13 @@
 													row, meta) {
 												var name = '';
 												if (loc === 'ja') {
-													name = name_ja[data[1]];
+													name = unit_ja[data[1]];
 												} else if (loc === 'fr') {
-													name = name_fr[data[1]] ? name_fr[data[1]]
-															: name_ja[data[1]];
+													name = unit_fr[data[1]] ? unit_fr[data[1]]
+															: unit_ja[data[1]];
 												} else {
-													name = name_en[data[1]] ? name_en[data[1]]
-															: name_ja[data[1]];
+													name = unit_en[data[1]] ? unit_en[data[1]]
+															: unit_ja[data[1]];
 												}
 												return '<a href="/unit/' + data[0] + '">'
 														+ name + '</a>';
@@ -222,8 +224,46 @@
 													stage_name = stage_en[data[1]] ? stage_en[data[1]]
 															: stage_ja[data[1]];
 												}
-												return '<a href="/stages/' + data[0] + '">'
-														+ stage_name + '</a>';
+												var stageHtml = '<a href="/stages/' + data[0] + '">'
+														+ stage_name + '</a>'
+												var portalHtml = '';
+												if (row["portalSplit"][0] == 1) {
+													var portal = '';
+													var pname = row["portalSplit"][2];
+													if (loc === 'ja') {
+														portal = event_portal_ja[pname];
+													} else if (loc === 'fr') {
+														portal = event_portal_fr[pname] ? event_portal_fr[pname]
+																: event_portal_ja[pname];
+													} else {
+														portal = event_portal_en[pname] ? event_portal_en[pname]
+																: event_portal_ja[pname];
+													}
+													portalHtml = '<a href="/event/' + row["portalSplit"][1] + '">'
+															+ portal + '</a>'
+												} else {
+													var group = '';
+													var gname = row["portalSplit"][2];
+													if (loc === 'ja') {
+														group = event_group_ja[gname];
+													} else if (loc === 'fr') {
+														group = event_group_fr[gname] ? event_group_fr[gname]
+																: event_portal_ja[gname];
+													} else {
+														group = event_group_en[gname] ? event_group_en[gname]
+																: event_group_ja[gname];
+													}
+													if (row["portalSplit"][1] == undefined) {
+													} else {
+														portalHtml = '<a href="/event/group/' + row["portalSplit"][1] + '">'
+																+ group
+																+ '</a>';
+													}
+												}
+
+												return portalHtml
+														+ "<div></div>"
+														+ stageHtml;
 											}
 										},
 										{
@@ -233,13 +273,6 @@
 												return data / 100.0 + '%';
 											}
 										},
-										/*     {
-										        "data": "rate",
-										        "render": function(data, type,
-										            row, meta) {
-										            return Math.round((10000.0 / data * row['stamina']) * 100) / 100;
-										        }
-										    }, */
 										{
 											"data" : "stamrate",
 											"render" : function(data, type,

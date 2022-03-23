@@ -26,6 +26,11 @@ public class SkillServiceImpl implements SkillService {
 	}
 
 	@Override
+	public String getEnhancement(BigInteger id) {
+		return skillRepository.findEnhancementById(id);
+	}
+
+	@Override
 	public List<UnitMin> getUnits(BigInteger id) {
 		return unitsRepository.findAllUnit(id);
 	}

@@ -22,7 +22,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class UnitMin extends AbstractUnit<UnitMin> {
+public class UnitMin extends AbstractUnit {
 	public String getName() {
 		return name;
 	}

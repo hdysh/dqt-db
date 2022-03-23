@@ -35,7 +35,8 @@ CREATE TABLE unit  (
 	rarity INTEGER,
 	icon TEXT,
 	ailres INTEGER,
-	leader INTEGER,     
+	leader ,  
+weight INTEGER,	
 	unique(code)
 );
  CREATE TABLE stats (
@@ -284,7 +285,8 @@ CREATE TABLE event_area (
 	icon TEXT,  
 	areagroup INTEGER,
 	eventportal INTEGER,
-	atype INTEGER,
+	category INTEGER,
+	sub_category INTEGER,
 	unique(code)
 ); 
 CREATE TABLE event_portal ( 
@@ -304,7 +306,8 @@ CREATE TABLE event_group (
 	name TEXT,    
 	icon TEXT, 
 	eventportal INTEGER,
-	atype INTEGER,
+	category INTEGER,
+	sub_category INTEGER,
 	unique(code)
 );  
 CREATE TABLE mission ( 
@@ -328,9 +331,11 @@ CREATE TABLE mission_list (
 );  
 CREATE TABLE unit_drop ( 
  id INTEGER PRIMARY KEY NOT NULL,
-    code INTEGER,    
+    code INTEGER,  
+    uid INTEGER,    
     unit TEXT, 
     stage TEXT, 
+    portal TEXT, 
     rate INTEGER,
     stamina INTEGER ,
 	unique(code)
@@ -403,7 +408,9 @@ CREATE TABLE buff (
 	display_format TEXT,   
 	desc_format TEXT,     
 	suffix_up TEXT,     
-	suffix_down TEXT,   
+	suffix_down TEXT, 
+	status_change INTEGER, 
+	status_change_override INTEGER,	
 	unique(code)
 );
 CREATE TABLE skill_buff ( 
@@ -438,4 +445,10 @@ CREATE TABLE skill_effect (
 	heal_mul INTEGER, 
 	damage_calculation INTEGER, 
 	unique(code,effect)
-);
+); 
+CREATE TABLE enhancement ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER, 
+	value TEXT,
+	unique(code)
+); 

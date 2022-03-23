@@ -15,8 +15,6 @@
 <title>Unit list</title>
 
 <th:block id="unit-static-resources">
-	<link href="../static/css/style.css"
-		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
@@ -51,47 +49,50 @@
 				<div>
 					<form name="frank" style="padding: 1px">
 						Rarity : <label><input type="radio" name="rank"
-							value="MonsterRankIcon_S"><img title="S"
-							src="/img/icon/MonsterRankIcon_S.png"></label><label><input
-							type="radio" name="rank" value="MonsterRankIcon_A"><img
-							title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_B"><img
-							title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_C"><img
-							title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_D"><img
-							title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_E"><img
-							title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_F"><img
-							title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
-							type="radio" name="rank" value="" checked="checked"><img
-							title="All" src="/img/icon/all.png"></label>
+							value="MonsterRankIcon_S">
+						<img title="S" src="/img/icon/MonsterRankIcon_S.png"></label><label><input
+							type="radio" name="rank" value="MonsterRankIcon_A">
+						<img title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_B">
+						<img title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_C">
+						<img title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_D">
+						<img title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_E">
+						<img title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
+							type="radio" name="rank" value="MonsterRankIcon_F">
+						<img title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
+							type="radio" name="rank" value="" checked="checked">
+						<img title="All" src="/img/icon/all.png"></label>
 					</form>
 					<form name="ffam" style="padding: 1px">
 						Family : <label><input type="radio" name="family"
-							value="Slime"><img title="Slime"
-							src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
-							type="radio" name="family" value="Dragon"><img
-							title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
-						<label><input type="radio" name="family" value="Nature"><img
-							title="Nature" src="/img/icon/EquipmentIcon_NatureFamilly.png"></label>
-						<label><input type="radio" name="family" value="Beast"><img
-							title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
-						<label><input type="radio" name="family" value="Material"><img
-							title="Inorganic"
-							src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
-							type="radio" name="family" value="Devil"><img
-							title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
-						<label><input type="radio" name="family" value="Zombie"><img
-							title="Undead" src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label>
-						<label><input type="radio" name="family" value="Special"><img
-							title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
-						<label><input type="radio" name="family" value="Hero"><img
-							title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
+							value="Slime">
+						<img title="Slime" src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label>
+						<label><input type="radio" name="family" value="Dragon">
+						<img title="Dragon"
+								src="/img/icon/EquipmentIcon_DragonFamilly.png"></label> <label><input
+							type="radio" name="family" value="Nature">
+						<img title="Nature"
+								src="/img/icon/EquipmentIcon_NatureFamilly.png"></label> <label><input
+							type="radio" name="family" value="Beast">
+						<img title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
+						<label><input type="radio" name="family" value="Material">
+						<img title="Inorganic"
+								src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
+							type="radio" name="family" value="Devil">
+						<img title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
+						<label><input type="radio" name="family" value="Zombie">
+						<img title="Undead"
+								src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label> <label><input
+							type="radio" name="family" value="Special">
+						<img title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
+						<label><input type="radio" name="family" value="Hero">
+						<img title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
 						<label><input type="radio" name="family" value=""
-							checked="checked"><img title="All"
-							src="/img/icon/all.png"></label>
+							checked="checked">
+						<img title="All" src="/img/icon/all.png"></label>
 					</form>
 					<table id="example" class="display cell-border" style="width: 100%">
 						<thead>
@@ -131,7 +132,7 @@
 			</div>
 		</div>
 
-		<script type="text/javascript" src="json/name.json"></script>
+		<script type="text/javascript" src="json/unit.js"></script>
 		<script>
 			var loc = "[[${#locale}]]";
 			$('#example')
@@ -168,17 +169,18 @@
 										},
 										{
 											"data" : "code",
+											"width" : "150px",
 											"render" : function(data, type,
 													row, meta) {
 												var name = '';
 												if (loc === 'ja') {
-													name = name_ja[row['name']];
+													name = unit_ja[row['name']];
 												} else if (loc === 'fr') {
-													name = name_fr[row['name']] ? name_fr[row['name']]
-															: name_ja[row['name']];
+													name = unit_fr[row['name']] ? unit_fr[row['name']]
+															: unit_ja[row['name']];
 												} else {
-													name = name_en[row['name']] ? name_en[row['name']]
-															: name_ja[row['name']];
+													name = unit_en[row['name']] ? unit_en[row['name']]
+															: unit_ja[row['name']];
 												}
 												return '<a href="/unit/' + data + '">'
 														+ name + '</a>';
@@ -198,6 +200,7 @@
 										},
 										{
 											"data" : "family",
+											"width" : "10px",
 											"render" : function(data, type,
 													row, meta) {
 												if (type === "sort"
@@ -209,20 +212,28 @@
 											}
 										}, {
 											"data" : "stats[0].level",
+											"width" : "10px"
 										}, {
 											"data" : "stats[0].hp",
+											"width" : "10px"
 										}, {
 											"data" : "stats[0].mp",
+											"width" : "10px"
 										}, {
 											"data" : "stats[0].attack",
+											"width" : "10px"
 										}, {
 											"data" : "stats[0].defense",
+											"width" : "10px"
 										}, {
 											"data" : "stats[0].intelligence",
+											"width" : "10px"
 										}, {
 											"data" : "stats[0].agility",
+											"width" : "10px"
 										}, {
 											"data" : "stats[0].mobility",
+											"width" : "10px"
 										} ],
 							});
 			$('input:radio[name=rank]').change(function() {

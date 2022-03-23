@@ -12,9 +12,9 @@
                                                )}">
 
 <head>
-<title>Ailment list</title>
+<title>Passive list</title>
 
-<th:block id="skill-static-resources">
+<th:block id="skill-static-resources"> 
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
@@ -35,7 +35,7 @@
 </head>
 <body>
 
-	<div id="skill-header">Ailment List</div>
+	<div id="skill-header">Passive List</div>
 
 	<div id="skill-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
@@ -46,18 +46,17 @@
 		<div>
 			<div class="units">
 				<div>
-					<div></div>
 					<table id="example" class="display cell-border" style="width: 100%">
 						<thead>
 							<tr>
-								<th>Icon</th>
 								<th>Name</th>
+								<th>Description</th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
-								<th>Icon</th>
 								<th>Name</th>
+								<th>Description</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -66,16 +65,18 @@
 		</div>
 
 
-		<script type="text/javascript" src="json/ailment_name.js"></script>
+		<script type="text/javascript" src="json/passive_name.js"></script>
+		<script type="text/javascript" src="json/passive_desc.js"></script>
 		<script>
 			var loc = "[[${#locale}]]";
 			$('#example')
 					.DataTable(
 							{
-								"paging" : false,
-								"order" : [ 1, "asc" ],
+								"paging" : true,
+								"order" : [ 0, "asc" ],
+								"pageLength" : 25,
 								"ajax" : {
-									"url" : "/ailments/q",
+									"url" : "/passives/q",
 									"type" : "POST",
 									"dataType" : "json",
 									"dataSrc" : "",
@@ -85,38 +86,47 @@
 									}
 								},
 								"columns" : [
-
-										{
-											"data" : "icon",
-											"render" : function(data, type,
-													row, meta) {
-												if (type === "sort"
-														|| type === 'type') {
-													return data;
-												} else {
-													return '<div class="icon_container_very_small"><img src="/img/icon/' + data  + '" /></div>';
-												}
-											}
-										},
 										{
 											"data" : "code",
 											"render" : function(data, type,
 													row, meta) {
-												var ailment = '';
+												var name = '';
 												if (loc === 'ja') {
-													ailment = ailment_name_ja[row['name']];
+													name = passive_name_ja[row['name']];
 												} else if (loc === 'fr') {
-													ailment = ailment_name_fr[row['name']] ? ailment_name_fr[row['name']]
-															: ailment_name_ja[row['name']];
+													name = passive_name_fr[row['name']] ? passive_name_fr[row['name']]
+															: skill_name_ja[row['name']];
 												} else {
-													ailment = ailment_name_en[row['name']] ? ailment_name_en[row['name']]
-															: ailment_name_ja[row['name']];
+													name = passive_name_en[row['name']] ? passive_name_en[row['name']]
+															: passive_name_ja[row['name']];
 												}
-												return '<a href="/ailment/' + data + '">'
-														+ ailment + '</a>';
+												name = name.replaceAll(
+														/<.+?>/g, row['var']);
+
+												return '<a href="/passive/' + data + '">'
+														+ name + '</a>';
+											}
+										},
+										{
+											"data" : "description",
+											"render" : function(data, type,
+													row, meta) {
+												var desc = '';
+												if (loc === 'ja') {
+													desc = passive_desc_ja[row['description']];
+												} else if (loc === 'fr') {
+													desc = passive_desc_fr[row['description']] ? passive_desc_fr[row['description']]
+															: passive_desc_ja[row['description']];
+												} else {
+													desc = passive_desc_en[row['description']] ? passive_desc_en[row['description']]
+															: passive_desc_ja[row['description']];
+												}
+
+												return desc;
+
 											}
 										} ],
-							});
+							}); 
 		</script>
 	</div>
 

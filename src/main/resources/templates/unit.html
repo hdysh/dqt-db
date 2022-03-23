@@ -27,10 +27,11 @@
 		var masterStats = [(${master})];
 		var master = 0;
 		var talentStats = [(${talentStats})];
+		var awakening = [(${awakening})];
 		var fullTalent = false;
 
 		function applyStats() {
-		    var level = stats[rank].level;
+		    var level = stats[rank].level; 
 		    $('#lvl').text(': ' + (stats[rank].level + (awakAdd[awak] ? awakAdd[awak].level : 0) + (pass[level] ? pass[level].level : 0)));
 		    $('#hp').text(': ' + mul((stats[rank].hp + (awakAdd[awak] ? awakAdd[awak].hp : 0) + (pass[level] ? pass[level].hp : 0) + (fullTalent ? talentStats.hp : 0)), awakMul[awak].hp, masterStats[master].hp));
 		    $('#mp').text(': ' + mul((stats[rank].mp + (awakAdd[awak] ? awakAdd[awak].mp : 0) + (pass[level] ? pass[level].mp : 0) + (fullTalent ? talentStats.mp : 0)), awakMul[awak].mp, masterStats[master].mp));
@@ -39,48 +40,28 @@
 		    $('#agi').text(': ' + mul((stats[rank].agility + (awakAdd[awak] ? awakAdd[awak].agility : 0) + (pass[level] ? pass[level].agility : 0) + (fullTalent ? talentStats.agility : 0)), awakMul[awak].agility, masterStats[master].agility));
 		    $('#int').text(': ' + mul((stats[rank].intelligence + (awakAdd[awak] ? awakAdd[awak].intelligence : 0) + (pass[level] ? pass[level].intelligence : 0) + (fullTalent ? talentStats.intelligence : 0)), awakMul[awak].intelligence, masterStats[master].intelligence));
 		    $('#mov').text(': ' + (stats[rank].mobility + (awakAdd[awak] ? awakAdd[awak].mobility : 0) + (pass[level] ? pass[level].mobility : 0) + (fullTalent ? talentStats.mobility : 0)));
-
-		}
-
+		  
+		    for(let i=0;i<Object.keys(awakening).length;i++){
+		    	if(i<=awak){
+					setEleres(awakening[i] );  
+				}
+		    }
+		}  
+		function setEleres(res ){ 
+			 for(let j=1;j<=7;j++){ 
+				let ele= $('#ele'+j ); 
+				let value=ele.data("val")+res["ele"+j];
+				ele.text(value);
+				console.log(value+" - "+resLevel(value));
+				 $('#imgele'+j ).attr('src','/img/icon/'+resLevel(value)); 
+			 }
+		} 
 		function mul(val, mul1, mul2) {
 		    return Math.floor(val + (val * (mul1 + mul2) / 100));
 		}
-		$(document).ready(function() {
-		    applyStats();
-		    $("#rankSelect").on("change", function() {
-		        rank = $(this).val();
-		        applyStats();
-		    });
-		    $("#awakeningSelect").on("change", function() {
-		        awak = $(this).val();
-		        applyStats();
-		    });
-		    $("#masterSelect").on("change", function() {
-		        master = $(this).val();
-		        applyStats();
-		    });
-		    if ($("#talent").is(":checked")) {
-		        fullTalent = true;
-		        applyStats();
-		    } else {
-		        fullTalent = false;
-		        applyStats();
-		    }
-		    $("#talent").change(function() {
-		        if ($(this).is(":checked")) {
-		            fullTalent = true;
-		            applyStats();
-		        } else {
-		            fullTalent = false;
-		            applyStats();
-		        }
-		    });
-		});
-
-	</script>
-	<script>
 		function resLevel(val) {
-	    var res = [{
+			let output;
+	    let res = [{
 	            "min": -2147483648,
 	            "max": -66,
 	            "icon": "ResistanceLevel_ChouZyakuten.png"
@@ -122,11 +103,48 @@
 	        }
 	    ]
 	    for (i = 0; i < res.length; i++) {
-	        if (val > res[i].min && val < res[i].max) {
-	            console.log(res[i].icon);
+	        if (val >= res[i].min && val < res[i].max) {
+	        	output=res[i].icon;
 	        }
 	    }
-	}
+	    return output;
+	} 
+		$(document).ready(function() {
+			
+		    applyStats();
+		    $("#rankSelect").on("change", function() {
+		        rank = $(this).val();
+		        applyStats();
+		    });
+		    $("#awakeningSelect").on("change", function() {
+		        awak = $(this).val();
+		        applyStats();
+		    });
+		    $("#masterSelect").on("change", function() {
+		        master = $(this).val();
+		        applyStats();
+		    });
+		    if ($("#talent").is(":checked")) {
+		        fullTalent = true;
+		        applyStats();
+		    } else {
+		        fullTalent = false;
+		        applyStats();
+		    }
+		    $("#talent").change(function() {
+		        if ($(this).is(":checked")) {
+		            fullTalent = true;
+		            applyStats();
+		        } else {
+		            fullTalent = false;
+		            applyStats();
+		        }
+		    });
+		});
+
+		window.onload = function() {
+		    form1.reset();
+		}
 	</script>
 </th:block>
 
@@ -143,38 +161,38 @@
 		<div class="content">
 			<div class="grid-container">
 				<div class="pp">
-					<div
-						th:style="'display: flex;flex-direction: column;background-color:#d0d0d0; padding:20px;align-items: center;width:200px;border-radius: .8rem;'">
+					<div class="pp-inner">
+						<div class="unit-profile">
+							<div
+								th:style="'display: flex;flex-direction: row; padding:4px 0;height: 30px;'">
+								<div>
+									<img th:src="@{${'/img/icon/' + unit.family.icon }}" />
+								</div>
+								<div>
+									<img th:style="'height:30px;'"
+										th:src="@{${'/img/icon/' + unit.role.icon }}" />
+								</div>
+							</div>
+							<div class="frame-container">
+								<div class="framez">
+									<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
+								</div>
+								<div class="prof">
+									<img th:src="@{${'/img/icon/' + unit.icon }}" />
 
-						<div
-							th:style="'display: flex;flex-direction: row; padding:4px 0;height: 30px;'">
-							<div>
-								<img th:src="@{${'/img/icon/' + unit.family.icon }}" />
-							</div>
-							<div>
-								<img th:style="'height:30px;'"
-									th:src="@{${'/img/icon/' + unit.role.icon }}" />
-							</div>
-						</div>
-						<div class="frame-container">
-							<div class="framez">
-								<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
-							</div>
-							<div class="prof">
-								<img th:src="@{${'/img/icon/' + unit.icon }}" />
+								</div>
+								<div class="framez">
+									<img th:src="@{${'/img/icon/' + unit.rarity.frame }}" />
+								</div>
+								<div class="rarity">
+									<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
+								</div>
 
 							</div>
-							<div class="framez">
-								<img th:src="@{${'/img/icon/' + unit.rarity.frame }}" />
-							</div>
-							<div class="rarity">
-								<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
-							</div>
-
-						</div>
-						<div th:style="' '">
-							<div th:text="#{${unit.name}}"
-								th:style="'text-align: center;font-size:25px;font-weight:bold;'">
+							<div th:style="' '">
+								<div th:text="#{${unit.name}}"
+									th:style="'text-align: center;font-size:25px;font-weight:bold;'">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -196,22 +214,22 @@
 							<tr th:each="us  : ${unit.skills}">
 								<td th:if="${us.level>-1}" th:text="${us.level}">level</td>
 								<td th:if="${us.level==-1}"><img th:style="'height:25px;'"
-									title="Talent Blossom" src="/img/TrainingPointIcon.png" /></td>
+										title="Talent Blossom" src="/img/TrainingPointIcon.png" /></td>
 								<td>
 									<div
 										th:classappend="${us.skill.rarity.code==30} ? skill_frame : skill_frame2"
 										th:style="@{${'background-image: url(/img/icon/' + us.skill.button+');' }}">
-										<span class="skill_frame_centerer"></span><img
-											th:src="@{${'/img/icon/' + us.skill.icon }}" />
+										<span class="skill_frame_centerer"></span>
+										<img th:src="@{${'/img/icon/' + us.skill.icon }}" />
 									</div>
 								</td>
 								<td><a th:href="@{${'/skill/' + us.skill.code }}"
-									th:text="#{${us.skill.name}}">name</a></td>
+										th:text="#{${us.skill.name}}">name</a></td>
 								<td th:text="${us.skill.mp}">mp</td>
 								<td><img th:title="#{${us.skill.element.name}}"
-									th:src="@{${'/img/icon/' + us.skill.element.icon }}" /></td>
+										th:src="@{${'/img/icon/' + us.skill.element.icon }}" /></td>
 								<td><div th:text="#{${us.skill.reach}}"></div> <img
-									th:src="@{${'/img/icon/' + us.skill.range }}" /></td>
+										th:src="@{${'/img/icon/' + us.skill.range }}" /></td>
 								<td th:with="desctr=#{${us.skill.description}}"><div
 										th:with="desc1=${#strings.replace(desctr,'<damagePhysics>',us.skill.strMul)}">
 										<div
@@ -241,8 +259,8 @@
 							<div th:each="up,iter : ${unit.passives}" th:remove="tag">
 								<div class="passive_item" th:text="${up.level}"></div>
 								<div th:with="desctr=#{${up.passive.name}}" class="passive_item">
-									<div
-										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) ).replaceAll('\+-', '-' )}"></div>
+									<a th:href="@{${'/passive/' + up.passive.code }}"
+										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) ).replaceAll('\+-', '-' )}"></a>
 								</div>
 								<div th:with="desctr=#{${up.passive.description}}"
 									class="passive_item">
@@ -269,13 +287,13 @@
 								<div class="passive_item" th:text="${ua.level}"></div>
 								<div th:with="desctr=#{${ua.awakening.name}}"
 									class="passive_item">
-									<div
-										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var/100) ).replaceAll('\+-', '-' )}"></div>
+									<a th:href="@{${'/passive/' + ua.awakening.code }}"
+										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var ) ).replaceAll('\+-', '-' )}"></a>
 								</div>
 								<div th:with="desctr=#{${ua.awakening.description}}"
 									class="passive_item">
 									<div
-										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var/100) )}"></div>
+										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var ) )}"></div>
 								</div>
 							</div>
 						</div>
@@ -286,11 +304,24 @@
 				<div class="er">
 					<div class="resistance">
 						<div class="header bold">Element Resistance</div>
-						<div th:each="re: ${eleres}">
-							<div class="res bold w200px">
-								<img class="w15" th:src="@{${'/img/icon/' +re.ele.icon }}" /><span
-									th:text="#{${re.ele.name }}"></span> <img
-									th:src="@{${'/img/icon/' + re.icon  }}" />
+						<div th:each="re: ${eleres}" th:remove="tag">
+							<div class="res bold w300px res-grid">
+								<div class="h30px grid">
+									<img class="center self-center"
+										th:src="@{${'/img/icon/' +re.ele.icon }}" />
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center" th:text="#{${re.ele.name }}"></span>
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center" th:text="${re.value }"
+										th:id="${'ele'+re.ele.code}" th:attr="data-val=${re.value}"></span>
+								</div>
+								<div class="h30px grid">
+									<img class="center self-center"
+										th:src="@{${'/img/icon/' + re.icon  }}"
+										th:id="${'imgele'+re.ele.code}" />
+								</div>
 							</div>
 						</div>
 
@@ -301,56 +332,96 @@
 						<div class="header bold w300px">Status Ailment Resistance</div>
 						<!-- <div th:each="res: ${unit.ailres.ail1}" class="" th:remove="tag"> -->
 						<div th:each="awak,iter : ${strAilment}" th:remove="tag">
-							<div class="res bold w300px pad5">
-								<img class="w10"
-									th:src="@{${'/img/icon/' +ailment.get(awak).icon }}" /><span
-									th:text="#{${ailment.get(awak).name }}"></span> <img
-									th:id="${awak}"
-									th:src="@{${'/img/icon/' +ailres[iter.index].icon }}" />
+							<div class="res bold w300px res-grid">
+								<div class="h30px grid">
+									<img class="center self-center"
+										th:src="@{${'/img/icon/' +ailment.get(awak).icon }}" />
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center"
+										th:text="#{${ailment.get(awak).name }}"></span>
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center"
+										th:text="${ailres[iter.index].value }"
+										th:id="${'ail'+ailment.get(awak).code}"
+										th:attr="data-val=${ailres[iter.index].value}"></span>
+								</div>
+								<div class="h30px grid">
+									<img class="center self-center" th:id="${awak}"
+										th:src="@{${'/img/icon/' +ailres[iter.index].icon }}" />
+								</div>
 							</div>
-							<!-- 	
-							</div> -->
 						</div>
 
 					</div>
 				</div>
+
+				<div class="dr">
+					<div class="drops">
+						<div class="header bold w300px">How to get:</div>
+						<div th:each="drop  : ${unit.drops}">
+							<div class="drop-loc">
+								<div class="drop-top">
+									<a
+										th:href="${(drop.portalSplit[0] == '1' ? '/event/' : '/event/group/' )+drop.portalSplit[1]}"
+										th:text="#{${drop.portalSplit[2]}}"></a>
+								</div>
+								<div class="drop-bottom">
+									<span>➤</span>
+									<a th:href="${'/stages/'+drop.stageSplit[0]}"
+										th:text="#{${drop.stageSplit[1]}}"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
 				<div class="ss">
 
 					<div class="stats_item_cont bold">
-						<span class="stats_item">LVL</span> <span class="stats_item val"
-							id="lvl" th:text="${ ': '+ unit.stats[7].level}"></span>
+						<span class="stats_item">LVL</span>
+						<span class="stats_item val" id="lvl"
+							th:text="${ ': '+ unit.stats[7].level}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">HP</span> <span class="stats_item val"
-							id="hp" th:text="${ ': '+ unit.stats[7].hp}"></span>
+						<span class="stats_item">HP</span>
+						<span class="stats_item val" id="hp"
+							th:text="${ ': '+ unit.stats[7].hp}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">MP</span> <span class="stats_item val"
-							id="mp" th:text="${ ': '+ unit.stats[7].mp}"></span>
+						<span class="stats_item">MP</span>
+						<span class="stats_item val" id="mp"
+							th:text="${ ': '+ unit.stats[7].mp}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">ATK</span> <span class="stats_item val"
-							id="atk" th:text="${ ': '+ unit.stats[7].attack}"></span>
+						<span class="stats_item">ATK</span>
+						<span class="stats_item val" id="atk"
+							th:text="${ ': '+ unit.stats[7].attack}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">DEF</span> <span class="stats_item val"
-							id="def" th:text="${ ': '+ unit.stats[7].defense}"></span>
+						<span class="stats_item">DEF</span>
+						<span class="stats_item val" id="def"
+							th:text="${ ': '+ unit.stats[7].defense}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">AGL</span> <span class="stats_item val"
-							id="agi" th:text="${ ': '+ unit.stats[7].agility}"></span>
+						<span class="stats_item">AGL</span>
+						<span class="stats_item val" id="agi"
+							th:text="${ ': '+ unit.stats[7].agility}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">WIS</span> <span class="stats_item val"
-							id="int" th:text="${ ': '+ unit.stats[7].intelligence}"></span>
+						<span class="stats_item">WIS</span>
+						<span class="stats_item val" id="int"
+							th:text="${ ': '+ unit.stats[7].intelligence}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">MOV</span> <span class="stats_item val"
-							id="mov" th:text="${ ': '+ unit.stats[7].mobility}"></span>
+						<span class="stats_item">MOV</span>
+						<span class="stats_item val" id="mov"
+							th:text="${ ': '+ unit.stats[7].mobility}"></span>
 					</div>
 
 					<div class="form-group"></div>
-					<div class="flex_center_row">
+					<form name="form1" class="flex_center_row">
 						<div class="form-group">
 							<select class="form-control" id="rankSelect">
 								<option th:each="i: ${#numbers.sequence(0, 7)}"
@@ -366,7 +437,7 @@
 						</div>
 						<div class="form-group">
 							<select class="form-control" id="masterSelect">
-								<option th:each="i: ${#numbers.sequence(0, 40)}"
+								<option th:each="i: ${#numbers.sequence(0, 60)}"
 									th:selected="${i == 0}" th:value="${i}"
 									th:text="${'Master Rank '+i}"></option>
 							</select>
@@ -375,7 +446,7 @@
 							<label><input type="checkbox" name="active" id="talent"
 								th:checked="false" />Full Talent Blossom</label>
 						</div>
-					</div>
+					</form>
 				</div>
 				<div class="ld" th:if="${unit.leader}">
 					<div class="header">Leader Skill</div>

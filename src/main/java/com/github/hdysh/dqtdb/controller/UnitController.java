@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hdysh.dqtdb.model.AilmentResPair;
+import com.github.hdysh.dqtdb.model.EleRes;
 import com.github.hdysh.dqtdb.model.EleResPair;
 import com.github.hdysh.dqtdb.model.Passive;
 import com.github.hdysh.dqtdb.model.Stats;
@@ -54,7 +55,7 @@ public class UnitController {
 		ModelAndView modelAndView = new ModelAndView("unit");
 		List<EleResPair> rl = new ArrayList<>();
 		List<AilmentResPair> al = new ArrayList<>();
-		Unit unit = unitService.getUnit(id);
+		Unit unit = unitService.getUnit(id); 
 		rl.add(calcEle(unit.getEleRes().getEle1(), "1"));
 		rl.add(calcEle(unit.getEleRes().getEle2(), "2"));
 		rl.add(calcEle(unit.getEleRes().getEle3(), "3"));
@@ -89,6 +90,8 @@ public class UnitController {
 		Map<BigInteger, StatsRank> mapAwaMul = new HashMap<>();
 		Map<BigInteger, StatsRank> mapPassAdd = new HashMap<>();
 		Map<BigInteger, StatsRank> mapPassMul = new HashMap<>();
+		Map<BigInteger, EleRes> awakening = new HashMap<>();
+		awakening.put(new BigInteger("0"), new EleRes());
 		for (int i = 0; i < 6; i++) {
 			mapAwaMul.put(new BigInteger(String.valueOf(i)), new StatsRank(null));
 			mapAwaAdd.put(new BigInteger(String.valueOf(i)), new StatsRank(null));
@@ -107,6 +110,13 @@ public class UnitController {
 			Passive awa = ua.getAwakening();
 			if (awa != null) {
 				add2Map(awa, mapAwaAdd, mapAwaMul, ua.getLevel());
+				if (awakening.containsKey(ua.getLevel())) {
+					awakening.get(ua.getLevel()).add(awa.getEleres());
+				} else {
+					EleRes newEle = new EleRes();
+					newEle.add(awa.getEleres());
+					awakening.put(ua.getLevel(), newEle);
+				}
 			}
 		}
 		for (UnitPassive up : unit.getPassives()) {
@@ -137,6 +147,7 @@ public class UnitController {
 			modelAndView.addObject("passAdd", mapper.writeValueAsString(sortedPassAdd));
 			modelAndView.addObject("passMul", mapper.writeValueAsString(sortedPassMul));
 			modelAndView.addObject("talentStats", mapper.writeValueAsString(talentStats));
+			modelAndView.addObject("awakening", mapper.writeValueAsString(mergeEleRes(awakening)));
 			List<Stats> st = unitService.findByCodezz(id);
 			String stats = mapper.writeValueAsString(st);
 			modelAndView.addObject("stats", stats);
@@ -153,6 +164,18 @@ public class UnitController {
 
 	private Map<BigInteger, StatsRank> mergeStats(Map<BigInteger, StatsRank> mapMul) {
 		Map<BigInteger, StatsRank> sorted = mapMul.entrySet().stream()
+				.sorted(Collections.reverseOrder(Map.Entry.comparingByKey())).collect(Collectors.toMap(
+						Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+		sorted.entrySet().stream().forEach(x -> {
+			mapMul.entrySet().stream().filter(f -> f.getKey().compareTo(x.getKey()) < 0).forEach(y -> {
+				x.getValue().add(y.getValue());
+			});
+		});
+		return sorted;
+	}
+
+	private Map<BigInteger, EleRes> mergeEleRes(Map<BigInteger, EleRes> mapMul) {
+		Map<BigInteger, EleRes> sorted = mapMul.entrySet().stream()
 				.sorted(Collections.reverseOrder(Map.Entry.comparingByKey())).collect(Collectors.toMap(
 						Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 		sorted.entrySet().stream().forEach(x -> {
@@ -188,13 +211,14 @@ public class UnitController {
 	}
 
 	EleResPair calcEle(int ele, String strEle) {
-		return new EleResPair(unitService.getCalcRes().floorEntry(new BigInteger(String.valueOf(ele))).getValue(),
-				unitService.getElements().get(new BigInteger(strEle)));
+		BigInteger value = new BigInteger(String.valueOf(ele));
+		return new EleResPair(unitService.getCalcRes().floorEntry(value).getValue(),
+				unitService.getElements().get(new BigInteger(strEle)), value);
 	}
 
 	AilmentResPair calcAilment(int ailment, String strailment) {
-		return new AilmentResPair(
-				unitService.getCalcRes().floorEntry(new BigInteger(String.valueOf(ailment))).getValue(),
-				unitService.getAilments().get(strailment));
+		BigInteger value = new BigInteger(String.valueOf(ailment));
+		return new AilmentResPair(unitService.getCalcRes().floorEntry(value).getValue(),
+				unitService.getAilments().get(strailment), value);
 	}
 }

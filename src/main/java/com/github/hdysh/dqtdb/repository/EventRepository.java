@@ -32,7 +32,7 @@ public interface EventRepository extends CrudRepository<EventPortal, BigInteger>
 	@Query("select s from Stage s where s.area= ?1")
 	List<Stage> findAllEventStage(BigInteger eventArea);
 
-	@Query("select ea from EventArea ea where ea.atype= ?1")
+	@Query("select ea from EventArea ea where ea.category= ?1")
 	List<EventArea> findAllStoryArea(int id);
 
 	@Query("select s from Stage s where s.area= ?1")
@@ -41,24 +41,30 @@ public interface EventRepository extends CrudRepository<EventPortal, BigInteger>
 	@Query("select eg from EventGroup eg where eg.eventPortal= ?1")
 	List<EventGroup> findAllEventGroup(BigInteger id);
 
-	@Query("select eg from EventGroup eg where eg.atype= ?1")
+	@Query("select eg from EventGroup eg where eg.category= ?1")
 	List<EventGroup> findAllStoryGroup(BigInteger id);
 
-	@Query("select eg from EventGroup eg where eg.atype= 4 and eg.eventPortal is null")
+	@Query("select eg from EventGroup eg where eg.category= 4 and eg.eventPortal is null")
 	List<EventGroup> findAllBattleroads();
 
-	@Query("select eg from EventGroup eg where eg.atype= 5 and eg.eventPortal is null")
+	@Query("select eg from EventGroup eg where eg.category= 5 and eg.eventPortal is null")
 	List<EventGroup> findGroupDailies();
 
-	@Query("select ea from EventArea ea where ea.atype= 5 and ea.areaGroup is null and ea.eventPortal is null")
+	@Query("select ea from EventArea ea where ea.category= 5 and ea.areaGroup is null and ea.eventPortal is null")
 	List<EventArea> findAreaDailies();
 
-	@Query("select ea from EventArea ea where (ea.atype= 6 or ea.atype= 9 or ea.atype= 2) and ea.areaGroup is null and ea.eventPortal is null")
+	@Query("select ea from EventArea ea where (ea.category= 6 or ea.category= 9 or ea.category= 2) and ea.areaGroup is null and ea.eventPortal is null")
 	List<EventArea> findExtraArea();
 
-	@Query("select eg from EventGroup eg where eg.atype= 2 and eg.eventPortal is null")
+	@Query("select eg from EventGroup eg where eg.category= 2 and eg.eventPortal is null")
 	List<EventGroup> findExtraGroup();
 
-	@Query("select eg from EventGroup eg where eg.atype= 7")
+	@Query("select eg from EventGroup eg where eg.category= 7")
 	List<EventGroup> findHeroQuest();
+
+	@Query("select eg from EventGroup eg where eg.category= 2 and eg.subCategory = 0 and eg.eventPortal is null")
+	List<EventGroup> findMiscGroup();
+
+	@Query("select ea from EventArea ea where ea.category= 2 and ea.subCategory = 0 and ea.eventPortal is null")
+	List<EventArea> findMiscArea();
 }

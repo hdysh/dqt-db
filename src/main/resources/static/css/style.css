@@ -179,7 +179,17 @@ img {
 
 .skills {
 	grid-area: skills;
+	padding: 10px;
+}
+
+.unit-profile {
+	display: flex;
+	flex-direction: column;
+	background-color: #d0d0d0;
 	padding: 20px;
+	align-items: center;
+	width: 200px;
+	border-radius: .8rem;
 }
 
 .passive {
@@ -190,7 +200,7 @@ img {
 
 .resistance {
 	grid-area: resistance;
-	padding: 20px;
+	padding: 10px;
 }
 
 .item2 {
@@ -206,7 +216,7 @@ img {
 	grid-template-rows: 320px auto;
 	gap: 10px 10px;
 	grid-template-areas: "pp ss ld" "sk sk sk" "ps ps ps" "ak ak ak"
-		"er ar .";
+		"er ar dr";
 }
 
 * {
@@ -219,8 +229,11 @@ img {
 	grid-area: pp;
 	align-items: center;
 	justify-items: center;
-	padding: 20px;
+}
+
+.pp-inner {
 	background-color: gray;
+	padding: 10px;
 	border-radius: .8rem;
 }
 
@@ -253,6 +266,13 @@ img {
 	grid-area: ar;
 	background-color: gray;
 	border-radius: .8rem;
+}
+
+.dr {
+	grid-area: dr;
+	background-color: gray;
+	border-radius: .8rem;
+	height: min-content;
 }
 
 .ld {
@@ -315,6 +335,10 @@ img {
 	width: 100px;
 }
 
+.w150px {
+	width: 150px;
+}
+
 .w200px {
 	width: 200px;
 }
@@ -327,8 +351,20 @@ img {
 	height: 100px;
 }
 
+.h125px {
+	height: 125px;
+}
+
 .h50px {
 	height: 50px;
+}
+
+.h40px {
+	height: 40px;
+}
+
+.h30px {
+	height: 30px;
 }
 
 table td {
@@ -660,4 +696,43 @@ html * {
 	background-color: dimgray;
 	border-radius: .8rem;
 	margin: 10px;
+}
+
+.res-grid {
+	align-items: center;
+	display: grid;
+	grid-template-columns: .5fr 1.2fr .5fr 1fr;
+	gap: 3px 3px;
+	grid-template-areas: ". . . ." ". . . ." ". . . .";
+}
+
+body {
+	margin: 0;
+}
+
+.self-center {
+	align-self: center;
+}
+
+.drops {
+	padding: 10px;
+}
+
+.drop-loc {
+	display: flex;
+	flex-direction: column;
+	background-color: #d0d0d0;
+	justify-content: space-around;
+	background-color: #d0d0d0;
+	margin-bottom: 5px;
+	border-radius: 10px;
+}
+
+.drop-top {
+	padding-left: 10px;
+	border-bottom: 2px solid grey;
+}
+
+.drop-bottom {
+	padding-left: 10px;
 }

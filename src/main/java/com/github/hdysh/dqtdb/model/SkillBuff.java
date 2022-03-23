@@ -27,6 +27,13 @@ public class SkillBuff {
 	private int minDur;
 	private int maxDur;
 
+	public double getLevelF() {
+		if (this.level > 500)
+			return this.level / 100;
+		else
+			return this.level;
+	}
+
 	public String getDuration() {
 		String turn = " turn";
 		if (minDur > 1) {

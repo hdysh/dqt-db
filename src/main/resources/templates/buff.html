@@ -27,16 +27,11 @@
 
 	<div id="skill-header" class="flex_center_row"
 		th:with="level=${buff.level}">
-		<div th:if="${not #strings.isEmpty(buff.iconUp)}"
-			class="pad-left-10">
+		<div th:if="${not #strings.isEmpty(buff.iconUp)}" class="pad-left-10">
 			<img th:src="@{${'/img/icon/' + buff.iconUp }}" />
 		</div>
 		<div th:text="#{${buff.name}}" class="pad-left-10"></div>
-		<div th:if="${buff.up and buff.down}"
-			th:text="#{${buff.suffixUp}}" class="pad-left-10"></div>
-		<div th:if="${buff.up and buff.down} " th:text="'/'"></div>
-		<div th:if="${buff.down}" th:text="#{${buff.suffixDown }}"
-			class="pad-left-10"></div>
+		
 		<div th:if="${not #strings.isEmpty(buff.iconDown)}"
 			class="pad-left-10">
 			<img th:src="@{${'/img/icon/' + buff.iconDown  }}" />
@@ -49,21 +44,24 @@
 	<div id="skill-content" th:with=name=#{${buff.name}}>
 		<div th:each="suf,iter : ${buff.suffix}" th:remove="tag">
 			<div
-				th:if="${(iter.index==0 and buff.up) or (iter.index==1 and buff.down)}"  class="effect-container" >
-			<div class="flex_center_row pad-10" th:with="sufTxt=#{${suf}}">
+				th:if="${(iter.index==0 and buff.up and buff.iconUp!=null) or (iter.index==1 and buff.down and buff.iconDown!=null)}"
+				class="effect-container">
+				<div class="flex_center_row pad-10" th:with="sufTxt=#{${suf}}">
 					<div class="skill-item bold flex-column pad-10">
 						<span th:text="Icon" class="header"></span>
 						<div class="skill-sub-item">
-							<img th:src="@{${'/img/icon/' + (iter.index==0?buff.iconUp:buff.iconDown)  }}" />
+							<img
+								th:src="@{${'/img/icon/' + (iter.index==0?buff.iconUp:buff.iconDown)  }}" />
 						</div>
 					</div>
 
 					<div class="skill-item bold flex-column pad-10"
-						th:with=up=#{${buff.suffixUp}}>
+						th:with="display=#{${buff.displayFormat}}">
 						<span th:text="Name" class="header"></span>
-						<div class="skill-sub-item">
-							<span th:text="${name}">reach</span> <span
-								th:if="${buff.up and buff.down} " th:text="${' '+sufTxt}"></span>
+						<div class="skill-sub-item"
+							th:with="display=${#strings.replace(display,'<statusName>', name)}">
+							<span
+								th:text="${#strings.replace(display,'<statusChangeTo>', sufTxt)}">name</span>
 						</div>
 					</div>
 					<div class="skill-item bold flex-column pad-10"
@@ -73,7 +71,7 @@
 							<div
 								th:with="desc=${#strings.replace(desc,'<statusChangeTo>', sufTxt)}">
 								<div th:text="${#strings.replace(desc,'<statusName>', name)}"
-									class="skill-sub-item">base dmg</div>
+									class="skill-sub-item">desc</div>
 							</div>
 						</div>
 					</div>
@@ -105,7 +103,7 @@
 					<div class="header bold">Learned by:</div>
 					<div class="flex_center_row" th:with="unitarr=${units[iter.index]}">
 						<div th:each="unit : ${unitarr}" th:remove="tag">
-							<div class="frame-container" th:title="${unit.name}">
+							<div class="frame-container" th:title="#{${unit.name}}">
 								<div class="framez">
 									<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 								</div>
@@ -121,7 +119,7 @@
 									<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
 								</div>
 
-							</div> 
+							</div>
 						</div>
 					</div>
 				</div>
@@ -183,7 +181,7 @@
 			<div class="header bold">Learned by:</div>
 			<div class="flex_center_row">
 				<div th:each="unit : ${units}" th:remove="tag">
-					<div class="frame-container" th:title="${unit.name}">
+					<div class="frame-container" th:title="#{${unit.name}}">
 						<div class="framez">
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>

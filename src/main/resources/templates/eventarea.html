@@ -46,7 +46,7 @@
 			</div>
 		</div>
 
-		<div th:if="${group} and ${group.atype}==1"
+		<div th:if="${group} and ${group.category}==1"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/story'  }}">Story</a>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
-		<div th:if="${group} and ${group.atype}==4"
+		<div th:if="${group} and ${group.category}==4"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/battleroad'  }}">Battle Road</a>
@@ -71,7 +71,7 @@
 			<div class="pad-left-5">/</div>
 		</div>
 		<div
-			th:if="${portal }==null and (${area.atype}==2 or ${area.atype}==6 or ${area.atype}==9)"
+			th:if="${portal }==null and (${area.category}==2 or ${area.category}==6 or ${area.category}==9)"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/extra'  }}">Extra</a>
@@ -83,7 +83,7 @@
 			</div>
 			<div th:if="${group }" class="pad-left-5">/</div>
 		</div>
-		<div th:if="${portal }==null and ${area.atype}==5"
+		<div th:if="${portal }==null and ${area.category}==5"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/daily'  }}">Daily</a>

@@ -41,28 +41,28 @@
 			<div class="pad-left-5">/</div>
 		</div>
 
-		<div th:if="${group.atype}==1"
+		<div th:if="${group.category}==1"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/story'  }}">Story</a>
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
-		<div th:if="${portal == null} and ${group.atype}==2"
+		<div th:if="${portal == null} and ${group.category}==2"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/extra'  }}">Extra</a>
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
-		<div th:if="${portal == null} and ${group.atype}==5"
+		<div th:if="${portal == null} and ${group.category}==5"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/extra'  }}">Daily</a>
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
-		<div th:if="${portal == null} and ${group.atype}==4"
+		<div th:if="${portal == null} and ${group.category}==4"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/battleroad'  }}">Battle Road</a>
@@ -83,7 +83,7 @@
 				class="event-banner drop-item bold margin-10 pad-10">
 				<a th:href="@{${'/event/area/' + ev.code}}" class="banner-container">
 					<span
-					th:class="@{${'flex_center_row banner-text text-' + ev.atype }}"
+					th:class="@{${'flex_center_row banner-text text-' + ev.category }}"
 					th:text="#{${ev.name }}"></span> <img class="h100px pad5"
 					th:src="@{${'/img/icon/' + ev.icon }}" />
 				</a>

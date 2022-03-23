@@ -15,8 +15,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -73,5 +71,7 @@ public class Unit extends AbstractUnit {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "code")
 	private List<UnitTalent> talents;
+	@OneToMany(mappedBy = "uid")
+	private List<UnitDrop> drops;
 
 }

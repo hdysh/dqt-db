@@ -9,6 +9,8 @@ import com.github.hdysh.dqtdb.model.UnitMin;
 public interface SkillService {
 	Skill getSkill(BigInteger id);
 
+	String getEnhancement(BigInteger id);
+
 	List<UnitMin> getUnits(BigInteger id);
 
 }

@@ -17,10 +17,11 @@ import lombok.ToString;
 public class EventArea {
 
 	private @Id BigInteger code;
-	@Column(name="areagroup")
+	@Column(name = "areagroup")
 	private BigInteger areaGroup;
-	@Column(name="eventportal")
+	@Column(name = "eventportal")
 	private BigInteger eventPortal;
 	private String name, icon;
-	private BigInteger atype;
+	private BigInteger category;
+	private BigInteger subCategory;
 }

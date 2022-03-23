@@ -39,7 +39,7 @@ public class Skill {
 	private List<SkillAilment> ailments;
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "code")
-	private List<SkillEffect> effects;
+	private List<SkillEffect> effects; 
 	@Transient
 	private String strMul;
 	@Transient
@@ -48,7 +48,7 @@ public class Skill {
 	private int activeSkillAction;
 	private int activeSkill;
 	private int activeSkillTarget;
-	private	int damageCalculation;
+	private int damageCalculation;
 
 	public String getStrMul() {
 		return multiplier / 10 + "";

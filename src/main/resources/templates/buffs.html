@@ -15,8 +15,6 @@
 <title>Status Change list</title>
 
 <th:block id="skill-static-resources">
-	<link href="../static/css/style.css"
-		th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
@@ -68,7 +66,7 @@
 		</div>
 
 
-		<script type="text/javascript" src="json/ailment.json"></script>
+		<script type="text/javascript" src="json/buff_name.js"></script>
 		<script>
 			var loc = "[[${#locale}]]";
 			var names = {};
@@ -119,13 +117,13 @@
 												var suffix = 'Up/Down';
 												if (loc === 'ja') {
 													suffix = 'アップ/ダウン';
-													buff = buff_ja[row['name']];
+													buff = buff_name_ja[row['name']];
 												} else if (loc === 'fr') {
-													buff = buff_fr[row['name']] ? buff_fr[row['name']]
-															: buff_ja[row['name']];
+													buff = buff_name_fr[row['name']] ? buff_name_fr[row['name']]
+															: buff_name_ja[row['name']];
 												} else {
-													buff = buff_en[row['name']] ? buff_en[row['name']]
-															: buff_ja[row['name']];
+													buff = buff_name_en[row['name']] ? buff_name_en[row['name']]
+															: buff_name_ja[row['name']];
 												}
 												names[data] = buff;
 												return '<a href="/buff/' + data + '">'

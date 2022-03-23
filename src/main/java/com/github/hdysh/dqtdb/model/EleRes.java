@@ -21,4 +21,17 @@ public class EleRes {
 	private int ele5;
 	private int ele6;
 	private int ele7;
+
+	public EleRes add(EleRes res) {
+		if (res != null) {
+			this.ele1 += res.ele1;
+			this.ele2 += res.ele2;
+			this.ele3 += res.ele3;
+			this.ele4 += res.ele4;
+			this.ele5 += res.ele5;
+			this.ele6 += res.ele6;
+			this.ele7 += res.ele7;
+		}
+		return this;
+	}
 }

@@ -13,15 +13,15 @@ import lombok.EqualsAndHashCode;
 @Data
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = false)
-public class AbstractUnit<T extends AbstractUnit> {
+public class AbstractUnit {
 	public @Id BigInteger code;
-	 public	 String name;
+	public String name;
 	@ManyToOne(targetEntity = Family.class)
 	@JoinColumn(name = "family")
-	public	 Family family;
+	public Family family;
 	@ManyToOne(targetEntity = Role.class)
 	@JoinColumn(name = "role")
-	public	 Role role;
+	public Role role;
 	@ManyToOne(targetEntity = Rarity.class)
 	@JoinColumn(name = "rarity")
 	public Rarity rarity;

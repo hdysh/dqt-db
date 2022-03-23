@@ -38,9 +38,10 @@ public class SkillController {
 		ModelAndView modelAndView = new ModelAndView("skill");
 		Skill skill = skillService.getSkill(id);
 		List<UnitMin> units = skillService.getUnits(id);
-		System.out.println(skill);
 		modelAndView.addObject(skill);
 		modelAndView.addObject("units", units);
+		String enhancement = skillService.getEnhancement(id);
+		modelAndView.addObject("enhancement", enhancement);
 		return modelAndView;
 	}
 }

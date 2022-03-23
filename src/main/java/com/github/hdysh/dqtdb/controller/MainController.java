@@ -22,11 +22,13 @@ import com.github.hdysh.dqtdb.model.Ailment;
 import com.github.hdysh.dqtdb.model.Buff;
 import com.github.hdysh.dqtdb.model.EventArea;
 import com.github.hdysh.dqtdb.model.EventGroup;
+import com.github.hdysh.dqtdb.model.Passive;
 import com.github.hdysh.dqtdb.model.SkillMin;
 import com.github.hdysh.dqtdb.model.UnitDrop;
 import com.github.hdysh.dqtdb.model.UnitMin;
 import com.github.hdysh.dqtdb.service.BuffService;
 import com.github.hdysh.dqtdb.service.EventService;
+import com.github.hdysh.dqtdb.service.PassiveService;
 import com.github.hdysh.dqtdb.service.UnitsService;
 
 @Controller
@@ -39,6 +41,8 @@ public class MainController {
 	private EventService eventService;
 	@Autowired
 	private BuffService buffService;
+	@Autowired
+	private PassiveService passiveService;
 
 	@GetMapping("")
 	public String home() {
@@ -228,6 +232,36 @@ public class MainController {
 	public ModelAndView showBuffs() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("buffs");
+		return modelAndView;
+	}
+
+	@PostMapping("/passives/q")
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<List<Passive>> getPassives() {
+		List<Passive> passives = passiveService.getAllPassives();
+		return ResponseEntity.ok(passives);
+	}
+
+	@GetMapping("/passives")
+	@ResponseBody
+	public ModelAndView showPassives() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("passives");
+		return modelAndView;
+	}
+
+	@GetMapping("/passive/{id}")
+	@ResponseBody
+	public ModelAndView showPassive(@PathVariable(value = "id") BigInteger id) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("passive");
+		Passive passive = passiveService.getPassive(id);
+		modelAndView.addObject("passive", passive);
+		List<UnitMin> unitsPass = passiveService.getUnitByPassive(id);
+		modelAndView.addObject("unitsPass", unitsPass);
+		List<UnitMin> unitsAwa = passiveService.getUnitByAwakening(id);
+		modelAndView.addObject("unitsAwa", unitsAwa);
 		return modelAndView;
 	}
 }

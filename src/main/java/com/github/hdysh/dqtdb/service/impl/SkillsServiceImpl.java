@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.hdysh.dqtdb.model.Skill;
+import com.github.hdysh.dqtdb.model.SkillMin;
 import com.github.hdysh.dqtdb.repository.SkillRepository;
 import com.github.hdysh.dqtdb.service.SkillsService;
 
@@ -16,7 +16,7 @@ public class SkillsServiceImpl implements SkillsService {
 	private SkillRepository skillRepository;
 
 	@Override
-	public List<Skill> getAllSkill() {
+	public List<SkillMin> getAllSkill() {
 		return skillRepository.findAllSkill();
 	}
 

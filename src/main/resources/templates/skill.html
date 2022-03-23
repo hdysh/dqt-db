@@ -17,14 +17,81 @@
 <th:block id="skill-static-resources">
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
 		type="text/javascript"></script>
+	<script>		
+	</script>
 	<script>
-		
+	var enh = [(${enhancement})];
+
+	function applyEnhanc(val) {
+	    var defMp = $('#mp').data("val");
+	    var defMul = $('#mul').data("val") / 10;
+	    var defAddBase = $('#baseDamage').data("val");
+	    var defAilAcc = $('#ailAcc').data("val");
+	    var defBuffAcc = $('#buffAcc').data("val");
+	    var index = val.val();
+	    if (val.val() == 0) {
+	        $('#mp').text(defMp);
+	        $('#mul').text(($('#mul').data("val") / 10) + "%");
+	        $('#baseDamage').text(($('#baseDamage').data("val")));
+	        $('#ailAcc').text(($('#ailAcc').data("val")));
+	        $('#buffAcc').text(($('#buffAcc').data("val")));
+	    } else {
+	        var mp = enh[index].mp;
+	        var mul = 0;
+	        var add = 0;
+	        var ailAcc = 0;
+	        var buffAcc = 0;
+	        if (enh[index].damage_mul != 0) {
+	            mul = enh[index].damage_mul;
+	        }
+	        if (enh[index].healing_mul != 0) {
+	            mul = enh[index].healing_mul;
+	        }
+	        if (enh[index].healing_mul != 0) {
+	            mul = enh[index].healing_mul;
+	        }
+	        if (enh[index].mp_healing_add != 0) {
+	            add = enh[index].mp_healing_add;
+	        }
+	        if (enh[index].ail_acc != 0) {
+	            ailAcc = enh[index].ail_acc;
+	        }
+	        if (enh[index].buff_acc != 0) {
+	            buffAcc = enh[index].buff_acc;
+	        }
+	        if (mp != 0) {
+	            $('#mp').text((defMp - mp));
+	        }
+	        if (mul != 0) {
+	            $('#mul').text(((defMul * mul / 100) + defMul) + "%");
+	            $('#baseDamage').text(((defAddBase * mul / 100) + defAddBase));
+	        }
+	        if (add != 0) {
+	            $('#baseDamage').text((defAddBase + add));
+	        }
+	        if (ailAcc != 0) {
+	            $('#ailAcc').text((defAilAcc + ailAcc));
+	        }
+	        if (buffAcc != 0) {
+	            $('#buffAcc').text((defBuffAcc + buffAcc));
+	        }
+	    }
+	}
+	$(document).ready(function() {
+	    $("#enhancement").on("change", function() {
+	        var lev = $(this);
+	        applyEnhanc(lev);
+	    });
+	});
+
+	window.onload = function() {
+	    enhance.reset();
+	}
 	</script>
 </th:block>
 
 </head>
 <body>
-
 	<div id="skill-header" class="flex_center_row">
 		<div>
 			<div
@@ -44,6 +111,13 @@
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
 	<div id="skill-content" class="grid">
+		<form  name="enhance"  class="form-group">
+			<select class="form-control" id="enhancement">
+				<option th:each="i: ${#numbers.sequence(0, 10)}"
+					th:selected="${i == 0}" th:value="${i}"
+					th:text="${'enhancement +'+i}"></option>
+			</select>
+		</form>
 		<div class="flex_center_row pad-10">
 
 			<div class="skill-item bold flex-column pad-10">
@@ -66,14 +140,16 @@
 			</div>
 			<div class="skill-item bold flex-column pad-10">
 				<span th:text="MP" class="header"></span>
-				<div th:text="${skill.mp}" class="skill-sub-item">mp</div>
+				<div th:text="${skill.mp}" class="skill-sub-item" id="mp"
+					th:attr="data-val=${skill.mp}">mp</div>
 			</div>
 			<div th:if="${skill.baseDamage}"
 				class="skill-item bold flex-column pad-10">
 				<span
 					th:text="${skill.damageCalculation ==4|| skill.damageCalculation ==7} ? 'Base Heal' : 'Base Damage' "
 					class="header"></span>
-				<div th:text="${skill.baseDamage}" class="skill-sub-item">base
+				<div th:text="${skill.baseDamage}" class="skill-sub-item"
+					id="baseDamage" th:attr="data-val=${skill.baseDamage}">base
 					dmg</div>
 			</div>
 			<div th:if="${skill.minDamage}"
@@ -81,52 +157,61 @@
 				<span
 					th:text="${skill.damageCalculation ==5|| skill.damageCalculation ==7} ? 'Min Heal' : 'Min Damage' "
 					class="header"></span>
-				<div th:text="${skill.minDamage}" class="skill-sub-item">min
-					dmg</div>
+				<div th:text="${skill.minDamage}" class="skill-sub-item"
+					id="minDamage">min dmg</div>
 			</div>
 			<div th:if="${skill.maxDamage}"
 				class="skill-item bold flex-column pad-10">
 				<span
 					th:text="${skill.damageCalculation ==5 || skill.damageCalculation ==7} ? 'Max Heal' : 'Max Damage' "
 					class="header"></span>
-				<div th:text="${skill.maxDamage}" class="skill-sub-item">max
-					dmg</div>
+				<div th:text="${skill.maxDamage}" class="skill-sub-item"
+					id="maxDamage">max dmg</div>
 			</div>
 			<div th:if="${skill.accuracy}"
 				class="skill-item bold flex-column pad-10">
 				<span th:text="'Hit Rate'" class="header"></span>
-				<div th:text="${skill.accuracy + '%'}" class="skill-sub-item">acc</div>
+				<div th:text="${skill.accuracy + '%'}" class="skill-sub-item"
+					id="acc">acc</div>
 			</div>
 
 			<div th:if="${skill.multiplier}"
 				class="skill-item bold flex-column pad-10">
-				<span th:text="Multiplier" class="header"></span>
-				<div th:text="${skill.strMul+'%'}" class="skill-sub-item">mul</div>
+				<span th:text="Potency" class="header"></span>
+				<div th:text="${(skill.multiplier/10)+'%'}" class="skill-sub-item"
+					id="mul" th:attr="data-val=${skill.multiplier}">mul</div>
 			</div>
-			<div th:if="${skill.maxMul}"
+
+		<!-- 	<div th:if="${skill.maxMul}"
 				class="skill-item bold flex-column pad-10">
 				<span th:text="'+10 Multiplier'" class="header"></span>
 				<div th:text="${skill.strMaxMul+'%'}" class="skill-sub-item">max
 					mul</div>
-			</div>
+			</div> -->
 			<div th:if="not ${#lists.isEmpty(skill.buffs)}"
 				class="skill-item bold flex-column pad-10">
 				<span th:text="'Status Change'" class="header"></span>
 				<div th:each="sb,iter : ${skill.buffs}" th:remove="tag">
 					<div class="skill-sub-item" th:with=desc=#{${sb.buff.descFormat}}>
-						<div th:text="${sb.accuracy} +'% chance'"></div>
+						<div>
+							<span th:text="${sb.accuracy}" id="buffAcc"
+								th:attr="data-val=${sb.accuracy}"></span><span
+								th:text="'% chance'"></span>
+						</div>
 						<div th:text="${sb.duration}"></div>
 						<div th:with=name=#{${sb.buff.name}}>
 							<div th:with=suffix=#{${sb.suffix}}>
-								<span th:text="${sb.buff.level[sb.level]}"></span> <span
-									th:with="desc=${#strings.replace(desc,'<effectValue>', '')}">
+								<div th:with=val=${sb.buff.level[sb.level]}>
 									<span
-									th:with="desc=${#strings.replace(desc,'<statusChangeTo>', suffix)}">
-										<a th:href="@{${'/buff/' + sb.buff.code }}"
-										th:text="${#strings.replace(desc,'<statusName>', name)}"
-										class="skill-sub-item"> </a>
-								</span>
-								</span>
+										th:with="desc=${#strings.replace(desc,'<effectValue>', val)}">
+										<span
+										th:with="desc=${#strings.replace(desc,'<statusChangeTo>', suffix)}">
+											<a th:href="@{${'/buff/' + sb.buff.code }}"
+											th:text="${#strings.replace(desc,'<statusName>', name)}"
+											class="skill-sub-item">Status Change</a>
+									</span>
+									</span>
+								</div>
 							</div>
 						</div>
 
@@ -138,7 +223,11 @@
 				<span th:text="'Status Ailment'" class="header"></span>
 				<div th:each="sa,iter : ${skill.ailments}" th:remove="tag">
 					<div class="skill-sub-item">
-						<div th:text=" ${sa.accuracy} +'% chance' "></div>
+						<div>
+							<span th:text=" ${sa.accuracy} " id="ailAcc"
+								th:attr="data-val=${sa.accuracy}"></span><span
+								th:text="'% chance'"></span>
+						</div>
 						<div th:text="${sa.duration} "></div>
 						<a th:href="@{${'/ailment/' + sa.ailment.code }}"
 							th:text="#{${sa.ailment.name}} ">status ailment</a>
@@ -192,7 +281,7 @@
 			<div class="header bold">Learned by:</div>
 			<div class="flex_center_row">
 				<div th:each="unit : ${units}" th:remove="tag">
-					<div class="frame-container" th:title="${unit.name}">
+					<div class="frame-container" th:title="#{${unit.name}}">
 						<div class="framez">
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>

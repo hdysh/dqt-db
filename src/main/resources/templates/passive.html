@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #skill-static-resources},
+                                                ~{:: #skill-header},
+                                                ~{:: #skill-nav},
+                                                ~{:: #skill-content},  
+                                                ~{:: #skill-footer}
+                                               )}">
+
+<head>
+<title
+	th:text="${'__#{${passive.name}}__'.replaceAll('<.+?>', (passive.var ) ).replaceAll('\+-', '-' )}"></title>
+
+<th:block id="skill-static-resources">
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+		type="text/javascript"></script>
+	<script>
+		
+	</script>
+</th:block>
+
+</head>
+<body>
+
+	<div id="skill-header" class="flex_center_row">
+		<div class="pad-left-10"
+			th:text="${'__#{${passive.name}}__'.replaceAll('<.+?>', (passive.var ) ).replaceAll('\+-', '-' )}"></div>
+	</div>
+
+	<div id="skill-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="skill-content" th:with=name=#{${passive.name}}>
+		<div class="flex_center_row pad-10">
+
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Name" class="header"></span>
+				<div class="skill-sub-item"
+					th:text="${'__#{${passive.name}}__'.replaceAll('<.+?>', (passive.var ) ).replaceAll('\+-', '-' )}">name
+				</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Description" class="header"></span>
+				<div class="skill-sub-item"
+					th:text="${'__#{${passive.description}}__'.replaceAll('<.+?>', (passive.var ) ).replaceAll('\+-', '-' )}">desc</div>
+
+			</div>
+
+		</div>
+		<div class="learned" th:if="not ${#lists.isEmpty(unitsPass)}">
+			<div class="header bold">Unit(s) with this passive:</div>
+			<div class="flex_center_row">
+				<div th:each="unit : ${unitsPass}" th:remove="tag">
+					<div class="frame-container" th:title="#{${unit.name}}">
+						<div class="framez">
+							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
+						</div>
+						<div class="prof">
+							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+
+						</div>
+						<div class="framez">
+							<a th:href="@{${'/unit/' + unit.code}}"> <img
+								th:src="@{${'/img/icon/' + unit.rarity.frame }}" /></a>
+						</div>
+						<div class="rarity">
+							<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="learned" th:if="not ${#lists.isEmpty(unitsAwa)}">
+			<div class="header bold">Unit(s) with this awakening:</div>
+			<div class="flex_center_row">
+				<div th:each="unit : ${unitsAwa}" th:remove="tag">
+					<div class="frame-container" th:title="#{${unit.name}}">
+						<div class="framez">
+							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
+						</div>
+						<div class="prof">
+							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+
+						</div>
+						<div class="framez">
+							<a th:href="@{${'/unit/' + unit.code}}"> <img
+								th:src="@{${'/img/icon/' + unit.rarity.frame }}" /></a>
+						</div>
+						<div class="rarity">
+							<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="skill-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+</body>
+</html>

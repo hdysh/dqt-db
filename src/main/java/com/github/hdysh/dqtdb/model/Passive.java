@@ -20,7 +20,7 @@ public class Passive {
 	private String description;
 	private String leadericon;
 	@OneToOne(targetEntity = EleRes.class)
-	@JoinColumn(name = "code")
+	@JoinColumn(name = "eleres")
 	private EleRes eleres;
 
 	@OneToOne(fetch = FetchType.EAGER, targetEntity = StatsRank.class)
@@ -28,4 +28,7 @@ public class Passive {
 	private StatsRank stats;
 	private int var;
 
+	public String replaceName(String text, String target, String replacement) {
+		return text.replaceAll(target, replacement);
+	}
 }
