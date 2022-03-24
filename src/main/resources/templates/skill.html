@@ -97,8 +97,8 @@
 			<div
 				th:classappend="${skill.rarity.code==30} ? skill_frame : skill_frame2"
 				th:style="@{${'background-image: url(/img/icon/' + skill.button+');' }}">
-				<span class="skill_frame_centerer"></span><img
-					th:src="@{${'/img/icon/' + skill.icon }}" />
+				<span class="skill_frame_centerer"></span>
+				<img th:src="@{${'/img/icon/' + skill.icon }}" />
 			</div>
 		</div>
 		<div th:text="#{${skill.name}}" class="pad-left-10"></div>
@@ -111,13 +111,15 @@
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
 	<div id="skill-content" class="grid">
-		<form  name="enhance"  class="form-group">
-			<select class="form-control" id="enhancement">
-				<option th:each="i: ${#numbers.sequence(0, 10)}"
-					th:selected="${i == 0}" th:value="${i}"
-					th:text="${'enhancement +'+i}"></option>
-			</select>
-		</form>
+		<div  class="enhance-level">
+			<form name="enhance" class="form-group">
+				<select class="form-control" id="enhancement">
+					<option th:each="i: ${#numbers.sequence(0, 10)}"
+						th:selected="${i == 0}" th:value="${i}"
+						th:text="${'enhancement +'+i}"></option>
+				</select>
+			</form>
+		</div>
 		<div class="flex_center_row pad-10">
 
 			<div class="skill-item bold flex-column pad-10">
@@ -177,12 +179,12 @@
 
 			<div th:if="${skill.multiplier}"
 				class="skill-item bold flex-column pad-10">
-				<span th:text="Potency" class="header"></span>
+				<span th:text="Multiplier" class="header"></span>
 				<div th:text="${(skill.multiplier/10)+'%'}" class="skill-sub-item"
 					id="mul" th:attr="data-val=${skill.multiplier}">mul</div>
 			</div>
 
-		<!-- 	<div th:if="${skill.maxMul}"
+			<!-- 	<div th:if="${skill.maxMul}"
 				class="skill-item bold flex-column pad-10">
 				<span th:text="'+10 Multiplier'" class="header"></span>
 				<div th:text="${skill.strMaxMul+'%'}" class="skill-sub-item">max
@@ -195,8 +197,8 @@
 					<div class="skill-sub-item" th:with=desc=#{${sb.buff.descFormat}}>
 						<div>
 							<span th:text="${sb.accuracy}" id="buffAcc"
-								th:attr="data-val=${sb.accuracy}"></span><span
-								th:text="'% chance'"></span>
+								th:attr="data-val=${sb.accuracy}"></span>
+							<span th:text="'% chance'"></span>
 						</div>
 						<div th:text="${sb.duration}"></div>
 						<div th:with=name=#{${sb.buff.name}}>
@@ -205,11 +207,11 @@
 									<span
 										th:with="desc=${#strings.replace(desc,'<effectValue>', val)}">
 										<span
-										th:with="desc=${#strings.replace(desc,'<statusChangeTo>', suffix)}">
+											th:with="desc=${#strings.replace(desc,'<statusChangeTo>', suffix)}">
 											<a th:href="@{${'/buff/' + sb.buff.code }}"
-											th:text="${#strings.replace(desc,'<statusName>', name)}"
-											class="skill-sub-item">Status Change</a>
-									</span>
+												th:text="${#strings.replace(desc,'<statusName>', name)}"
+												class="skill-sub-item">Status Change</a>
+										</span>
 									</span>
 								</div>
 							</div>
@@ -225,8 +227,8 @@
 					<div class="skill-sub-item">
 						<div>
 							<span th:text=" ${sa.accuracy} " id="ailAcc"
-								th:attr="data-val=${sa.accuracy}"></span><span
-								th:text="'% chance'"></span>
+								th:attr="data-val=${sa.accuracy}"></span>
+							<span th:text="'% chance'"></span>
 						</div>
 						<div th:text="${sa.duration} "></div>
 						<a th:href="@{${'/ailment/' + sa.ailment.code }}"
@@ -290,8 +292,9 @@
 
 						</div>
 						<div class="framez">
-							<a th:href="@{${'/unit/' + unit.code}}"> <img
-								th:src="@{${'/img/icon/' + unit.rarity.frame }}" /></a>
+							<a th:href="@{${'/unit/' + unit.code}}">
+								<img th:src="@{${'/img/icon/' + unit.rarity.frame }}" />
+							</a>
 						</div>
 						<div class="rarity">
 							<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />

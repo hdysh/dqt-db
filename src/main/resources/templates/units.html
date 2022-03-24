@@ -4,97 +4,110 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #unit-static-resources},
-                                                ~{:: #unit-header},
-                                                ~{:: #unit-nav},
-                                                ~{:: #unit-content},  
-                                                ~{:: #unit-footer}
+                                                ~{:: #units-static-resources},
+                                                ~{:: #units-header},
+                                                ~{:: #units-nav},
+                                                ~{:: #units-content},  
+                                                ~{:: #units-footer}
                                                )}">
 
 <head>
 <title>Unit list</title>
 
-<th:block id="unit-static-resources">
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-3.5.1.js">
-		
-	</script>
-
-
+<th:block id="units-static-resources">
+	<script type="text/javascript" charset="utf8"
+		src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
 	<link rel="stylesheet" type="text/css"
 		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="text/css"
 		href="https://cdn.datatables.net/1.11.5/css/dataTables.jqueryui.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 
 </th:block>
 
 </head>
 <body>
 
-	<div id="unit-header">Unit List</div>
+	<div id="units-header">
+		<div>Unit List</div>
+	</div>
 
-	<div id="unit-nav"
+	<div id="units-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
-	<div id="unit-content">
+	<div id="units-content">
 
 
 		<div>
 			<div class="units">
 				<div>
-					<form name="frank" style="padding: 1px">
-						Rarity : <label><input type="radio" name="rank"
-							value="MonsterRankIcon_S">
-						<img title="S" src="/img/icon/MonsterRankIcon_S.png"></label><label><input
-							type="radio" name="rank" value="MonsterRankIcon_A">
-						<img title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_B">
-						<img title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_C">
-						<img title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_D">
-						<img title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_E">
-						<img title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_F">
-						<img title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
-							type="radio" name="rank" value="" checked="checked">
-						<img title="All" src="/img/icon/all.png"></label>
+					<form name="frank" class="form-filter">
+						<div class="form-name">Rarity:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="rank"
+								value="MonsterRankIcon_S"> <img title="S"
+									src="/img/icon/MonsterRankIcon_S.png"></label><label><input
+								type="radio" name="rank" value="MonsterRankIcon_A"> <img
+									title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_B"> <img
+									title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_C"> <img
+									title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_D"> <img
+									title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_E"> <img
+									title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_F"> <img
+									title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
+								type="radio" name="rank" value="" checked="checked"> <img
+									title="All" src="/img/icon/all.png"></label>
+						</div>
 					</form>
-					<form name="ffam" style="padding: 1px">
-						Family : <label><input type="radio" name="family"
-							value="Slime">
-						<img title="Slime" src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label>
-						<label><input type="radio" name="family" value="Dragon">
-						<img title="Dragon"
-								src="/img/icon/EquipmentIcon_DragonFamilly.png"></label> <label><input
-							type="radio" name="family" value="Nature">
-						<img title="Nature"
-								src="/img/icon/EquipmentIcon_NatureFamilly.png"></label> <label><input
-							type="radio" name="family" value="Beast">
-						<img title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
-						<label><input type="radio" name="family" value="Material">
-						<img title="Inorganic"
-								src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
-							type="radio" name="family" value="Devil">
-						<img title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
-						<label><input type="radio" name="family" value="Zombie">
-						<img title="Undead"
-								src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label> <label><input
-							type="radio" name="family" value="Special">
-						<img title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
-						<label><input type="radio" name="family" value="Hero">
-						<img title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
-						<label><input type="radio" name="family" value=""
-							checked="checked">
-						<img title="All" src="/img/icon/all.png"></label>
+					<form name="ffam" class="form-filter">
+						<div class="form-name">Family:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="family" value="Slime">
+								<img title="Slime"
+									src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
+								type="radio" name="family" value="Dragon"> <img
+									title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
+							<label><input type="radio" name="family" value="Nature">
+								<img title="Nature"
+									src="/img/icon/EquipmentIcon_NatureFamilly.png"></label> <label><input
+								type="radio" name="family" value="Beast"> <img
+									title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
+							<label><input type="radio" name="family" value="Material">
+								<img title="Inorganic"
+									src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
+								type="radio" name="family" value="Devil"> <img
+									title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
+							<label><input type="radio" name="family" value="Zombie">
+								<img title="Undead"
+									src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label> <label><input
+								type="radio" name="family" value="Special"> <img
+									title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
+							<label><input type="radio" name="family" value="Hero">
+								<img title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
+							<label><input type="radio" name="family" value=""
+								checked="checked"> <img title="All"
+									src="/img/icon/all.png"></label>
+						</div>
 					</form>
-					<table id="example" class="display cell-border" style="width: 100%">
+					<table id="example" class="display nowrap" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Icon</th>
@@ -141,6 +154,7 @@
 								"paging" : true,
 								"pageLength" : 25,
 								"order" : [ 1, "asc" ],
+								"responsive" : true,
 								"ajax" : {
 									"url" : "/units/q",
 									"type" : "POST",
@@ -160,10 +174,10 @@
 														|| type === 'type') {
 													return data;
 												} else {
-													return '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/' +
-	                            row.rarity['background'] + '" /></div><div class="prof-s"><img src="/img/icon/' + data +
-	                            '" /></div><div class="framez-s"><img src="/img/icon/' + row.rarity['frame'] +
-	                            '" /></div></div>';
+													return '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/' 
+													+ row.rarity['background'] + '" /></div><div class="prof-s"><img src="/img/icon/' 
+													+ data + '" /></div><div class="framez-s"><img src="/img/icon/' 
+													+ row.rarity['frame'] + '" /></div></div>';
 												}
 											}
 										},
@@ -253,7 +267,7 @@
 
 
 
-	<div id="unit-footer"
+	<div id="units-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
 
 

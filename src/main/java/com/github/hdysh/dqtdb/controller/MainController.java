@@ -262,6 +262,8 @@ public class MainController {
 		modelAndView.addObject("unitsPass", unitsPass);
 		List<UnitMin> unitsAwa = passiveService.getUnitByAwakening(id);
 		modelAndView.addObject("unitsAwa", unitsAwa);
+		List<UnitMin> unitsLead = passiveService.getUnitByLeaderSkill(id);
+		modelAndView.addObject("unitsLead", unitsLead);
 		return modelAndView;
 	}
 }

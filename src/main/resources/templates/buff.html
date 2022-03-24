@@ -4,17 +4,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #skill-static-resources},
-                                                ~{:: #skill-header},
-                                                ~{:: #skill-nav},
-                                                ~{:: #skill-content},  
-                                                ~{:: #skill-footer}
+                                                ~{:: #buff-static-resources},
+                                                ~{:: #buff-header},
+                                                ~{:: #buff-nav},
+                                                ~{:: #buff-content},  
+                                                ~{:: #buff-footer}
                                                )}">
 
 <head>
 <title th:text="#{${buff.name}}"></title>
 
-<th:block id="skill-static-resources">
+<th:block id="buff-static-resources">
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
 		type="text/javascript"></script>
 	<script>
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-	<div id="skill-header" class="flex_center_row"
+	<div id="buff-header" class="flex_center_row"
 		th:with="level=${buff.level}">
 		<div th:if="${not #strings.isEmpty(buff.iconUp)}" class="pad-left-10">
 			<img th:src="@{${'/img/icon/' + buff.iconUp }}" />
@@ -38,10 +38,10 @@
 		</div>
 	</div>
 
-	<div id="skill-nav"
+	<div id="buff-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
-	<div id="skill-content" th:with=name=#{${buff.name}}>
+	<div id="buff-content" th:with=name=#{${buff.name}}>
 		<div th:each="suf,iter : ${buff.suffix}" th:remove="tag">
 			<div
 				th:if="${(iter.index==0 and buff.up and buff.iconUp!=null) or (iter.index==1 and buff.down and buff.iconDown!=null)}"
@@ -205,7 +205,7 @@
 		</div>
 	</div> -->
 
-	<div id="skill-footer"
+	<div id="buff-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
 </body>
 </html>

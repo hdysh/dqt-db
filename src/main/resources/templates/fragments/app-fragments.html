@@ -5,47 +5,58 @@
 <title>App Fragments</title>
 </head>
 <body>
+	<div class="sub-nav" th:fragment="nav-default">
+		<div id="nav-menu">
+			<button onclick="openNav()">&#9776;</button>
+		</div>
+		<a id="openbtn" href="javascript:void(0)" class="closebtn"
+			onclick="closeNav()">&times;</a>
+		<ul id="nav-list">
+			<li><div class="nav-list">
+					<a th:href="@{/units}">UNITS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/skills}">SKILLS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/ailments}">AILMENTS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/buffs}">BUFF / DEBUFF</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/passives}">PASSIVES</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/event}">EVENTS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/story}">STORY QUESTS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/battleroad}">BATTLE ROADS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/extra}">EXTRAS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/daily}">DAILIES</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/unitdrop}">FARMABLE UNITS</a>
+				</div></li>
+			<li><div
+					style="padding: 5px; background-color: #fcfffa; display: flex; border-radius: 0.3rem; margin: 5px; font-weight: bold;">
+					Lang:
+					<a th:href="@{''(lang=en)}">en</a>
+					/
+					<a th:href="@{''(lang=ja)}">ja</a>
+					/
+					<a th:href="@{''(lang=fr)}">fr</a>
+				</div></li>
+		</ul>
+	</div>
 
-	<ul th:fragment="nav-default">
-		<li><div class="nav-list">
-				<a th:href="@{/units}">UNITS</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/skills}">SKILLS</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/ailments}">AILMENTS</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/buffs}">BUFF / DEBUFF</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/passives}">PASSIVES</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/event}">EVENTS</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/story}">STORY QUESTS</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/battleroad}">BATTLE ROADS</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/extra}">EXTRAS</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/daily}">DAILIES</a>
-			</div></li>
-		<li><div class="nav-list">
-				<a th:href="@{/unitdrop}">FARMABLE UNITS</a>
-			</div></li>
-		<li><div
-				style="padding: 5px; background-color: #fcfffa; display: flex; border-radius: 0.3rem; margin: 5px; font-weight: bold;">
-				Lang: <a th:href="@{''(lang=en)}">en</a>/<a th:href="@{''(lang=ja)}">ja</a>/<a
-					th:href="@{''(lang=fr)}">fr</a>
-			</div></li>
-	</ul>
 	<div th:fragment="copyright"></div>
 </body>
 </html>

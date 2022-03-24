@@ -31,9 +31,8 @@ public class UnitsController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<UnitMin>> getAll() {
 		List<UnitMin> units = unitService.getAll();
-
 		return ResponseEntity.ok(units);
-	}
+	} 
 
 	@GetMapping("/q")
 	@ResponseBody

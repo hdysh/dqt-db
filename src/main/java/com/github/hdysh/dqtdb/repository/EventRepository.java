@@ -55,7 +55,7 @@ public interface EventRepository extends CrudRepository<EventPortal, BigInteger>
 
 	@Query("select ea from EventArea ea where (ea.category= 6 or ea.category= 9 or ea.category= 2) and ea.areaGroup is null and ea.eventPortal is null")
 	List<EventArea> findExtraArea();
-
+ 
 	@Query("select eg from EventGroup eg where eg.category= 2 and eg.eventPortal is null")
 	List<EventGroup> findExtraGroup();
 

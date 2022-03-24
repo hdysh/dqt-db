@@ -23,4 +23,7 @@ public interface PassiveRepository extends CrudRepository<UnitMin, BigInteger> {
 
 	@Query(value = "select distinct unit.* from unit inner join unit_awakening on unit.code = unit_awakening.code where unit_awakening.awakening = ?1 ", nativeQuery = true)
 	List<UnitMin> findUnitByAwakening(BigInteger passive);
+
+	@Query(value = "select * from unit where unit.leader = ?1 ", nativeQuery = true)
+	List<UnitMin> findUnitByLeader(BigInteger leader);
 }

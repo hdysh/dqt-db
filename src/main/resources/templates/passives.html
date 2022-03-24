@@ -4,17 +4,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #skill-static-resources},
-                                                ~{:: #skill-header},
-                                                ~{:: #skill-nav},
-                                                ~{:: #skill-content},  
-                                                ~{:: #skill-footer}
+                                                ~{:: #passives-static-resources},
+                                                ~{:: #passives-header},
+                                                ~{:: #passives-nav},
+                                                ~{:: #passives-content},  
+                                                ~{:: #passives-footer}
                                                )}">
 
 <head>
 <title>Passive list</title>
 
-<th:block id="skill-static-resources"> 
+<th:block id="passives-static-resources">
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
@@ -35,12 +35,12 @@
 </head>
 <body>
 
-	<div id="skill-header">Passive List</div>
+	<div id="passives-header">Passive List</div>
 
-	<div id="skill-nav"
+	<div id="passives-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
-	<div id="skill-content">
+	<div id="passives-content">
 
 
 		<div>
@@ -90,7 +90,7 @@
 											"data" : "code",
 											"render" : function(data, type,
 													row, meta) {
-												var name = '';
+												let name = '';
 												if (loc === 'ja') {
 													name = passive_name_ja[row['name']];
 												} else if (loc === 'fr') {
@@ -126,14 +126,12 @@
 
 											}
 										} ],
-							}); 
+							});
 		</script>
 	</div>
 
 
-
-
-	<div id="skill-footer"
+	<div id="passives-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
 
 

@@ -4,23 +4,20 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #skill-static-resources},
-                                                ~{:: #skill-header},
-                                                ~{:: #skill-nav},
-                                                ~{:: #skill-content},  
-                                                ~{:: #skill-footer}
+                                                ~{:: #ailments-static-resources},
+                                                ~{:: #ailments-header},
+                                                ~{:: #ailments-nav},
+                                                ~{:: #ailments-content},  
+                                                ~{:: #ailments-footer}
                                                )}">
 
 <head>
 <title>Ailment list</title>
-
-<th:block id="skill-static-resources">
+<th:block id="ailments-static-resources">
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
 	</script>
-
-
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf8"
@@ -31,18 +28,14 @@
 	<link rel="stylesheet" type="text/css"
 		href="https://cdn.datatables.net/1.11.5/css/dataTables.jqueryui.min.css">
 </th:block>
-
 </head>
 <body>
+	<div id="ailments-header">Ailment List</div>
 
-	<div id="skill-header">Ailment List</div>
-
-	<div id="skill-nav"
+	<div id="ailments-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
-	<div id="skill-content">
-
-
+	<div id="ailments-content">
 		<div>
 			<div class="units">
 				<div>
@@ -123,9 +116,7 @@
 
 
 
-	<div id="skill-footer"
+	<div id="ailments-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
-
-
 </body>
 </html>

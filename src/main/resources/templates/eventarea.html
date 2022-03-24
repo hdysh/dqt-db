@@ -4,17 +4,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #event-static-resources},
-                                                ~{:: #event-header},
-                                                ~{:: #event-nav},
-                                                ~{:: #event-main-content},  
-                                                ~{:: #event-footer}
+                                                ~{:: #area-static-resources},
+                                                ~{:: #area-header},
+                                                ~{:: #area-nav},
+                                                ~{:: #area-main-content},  
+                                                ~{:: #area-footer}
                                                )}">
 
 <head>
 <title th:text="#{${area.name}}"></title>
 
-<th:block id="event-static-resources">
+<th:block id="area-static-resources">
 
 	<script type="text/javascript" src="../static/home.js"
 		th:src="@{/home.js}"></script>
@@ -27,7 +27,7 @@
 <body>
 
 
-	<div id="event-header" class="flex flex-column">
+	<div id="area-header" class="flex flex-column">
 
 		<div th:if="${portal}" class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
@@ -99,11 +99,11 @@
 		<div th:text="#{${area.name}}"></div>
 	</div>
 
-	<div id="event-nav"
+	<div id="area-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Home Nav
 	</div>
 
-	<div id="event-main-content">
+	<div id="area-main-content">
 		<div class="event flex-wrap">
 
 			<div th:each="ev,iter : ${stages}"
@@ -118,7 +118,7 @@
 	</div>
 
 
-	<div id="event-footer"
+	<div id="area-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
 
 

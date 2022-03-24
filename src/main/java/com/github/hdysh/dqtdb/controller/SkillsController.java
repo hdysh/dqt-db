@@ -19,7 +19,7 @@ import com.github.hdysh.dqtdb.service.SkillsService;
 @Controller
 @RequestMapping("/skills")
 public class SkillsController {
- 
+
 	@Autowired
 	private SkillsService skillsService;
 

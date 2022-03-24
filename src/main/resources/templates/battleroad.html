@@ -4,17 +4,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #event-static-resources},
-                                                ~{:: #event-header},
-                                                ~{:: #event-nav},
-                                                ~{:: #event-main-content},  
-                                                ~{:: #event-footer}
+                                                ~{:: #battleroad-static-resources},
+                                                ~{:: #battleroad-header},
+                                                ~{:: #battleroad-nav},
+                                                ~{:: #battleroad-main-content},  
+                                                ~{:: #battleroad-footer}
                                                )}">
 
 <head>
 <title>Battle Road</title>
 
-<th:block id="event-static-resources">
+<th:block id="battleroad-static-resources">
 
 	<script type="text/javascript" src="../static/home.js"
 		th:src="@{/home.js}"></script>
@@ -26,16 +26,16 @@
 </head>
 <body>
 
-	<div id="event-header" class="flex flex-column">
+	<div id="battleroad-header" class="flex flex-column">
 
 		<div>Battle Road</div>
 	</div>
 
-	<div id="event-nav"
+	<div id="battleroad-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Home Nav
 	</div>
 
-	<div id="event-main-content">
+	<div id="battleroad-main-content">
 		<div class="event flex-wrap">
 			<div th:each="br,iter : ${groups}"
 				class="event-banner drop-item bold margin-10 pad-10">
@@ -57,7 +57,7 @@
 	</div>
 
 
-	<div id="event-footer"
+	<div id="battleroad-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
 
 

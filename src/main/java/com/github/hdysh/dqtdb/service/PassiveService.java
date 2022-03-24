@@ -14,4 +14,6 @@ public interface PassiveService {
 	List<UnitMin> getUnitByPassive(BigInteger id);
 
 	List<UnitMin> getUnitByAwakening(BigInteger id);
+
+	List<UnitMin> getUnitByLeaderSkill(BigInteger id);
 }

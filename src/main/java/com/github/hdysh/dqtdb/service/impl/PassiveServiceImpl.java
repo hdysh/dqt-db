@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.hdysh.dqtdb.model.Passive;
+import com.github.hdysh.dqtdb.model.Unit;
 import com.github.hdysh.dqtdb.model.UnitMin;
 import com.github.hdysh.dqtdb.repository.PassiveRepository;
 import com.github.hdysh.dqtdb.service.PassiveService;
@@ -38,6 +39,13 @@ public class PassiveServiceImpl implements PassiveService {
 	@Override
 	public List<UnitMin> getUnitByAwakening(BigInteger id) {
 		List<UnitMin> u = passiveRepository.findUnitByAwakening(id);
+		Collections.sort(u, new UnitMinComparator());
+		return u;
+	}
+
+	@Override
+	public List<UnitMin> getUnitByLeaderSkill(BigInteger id) {
+		List<UnitMin> u = passiveRepository.findUnitByLeader(id);
 		Collections.sort(u, new UnitMinComparator());
 		return u;
 	}

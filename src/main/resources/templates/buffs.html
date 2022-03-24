@@ -4,17 +4,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #skill-static-resources},
-                                                ~{:: #skill-header},
-                                                ~{:: #skill-nav},
-                                                ~{:: #skill-content},  
-                                                ~{:: #skill-footer}
+                                                ~{:: #buffs-static-resources},
+                                                ~{:: #buffs-header},
+                                                ~{:: #buffs-nav},
+                                                ~{:: #buffs-content},  
+                                                ~{:: #buffs-footer}
                                                )}">
 
 <head>
 <title>Status Change list</title>
 
-<th:block id="skill-static-resources">
+<th:block id="buffs-static-resources">
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.5.1.js">
 		
@@ -35,12 +35,12 @@
 </head>
 <body>
 
-	<div id="skill-header">Status Change List</div>
+	<div id="buffs-header">Status Change List</div>
 
-	<div id="skill-nav"
+	<div id="buffs-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
-	<div id="skill-content">
+	<div id="buffs-content">
 
 
 		<div>
@@ -137,7 +137,7 @@
 
 
 
-	<div id="skill-footer"
+	<div id="buffs-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
 
 

@@ -4,101 +4,112 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{main-layout :: main-fragment(  
                                                 ~{::title},
-                                                ~{:: #skill-static-resources},
-                                                ~{:: #skill-header},
-                                                ~{:: #skill-nav},
-                                                ~{:: #skill-content},  
-                                                ~{:: #skill-footer}
+                                                ~{:: #skills-static-resources},
+                                                ~{:: #skills-header},
+                                                ~{:: #skills-nav},
+                                                ~{:: #skills-content},  
+                                                ~{:: #skills-footer}
                                                )}">
 
 <head>
 <title>Skill list</title>
 
-<th:block id="skill-static-resources">
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-3.5.1.js">
-		
-	</script>
-
-
+<th:block id="skills-static-resources">
+	<script type="text/javascript" charset="utf8"
+		src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/colreorder/1.5.5/js/dataTables.colReorder.min.js"></script>
 
 	<link rel="stylesheet" type="text/css"
 		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="text/css"
 		href="https://cdn.datatables.net/1.11.5/css/dataTables.jqueryui.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/colreorder/1.5.5/css/colReorder.dataTables.min.css">
 </th:block>
-
 </head>
 <body>
 
-	<div id="skill-header">Skill List</div>
+	<div id="skills-header">Skill List</div>
 
-	<div id="skill-nav"
+	<div id="skills-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
-	<div id="skill-content">
-
-
+	<div id="skills-content">
 		<div>
 			<div class="units">
 				<div>
-					<!-- <label>name : <input type="search" class="" placeholder=""
-						aria-controls="example"></label>
-					<div></div> -->
-					<form name="fele" style="padding: 1px">
-						Element : <label><input type="radio" name="ele"
-							value="Mera"> <img title="Frizz"
-								src="/img/icon/SpellIcon_Mera.png"></label> <label><input
-							type="radio" name="ele" value="Gira"> <img title="Sizz"
-								src="/img/icon/SpellIcon_Gira.png"></label><label><input
-							type="radio" name="ele" value="Hyado"> <img title="Crack"
-								src="/img/icon/SpellIcon_Hyado.png"></label><label><input
-							type="radio" name="ele" value="Bagi"> <img title="Woosh"
-								src="/img/icon/SpellIcon_Bagi.png"></label><label><input
-							type="radio" name="ele" value="Io"> <img title="Bang"
-								src="/img/icon/SpellIcon_Io.png"></label><label><input
-							type="radio" name="ele" value="Dein"> <img title="Zap"
-								src="/img/icon/SpellIcon_Dein.png"></label><label><input
-							type="radio" name="ele" value="Dorma"> <img title="Zam"
-								src="/img/icon/Spellcon_Dorma.png"></label><label><input
-							type="radio" name="ele" value="Mu"> <img title="Typeless"
-								src="/img/icon/SpellIcon_Mu.png"></label><label><input
-							type="radio" name="ele" value="" checked="checked"> <img
-								title="All" src="/img/icon/all.png"></label>
+					<form name="fele" class="form-filter">
+						<div class="form-name">Element:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="ele" value="Mera">
+								<img title="Frizz" src="/img/icon/SpellIcon_Mera.png"></label> <label><input
+								type="radio" name="ele" value="Gira"> <img title="Sizz"
+									src="/img/icon/SpellIcon_Gira.png"></label><label><input
+								type="radio" name="ele" value="Hyado"> <img
+									title="Crack" src="/img/icon/SpellIcon_Hyado.png"></label><label><input
+								type="radio" name="ele" value="Bagi"> <img title="Woosh"
+									src="/img/icon/SpellIcon_Bagi.png"></label><label><input
+								type="radio" name="ele" value="Io"> <img title="Bang"
+									src="/img/icon/SpellIcon_Io.png"></label><label><input
+								type="radio" name="ele" value="Dein"> <img title="Zap"
+									src="/img/icon/SpellIcon_Dein.png"></label><label><input
+								type="radio" name="ele" value="Dorma"> <img title="Zam"
+									src="/img/icon/Spellcon_Dorma.png"></label><label><input
+								type="radio" name="ele" value="Mu"> <img
+									title="Typeless" src="/img/icon/SpellIcon_Mu.png"></label><label><input
+								type="radio" name="ele" value="" checked="checked"> <img
+									title="All" src="/img/icon/all.png"></label>
+						</div>
 					</form>
 					<div></div>
 
-					<form name="ftype" style="padding: 1px">
-						Type : <label><input type="radio" name="type"
-							value="Physics">
-						<img title="Physics" src="/img/icon/SkillTypeIcon_Physics.png"></label><label><input
-							type="radio" name="type" value="Breath">
-						<img title="Breath" src="/img/icon/SkillTypeIcon_Breath.png"></label><label><input
-							type="radio" name="type" value="Spell">
-						<img title="Spell" src="/img/icon/SkillTypeIcon_Spell.png"></label><label><input
-							type="radio" name="type" value="Technique">
-						<img title="Technique" src="/img/icon/SkillTypeIcon_Technique.png"></label><label><input
-							type="radio" name="type" value="" checked="checked">
-						<img title="All" src="/img/icon/all.png"></label>
+					<form name="ftype" class="form-filter">
+						<div class="form-name">Type:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="type" value="Physics">
+								<img title="Physics" src="/img/icon/SkillTypeIcon_Physics.png"></label><label><input
+								type="radio" name="type" value="Breath"> <img
+									title="Breath" src="/img/icon/SkillTypeIcon_Breath.png"></label><label><input
+								type="radio" name="type" value="Spell"> <img
+									title="Spell" src="/img/icon/SkillTypeIcon_Spell.png"></label><label><input
+								type="radio" name="type" value="Technique"> <img
+									title="Technique" src="/img/icon/SkillTypeIcon_Technique.png"></label><label><input
+								type="radio" name="type" value="" checked="checked"> <img
+									title="All" src="/img/icon/all.png"></label>
+						</div>
 					</form>
 
 					<div></div>
-					<form name="frank" style="padding: 1px">
-						Rarity : <label><input type="radio" name="rank" value="30">
-						<img title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
-							type="radio" name="rank" value="20">
-						<img title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
-							type="radio" name="rank" value="10">
-						<img title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
-							type="radio" name="rank" value="" checked="checked">
-						<img title="All" src="/img/icon/all.png"></label>
+					<form name="frank" class="form-filter">
+						<div class="form-name">Rarity:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="rank" value="30">
+								<img title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+								type="radio" name="rank" value="20"> <img title="B"
+									src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+								type="radio" name="rank" value="10"> <img title="C"
+									src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+								type="radio" name="rank" value="" checked="checked"> <img
+									title="All" src="/img/icon/all.png"></label>
+						</div>
 					</form>
 					<div></div>
-					<table id="example" class="display cell-border" style="width: 100%">
+					<table id="example" class="display nowrap" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Icon</th>
@@ -140,6 +151,7 @@
 								"paging" : true,
 								"order" : [ 1, "asc" ],
 								"pageLength" : 25,
+								"responsive" : true,
 								"ajax" : {
 									"url" : "/skills/q",
 									"type" : "POST",
@@ -256,7 +268,7 @@
 
 
 
-	<div id="skill-footer"
+	<div id="skills-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
 
 

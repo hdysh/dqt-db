@@ -1,0 +1,235 @@
+.grid-container {
+	display: grid;
+	grid-template-columns: fit-content(20%) 1fr 1fr;
+	grid-template-rows: auto;
+	gap: 10px 10px;
+	grid-template-areas: "pp ss ld" "sk sk sk" "ps ps ps" "ak ak ak"
+		"er ar dr";
+}
+
+.pp {
+	display: grid;
+	grid-area: pp;
+	align-items: center;
+	justify-items: center;
+}
+
+.pp-inner {
+	background-color: gray;
+	padding: 10px;
+	border-radius: .8rem;
+}
+
+.sk {
+	grid-area: sk;
+	background-color: gray;
+	border-radius: .8rem;
+}
+
+.ps {
+	grid-area: ps;
+	background-color: gray;
+	border-radius: .8rem;
+}
+
+.ak {
+	grid-area: ak;
+	background-color: gray;
+	border-radius: .8rem;
+}
+
+.er {
+	grid-area: er;
+	background-color: gray;
+	border-radius: .8rem;
+	height: min-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ar {
+	grid-area: ar;
+	background-color: gray;
+	border-radius: .8rem;
+	margin: auto;
+}
+
+.dr {
+	grid-area: dr;
+	background-color: gray;
+	border-radius: .8rem;
+	height: min-content;
+}
+
+.ld {
+	grid-area: ld;
+	background-color: gray;
+	border-radius: .7rem;
+	height: max-content;
+	padding-bottom: 10px;
+	margin: auto;
+}
+
+.ss {
+	background-color: gray;
+	border-radius: .8rem;
+	padding: 10px;
+	grid-area: ss;
+	display: grid;
+	align-items: center;
+	justify-items: center;
+	margin: auto;
+}
+
+.passive_awak_container {
+	/* 	align-items: center;
+	display: grid;
+	grid-template-columns: 100px 250px 1fr;
+	gap: 5px 5px;
+	grid-template-areas: ". . ." ". . ." ". . ."; */
+	
+}
+
+.passive-row {
+	display: flex;
+}
+
+.passive_item {
+	margin: 1px;
+}
+
+.passive-level,.passive-awakening {
+	width: 15%;
+	min-width: 30px;
+}
+
+.passive-name {
+	width: 30%;
+}
+
+.passive-desc {
+	width: 90%;
+}
+
+.leader-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	min-height: 30px;
+	background-color: #d0d0d0;
+	text-align: center;
+	padding: 0 5px 0 5px;
+}
+
+@media only screen and (max-width:1180px) {
+	.grid-container {
+		grid-template-columns: auto;
+		grid-template-rows: auto;
+		
+		grid-template-areas: "pp ss" "ld ss" "sk sk" "ps ps" "ak ak" "er ar"
+			"dr ar";
+	}
+}
+
+@media only screen and (max-width: 650px) {
+	.grid-container {
+		grid-template-columns: auto;
+		grid-template-rows: auto;
+		grid-template-areas: "pp" "ss" "ld" "sk" "ps" "ak" "er" "ar" "dr";
+	}
+}
+
+@media only screen and (max-width: 650px) {
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr, .passive_item.bold {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	tr, .passive-row {
+		margin: 0 0 .5rem 0;
+	}
+	tr:nth-child(odd), .passive-row:nth-child(odd) {
+		background: #ccc;
+	}
+	td, .passive_item {
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee;
+		position: relative;
+		padding-left: 25% !important;
+		text-align: left !important;
+	}
+	.passive_item {
+		width: 100% !important;
+		justify-content: left;
+	}
+	.passive-row {
+		display: grid;
+	}
+	td:before, .passive_item:before {
+		/* Now like a table header */
+		position: absolute;
+		left: -6px;
+		width: 25%;
+		padding-right: 10px;
+		text-align: right !important;
+		white-space: nowrap;
+		top: 0;
+		right: 0;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		flex-direction: column;
+	}
+	skills .skill-sub-item {
+		padding-top: 0 !important;
+	}
+	td:nth-of-type(1):before {
+		content: "Level : ";
+	}
+	td:nth-of-type(2):before {
+		content: "Icon : ";
+	}
+	td:nth-of-type(3):before {
+		content: "Name : ";
+	}
+	td:nth-of-type(4):before {
+		content: "MP : ";
+	}
+	td:nth-of-type(5):before {
+		content: "Ele : ";
+	}
+	td:nth-of-type(6):before {
+		content: "Range : ";
+	}
+	td:nth-of-type(7):before {
+		content: "Desc : ";
+	}
+	.skill-range {
+		display: flex;
+		align-items: center;
+	}
+	.skill-range img {
+		width: min-content;
+		padding-right: 10px;
+	}
+	.passive-level::before {
+		content: "Level : ";
+	}
+	.passive-awakening::before {
+		content: "Awakening : ";
+	}
+	.passive-name::before {
+		content: "Name : ";
+	}
+	.passive-desc::before {
+		content: "Desc : ";
+	}
+}

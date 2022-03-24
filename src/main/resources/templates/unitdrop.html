@@ -15,21 +15,27 @@
 <title>Farmable Units</title>
 
 <th:block id="unitdrop-static-resources">
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-3.5.1.js">
-		
-	</script>
-
-
+	<script type="text/javascript" charset="utf8"
+		src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
 	<link rel="stylesheet" type="text/css"
 		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="text/css"
 		href="https://cdn.datatables.net/1.11.5/css/dataTables.jqueryui.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 </th:block>
 
 </head>
@@ -45,57 +51,63 @@
 		<div>
 			<div class="units">
 				<div>
-					<form name="frank" style="padding: 1px">
-						Rarity : <label><input type="radio" name="rank"
-							value="MonsterRankIcon_S"> <img title="S"
-								src="/img/icon/MonsterRankIcon_S.png"></label><label><input
-							type="radio" name="rank" value="MonsterRankIcon_A"> <img
-								title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_B"> <img
-								title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_C"> <img
-								title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_D"> <img
-								title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_E"> <img
-								title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
-							type="radio" name="rank" value="MonsterRankIcon_F"> <img
-								title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
-							type="radio" name="rank" value="" checked="checked"> <img
-								title="All" src="/img/icon/all.png"></label>
+					<form name="frank" class="form-filter">
+						<div class="form-name">Rarity:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="rank"
+								value="MonsterRankIcon_S"> <img title="S"
+									src="/img/icon/MonsterRankIcon_S.png"></label><label><input
+								type="radio" name="rank" value="MonsterRankIcon_A"> <img
+									title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_B"> <img
+									title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_C"> <img
+									title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_D"> <img
+									title="D" src="/img/icon/MonsterRankIcon_D.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_E"> <img
+									title="E" src="/img/icon/MonsterRankIcon_E.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_F"> <img
+									title="F" src="/img/icon/MonsterRankIcon_F.png"></label> <label><input
+								type="radio" name="rank" value="" checked="checked"> <img
+									title="All" src="/img/icon/all.png"></label>
+						</div>
 					</form>
-					<form name="ffam" style="padding: 1px">
-						Family : <label><input type="radio" name="family"
-							value="Slime"> <img title="Slime"
-								src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
-							type="radio" name="family" value="Dragon"> <img
-								title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
-						<label><input type="radio" name="family" value="Nature">
-							<img title="Nature"
-								src="/img/icon/EquipmentIcon_NatureFamilly.png"></label> <label><input
-							type="radio" name="family" value="Beast"> <img
-								title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
-						<label><input type="radio" name="family" value="Material">
-							<img title="Inorganic"
-								src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
-							type="radio" name="family" value="Devil"> <img
-								title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
-						<label><input type="radio" name="family" value="Zombie">
-							<img title="Undead"
-								src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label> <label><input
-							type="radio" name="family" value="Special"> <img
-								title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
-						<label><input type="radio" name="family" value="Hero">
-							<img title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
-						<label><input type="radio" name="family" value=""
-							checked="checked"> <img title="All"
-								src="/img/icon/all.png"></label>
+					<form name="ffam" class="form-filter">
+						<div class="form-name">Family:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="family" value="Slime">
+								<img title="Slime"
+									src="/img/icon/EquipmentIcon_SlimeFamilly.png"></label> <label><input
+								type="radio" name="family" value="Dragon"> <img
+									title="Dragon" src="/img/icon/EquipmentIcon_DragonFamilly.png"></label>
+							<label><input type="radio" name="family" value="Nature">
+								<img title="Nature"
+									src="/img/icon/EquipmentIcon_NatureFamilly.png"></label> <label><input
+								type="radio" name="family" value="Beast"> <img
+									title="Beast" src="/img/icon/EquipmentIcon_BeastFamilly.png"></label>
+							<label><input type="radio" name="family" value="Material">
+								<img title="Inorganic"
+									src="/img/icon/EquipmentIcon_MaterialFamilly.png"></label> <label><input
+								type="radio" name="family" value="Devil"> <img
+									title="Demon" src="/img/icon/EquipmentIcon_DevilFamilly.png"></label>
+							<label><input type="radio" name="family" value="Zombie">
+								<img title="Undead"
+									src="/img/icon/EquipmentIcon_ZombieFamilly.png"></label> <label><input
+								type="radio" name="family" value="Special"> <img
+									title="???" src="/img/icon/EquipmentIcon_SpecialFamily.png"></label>
+							<label><input type="radio" name="family" value="Hero">
+								<img title="Hero" src="/img/icon/EquipmentIcon_HeroFamily.png"></label>
+							<label><input type="radio" name="family" value=""
+								checked="checked"> <img title="All"
+									src="/img/icon/all.png"></label>
+						</div>
 					</form>
 					<form name="fopt" style="padding: 1px">
 						<label><input type="checkbox" name="family" id="optimal"
 							value="yes">Show only optimal stamina per drop</label>
 					</form>
-					<table id="example" class="display cell-border" style="width: 100%">
+					<table id="example" class="display nowrap" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Icon</th>
@@ -138,6 +150,20 @@
 								"paging" : true,
 								"order" : [ 1, "asc" ],
 								"pageLength" : 25,
+								"responsive" : true,
+								"columnDefs" : [ {
+									responsivePriority : 1,
+									targets : 1
+								}, {
+									responsivePriority : 2,
+									targets : 6
+								}, {
+									responsivePriority : 3,
+									targets : 7
+								}, {
+									responsivePriority : 4,
+									targets : 5
+								}],
 								"ajax" : {
 									"url" : "/unitdrop/q",
 									"type" : "POST",
@@ -159,7 +185,8 @@
 														|| type === 'type') {
 													return data[2];
 												} else {
-													return '<div class="icon_container_small"><img src="/img/icon/' + data[2] + '" /></div>';
+													return '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/MonsterIconBackGround_Ally.png" /></div><div class="prof-s"><img src="/img/icon/' + data[2]
+													+ '" /></div></div>';
 												}
 
 											}
@@ -307,7 +334,29 @@
 							$('#example').DataTable().columns(7).search("")
 									.draw();
 						}
+						/* 	var map = {};
+							$('#example').DataTable().rows({
+								filter : 'applied'
+							}).every(function(rowIdx, tableLoop, rowLoop) {
+								var data = this.data();
+								if (map[data.code]) {
+									map[data.code].push(data);
+								} else {
+									let obj = [];
+									obj.push(data);
+									map[data.code] = obj;
+								}
+							}); 
+							Object.entries(map).forEach(
+								    ([key, value]) => {
+
+								    	console.log(JSON.stringify(value));
+								    }
+								);
+						 
+							$('#example').DataTable().draw(); */
 					});
+
 			window.onload = function() {
 				frank.reset();
 				ffam.reset();

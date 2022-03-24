@@ -23,10 +23,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class UnitMin extends AbstractUnit {
-	public String getName() {
-		return name;
-	}
-
+	private BigInteger leader;
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "code")
 	@Where(clause = "rank = 7")
@@ -35,4 +32,8 @@ public class UnitMin extends AbstractUnit {
 	private List<BigInteger> stageDrop = new ArrayList<>();
 	@Transient
 	private List<Integer> dropRate = new ArrayList<>();
+
+	public String getName() {
+		return name;
+	}
 }

@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 }
 
-header {
+.head {
 	background-color: #666;
 	padding: 5px;
 	text-align: center;
@@ -12,14 +12,11 @@ header {
 
 nav {
 	float: left;
-	width: 150px; 
-	background: #ccc; 
-	margin:20px;
-	padding:10px;
-	border-radius: .8rem;
+	width: fit-content;
+	background: #ccc;
+	padding: 10px;
 }
 
- 
 nav ul {
 	list-style-type: none;
 	padding: 0;
@@ -28,7 +25,7 @@ nav ul {
 article {
 	float: left;
 	padding: 10px;
-	width: 70%; 
+	width: 80%;
 }
 
 section:after {
@@ -44,20 +41,70 @@ footer {
 	color: white;
 }
 
-@media ( max-width : 600px) {
-	nav, article {
-		width: 100%;
+nav .closebtn {
+	font-size: 36px;
+	display: none;
+}
+
+#nav-menu {
+	display: none;
+}
+
+@media ( max-width : 1000px) {
+	header {
+		display: flex;
+		align-items: stretch;
+		background-color: #ccc;
+	}
+	.head {
+		flex-grow: 5;
+		font-size: large;
+	}
+	nav {
+		float: none;
 		height: auto;
+		margin: 0;
+		width: fit-content;
+		border-radius: 0;
+	}
+	article {
+		float: none;
+		width: auto;
+		height: auto;
+	}
+	nav ul {
+		display: none;
+	}
+	#nav-menu {
+		display: unset;
+		font-size: x-large;
+	}
+	.font-20 {
+		font-size: small !important;
 	}
 }
 
 section {
-/* 	background-image: url("/img/bg/bg_016_obj_flr_onm01_02_02.png"); */
+	/* 	background-image: url("/img/bg/bg_016_obj_flr_onm01_02_02.png"); */
 	background-size: 150px;
 	background-repeat: repeat;
 	background-color: #444444;
 }
 
- body a { 
-    text-decoration: none;
+body a {
+	text-decoration: none;
+}
+
+#nav-menu button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.sub-nav {
+	text-align: center;
 }

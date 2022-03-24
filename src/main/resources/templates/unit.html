@@ -17,6 +17,8 @@
 <th:block id="unit-static-resources">
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
 		type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/unit.css}"
+		href="../static/css/unit.css" />
 	<script>
 		var pass  = [(${passAdd})]  ;
 		var stats = [(${stats})];
@@ -63,16 +65,16 @@
 			let output;
 	    let res = [{
 	            "min": -2147483648,
-	            "max": -66,
+	            "max": -6666,
 	            "icon": "ResistanceLevel_ChouZyakuten.png"
 	        },
 	        {
-	            "min": -66,
-	            "max": -33,
+	            "min": -6666,
+	            "max": -3333,
 	            "icon": "ResistanceLevel_DaiZyakuten.png"
 	        },
 	        {
-	            "min": -33,
+	            "min": -3333,
 	            "max": 0,
 	            "icon": "ResistanceLevel_Zyakuten.png"
 	        },
@@ -83,21 +85,21 @@
 	        },
 	        {
 	            "min": 1,
-	            "max": 34,
+	            "max": 3334,
 	            "icon": "ResistanceLevel_Keigen.png"
 	        },
 	        {
-	            "min": 34,
-	            "max": 67,
+	            "min": 3334,
+	            "max": 6667,
 	            "icon": "ResistanceLevel_Hangen.png"
 	        },
 	        {
-	            "min": 67,
-	            "max": 100,
+	            "min": 6667,
+	            "max": 10000,
 	            "icon": "ResistanceLevel_Gekigen.png"
 	        },
 	        {
-	            "min": 100,
+	            "min": 10000,
 	            "max": 2147483647,
 	            "icon": "ResistanceLevel_Mukou.png"
 	        }
@@ -197,184 +199,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="sk">
-					<div class="skills">
-						<div class="header bold">Skills</div>
-						<table class="w100">
-							<tr>
-								<th>Level</th>
-								<th>Icon</th>
-								<th>Name</th>
-								<th>MP</th>
-								<th>Element</th>
-								<th>Range</th>
-								<th>Description</th>
-							</tr>
-
-							<tr th:each="us  : ${unit.skills}">
-								<td th:if="${us.level>-1}" th:text="${us.level}">level</td>
-								<td th:if="${us.level==-1}"><img th:style="'height:25px;'"
-										title="Talent Blossom" src="/img/TrainingPointIcon.png" /></td>
-								<td>
-									<div
-										th:classappend="${us.skill.rarity.code==30} ? skill_frame : skill_frame2"
-										th:style="@{${'background-image: url(/img/icon/' + us.skill.button+');' }}">
-										<span class="skill_frame_centerer"></span>
-										<img th:src="@{${'/img/icon/' + us.skill.icon }}" />
-									</div>
-								</td>
-								<td><a th:href="@{${'/skill/' + us.skill.code }}"
-										th:text="#{${us.skill.name}}">name</a></td>
-								<td th:text="${us.skill.mp}">mp</td>
-								<td><img th:title="#{${us.skill.element.name}}"
-										th:src="@{${'/img/icon/' + us.skill.element.icon }}" /></td>
-								<td><div th:text="#{${us.skill.reach}}"></div> <img
-										th:src="@{${'/img/icon/' + us.skill.range }}" /></td>
-								<td th:with="desctr=#{${us.skill.description}}"><div
-										th:with="desc1=${#strings.replace(desctr,'<damagePhysics>',us.skill.strMul)}">
-										<div
-											th:with="desc2=${#strings.replace(desc1,'<specialCoolTurn>',us.skill.turn)}">
-											<div th:if="not ${#lists.isEmpty(us.skill.buffs)}"
-												th:with="desc3=${#strings.replace(desc2,'<Turn1>',us.skill.buffs[0].maxDur)}">
-												<div th:text="${desc3}" class="skill-sub-item">desc</div>
-											</div>
-											<div th:if="${#lists.isEmpty(us.skill.buffs)}">
-												<div th:text="${desc2}" class="skill-sub-item">desc</div>
-											</div>
-										</div>
-									</div></td>
-							</tr>
-						</table>
+				<div class="ld" th:if="${unit.leader}">
+					<div class="header bold">Leader Skill</div>
+					<a class="leader-item" th:href="@{${'/passive/' + unit.leader.code }}" th:text="#{${unit.leader.name}}"></a>
+					<div class="leader_container">
+						<img th:src="@{${'/img/icon/' + unit.leader.leadericon }}" />
 					</div>
-				</div>
-
-				<div class="ps" th:if="${unit.passives}">
-					<div class="skills">
-						<div class="header bold">Passive</div>
-						<div class="passive_awak_container" th:if="${unit.passives}">
-							<div class="passive_item bold">Level</div>
-							<div class="passive_item bold">Name</div>
-							<div class="passive_item bold">Description</div>
-
-							<div th:each="up,iter : ${unit.passives}" th:remove="tag">
-								<div class="passive_item" th:text="${up.level}"></div>
-								<div th:with="desctr=#{${up.passive.name}}" class="passive_item">
-									<a th:href="@{${'/passive/' + up.passive.code }}"
-										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) ).replaceAll('\+-', '-' )}"></a>
-								</div>
-								<div th:with="desctr=#{${up.passive.description}}"
-									class="passive_item">
-									<div
-										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) )}"></div>
-								</div>
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-
-				<div class="ak" th:if="${unit.awakenings}">
-
-					<div class="skills">
-						<div class="header bold">Awakening</div>
-
-						<div class="passive_awak_container" th:if="${unit.awakenings}">
-							<div class="passive_item bold">Awakening</div>
-							<div class="passive_item bold">Name</div>
-							<div class="passive_item bold">Description</div>
-							<div th:each="ua,iter : ${unit.awakenings}" th:remove="tag">
-								<div class="passive_item" th:text="${ua.level}"></div>
-								<div th:with="desctr=#{${ua.awakening.name}}"
-									class="passive_item">
-									<a th:href="@{${'/passive/' + ua.awakening.code }}"
-										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var ) ).replaceAll('\+-', '-' )}"></a>
-								</div>
-								<div th:with="desctr=#{${ua.awakening.description}}"
-									class="passive_item">
-									<div
-										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var ) )}"></div>
-								</div>
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-				<div class="er">
-					<div class="resistance">
-						<div class="header bold">Element Resistance</div>
-						<div th:each="re: ${eleres}" th:remove="tag">
-							<div class="res bold w300px res-grid">
-								<div class="h30px grid">
-									<img class="center self-center"
-										th:src="@{${'/img/icon/' +re.ele.icon }}" />
-								</div>
-								<div class="h30px grid">
-									<span class="center self-center" th:text="#{${re.ele.name }}"></span>
-								</div>
-								<div class="h30px grid">
-									<span class="center self-center" th:text="${re.value }"
-										th:id="${'ele'+re.ele.code}" th:attr="data-val=${re.value}"></span>
-								</div>
-								<div class="h30px grid">
-									<img class="center self-center"
-										th:src="@{${'/img/icon/' + re.icon  }}"
-										th:id="${'imgele'+re.ele.code}" />
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				<div class="ar">
-					<div class="resistance">
-						<div class="header bold w300px">Status Ailment Resistance</div>
-						<!-- <div th:each="res: ${unit.ailres.ail1}" class="" th:remove="tag"> -->
-						<div th:each="awak,iter : ${strAilment}" th:remove="tag">
-							<div class="res bold w300px res-grid">
-								<div class="h30px grid">
-									<img class="center self-center"
-										th:src="@{${'/img/icon/' +ailment.get(awak).icon }}" />
-								</div>
-								<div class="h30px grid">
-									<span class="center self-center"
-										th:text="#{${ailment.get(awak).name }}"></span>
-								</div>
-								<div class="h30px grid">
-									<span class="center self-center"
-										th:text="${ailres[iter.index].value }"
-										th:id="${'ail'+ailment.get(awak).code}"
-										th:attr="data-val=${ailres[iter.index].value}"></span>
-								</div>
-								<div class="h30px grid">
-									<img class="center self-center" th:id="${awak}"
-										th:src="@{${'/img/icon/' +ailres[iter.index].icon }}" />
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-
-				<div class="dr">
-					<div class="drops">
-						<div class="header bold w300px">How to get:</div>
-						<div th:each="drop  : ${unit.drops}">
-							<div class="drop-loc">
-								<div class="drop-top">
-									<a
-										th:href="${(drop.portalSplit[0] == '1' ? '/event/' : '/event/group/' )+drop.portalSplit[1]}"
-										th:text="#{${drop.portalSplit[2]}}"></a>
-								</div>
-								<div class="drop-bottom">
-									<span>➤</span>
-									<a th:href="${'/stages/'+drop.stageSplit[0]}"
-										th:text="#{${drop.stageSplit[1]}}"></a>
-								</div>
-							</div>
-						</div>
-					</div>
+					<div class="leader-item" th:text="#{${unit.leader.description}}"></div>
 
 				</div>
 				<div class="ss">
@@ -448,15 +279,201 @@
 						</div>
 					</form>
 				</div>
-				<div class="ld" th:if="${unit.leader}">
-					<div class="header">Leader Skill</div>
-					<div class="passive_item" th:text="#{${unit.leader.name}}"></div>
-					<div class="leader_container">
-						<img th:src="@{${'/img/icon/' + unit.leader.leadericon }}" />
+				<div class="sk">
+					<div class="skills">
+						<div class="header bold">Skills</div>
+						<table class="w100">
+							<thead>
+								<tr>
+									<th>Level</th>
+									<th>Icon</th>
+									<th>Name</th>
+									<th>MP</th>
+									<th>Element</th>
+									<th>Range</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="us  : ${unit.skills}">
+									<td th:if="${us.level>-1}" th:text="${us.level}">level</td>
+									<td th:if="${us.level==-1}"><img th:style="'height:25px;'"
+											title="Talent Blossom" src="/img/TrainingPointIcon.png" /></td>
+									<td>
+										<div
+											th:classappend="${us.skill.rarity.code==30} ? skill_frame : skill_frame2"
+											th:style="@{${'background-image: url(/img/icon/' + us.skill.button+');' }}">
+											<span class="skill_frame_centerer"></span>
+											<img th:src="@{${'/img/icon/' + us.skill.icon }}" />
+										</div>
+									</td>
+									<td><a th:href="@{${'/skill/' + us.skill.code }}"
+											th:text="#{${us.skill.name}}">name</a></td>
+									<td th:text="${us.skill.mp}">mp</td>
+									<td><img th:title="#{${us.skill.element.name}}"
+											th:src="@{${'/img/icon/' + us.skill.element.icon }}" /></td>
+									<td><div class="skill-range">
+											<img th:src="@{${'/img/icon/' + us.skill.range }}" />
+											<div th:text="#{${us.skill.reach}}"></div>
+										</div></td>
+									<td th:with="desctr=#{${us.skill.description}}"><div
+											th:remove="tag"
+											th:with="desc1=${#strings.replace(desctr,'<damagePhysics>',us.skill.strMul)}">
+											<div th:remove="tag"
+												th:with="desc2=${#strings.replace(desc1,'<specialCoolTurn>',us.skill.turn)}">
+												<div th:remove="tag"
+													th:if="not ${#lists.isEmpty(us.skill.buffs)}"
+													th:with="desc3=${#strings.replace(desc2,'<Turn1>',us.skill.buffs[0].maxDur)}">
+													<div th:text="${desc3}">desc</div>
+												</div>
+												<div th:remove="tag"
+													th:if="${#lists.isEmpty(us.skill.buffs)}">
+													<div th:text="${desc2}">desc</div>
+												</div>
+											</div>
+										</div></td>
+								</tr>
+							</tbody>
+
+						</table>
 					</div>
-					<div class="passive_item" th:text="#{${unit.leader.description}}"></div>
+				</div>
+
+				<div class="ps" th:if="${unit.passives}">
+					<div class="skills">
+						<div class="header bold">Passive</div>
+						<div class="passive_awak_container" th:if="${unit.passives}">
+							<div class="passive-row">
+								<div class="passive_item bold passive-level">Level</div>
+								<div class="passive_item bold passive-name">Name</div>
+								<div class="passive_item bold passive-desc">Description</div>
+							</div>
+
+							<div th:each="up,iter : ${unit.passives}" class="passive-row">
+								<div class="passive_item passive-level" th:text="${up.level}"></div>
+								<div th:with="desctr=#{${up.passive.name}}"
+									class="passive_item passive-name">
+									<a th:href="@{${'/passive/' + up.passive.code }}"
+										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) ).replaceAll('\+-', '-' )}"></a>
+								</div>
+								<div th:with="desctr=#{${up.passive.description}}"
+									class="passive_item passive-desc">
+									<div
+										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) )}"></div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="ak" th:if="${unit.awakenings}">
+
+					<div class="skills">
+						<div class="header bold">Awakening</div>
+
+						<div class="passive_awak_container" th:if="${unit.awakenings}">
+							<div class="passive-row">
+								<div class="passive_item bold passive-awakening">Awakening</div>
+								<div class="passive_item bold passive-name">Name</div>
+								<div class="passive_item bold passive-desc">Description</div>
+							</div>
+							<div th:each="ua,iter : ${unit.awakenings}" class="passive-row">
+								<div class="passive_item passive-awakening" th:text="${ua.level}"></div>
+								<div th:with="desctr=#{${ua.awakening.name}}"
+									class="passive_item passive-name">
+									<a th:href="@{${'/passive/' + ua.awakening.code }}"
+										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var ) ).replaceAll('\+-', '-' )}"></a>
+								</div>
+								<div th:with="desctr=#{${ua.awakening.description}}"
+									class="passive_item passive-desc">
+									<div
+										th:text="${ desctr.replaceAll('<.+?>', (ua.awakening.var ) )}"></div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				<div class="er">
+					<div class="resistance">
+						<div class="header bold">Element Resistance</div>
+						<div th:each="re: ${eleres}" th:remove="tag">
+							<div class="res bold w300px res-grid">
+								<div class="h30px grid">
+									<img class="center self-center"
+										th:src="@{${'/img/icon/' +re.ele.icon }}" />
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center" th:text="#{${re.ele.name }}"></span>
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center" th:text="${re.value }"
+										th:id="${'ele'+re.ele.code}" th:attr="data-val=${re.value}"></span>
+								</div>
+								<div class="h30px grid">
+									<img class="center self-center"
+										th:src="@{${'/img/icon/' + re.icon  }}"
+										th:id="${'imgele'+re.ele.code}" />
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="ar">
+					<div class="resistance">
+						<div class="header bold w300px">Status Ailment Resistance</div>
+						<!-- <div th:each="res: ${unit.ailres.ail1}" class="" th:remove="tag"> -->
+						<div th:each="awak,iter : ${strAilment}" th:remove="tag">
+							<div class="res bold w300px res-grid">
+								<div class="h30px grid">
+									<img class="center self-center"
+										th:src="@{${'/img/icon/' +ailment.get(awak).icon }}" />
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center"
+										th:text="#{${ailment.get(awak).name }}"></span>
+								</div>
+								<div class="h30px grid">
+									<span class="center self-center"
+										th:text="${ailres[iter.index].value }"
+										th:id="${'ail'+ailment.get(awak).code}"
+										th:attr="data-val=${ailres[iter.index].value}"></span>
+								</div>
+								<div class="h30px grid">
+									<img class="center self-center" th:id="${awak}"
+										th:src="@{${'/img/icon/' +ailres[iter.index].icon }}" />
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="dr" th:if="${#lists.size(unit.drops) > 0}">
+					<div class="drops">
+						<div class="header bold">How to get:</div>
+						<div th:each="drop  : ${unit.drops}">
+							<div class="drop-loc">
+								<div class="drop-top">
+									<a
+										th:href="${(drop.portalSplit[0] == '1' ? '/event/' : '/event/group/' )+drop.portalSplit[1]}"
+										th:text="#{${drop.portalSplit[2]}}"></a>
+								</div>
+								<div class="drop-bottom">
+									<span>➤</span>
+									<a th:href="${'/stages/'+drop.stageSplit[0]}"
+										th:text="#{${drop.stageSplit[1]}}"></a>
+								</div>
+							</div>
+						</div>
+					</div>
 
 				</div>
+
 			</div>
 
 			<div class="container">

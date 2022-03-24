@@ -46,29 +46,31 @@ img {
 }
 
 .skill_frame {
-	width: 43px;
-	height: 43px;
+	width: 50px;
+	height: 50px;
 	text-align: center;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
-	display: block;
-	/* 	margin: 0 auto;
- */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* 	 	margin: 0 auto; */
 	font-size: initial;
 	/* 	border: 1px green solid; */
 }
 
 .skill_frame2 {
-	width: 43px;
-	height: 43px;
+	width: 50px;
+	height: 50px;
 	text-align: center;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
-	display: block;
-	/* 	margin: 0 auto;
- */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* 	 	margin: 0 auto; */
 	font-size: initial;
 	/* 	border: 1px red solid; */
 }
@@ -102,7 +104,7 @@ img {
 	/* 	border: 1px solid red;
  */
 	background-color: #d0d0d0;
-	padding: 5px !important;
+	padding: 5px;
 }
 
 .center {
@@ -120,6 +122,12 @@ img {
 	gap: 5px 5px;
 }
 
+.frame-container-s {
+	width: 80px;
+	display: grid;
+	gap: 5px 5px;
+}
+
 .prof {
 	display: flex;
 	justify-content: center;
@@ -131,7 +139,23 @@ img {
 	box-sizing: content-box;
 }
 
+.prof-s {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-area: 1/1;
+	width: 75px;
+	padding-left: 2px;
+	padding-bottom: 4px;
+	box-sizing: content-box;
+}
+
 .framez {
+	grid-area: 1/1;
+}
+
+.framez-s {
+	width: 80px;
 	grid-area: 1/1;
 }
 
@@ -201,6 +225,7 @@ img {
 .resistance {
 	grid-area: resistance;
 	padding: 10px;
+	width: fit-content;
 }
 
 .item2 {
@@ -208,91 +233,6 @@ img {
 	height: 100px;
 	margin-bottom: 2%;
 	border: 1px solid red;
-}
-
-.grid-container {
-	display: grid;
-	grid-template-columns: fit-content(20%) 1fr 1fr;
-	grid-template-rows: 320px auto;
-	gap: 10px 10px;
-	grid-template-areas: "pp ss ld" "sk sk sk" "ps ps ps" "ak ak ak"
-		"er ar dr";
-}
-
-* {
-	/* 	box-sizing: border-box; */
-	
-}
-
-.pp {
-	display: grid;
-	grid-area: pp;
-	align-items: center;
-	justify-items: center;
-}
-
-.pp-inner {
-	background-color: gray;
-	padding: 10px;
-	border-radius: .8rem;
-}
-
-.sk {
-	grid-area: sk;
-	background-color: gray;
-	border-radius: .8rem;
-}
-
-.ps {
-	grid-area: ps;
-	background-color: gray;
-	border-radius: .8rem;
-}
-
-.ak {
-	grid-area: ak;
-	background-color: gray;
-	border-radius: .8rem;
-}
-
-.er {
-	grid-area: er;
-	background-color: gray;
-	border-radius: .8rem;
-	height: min-content;
-}
-
-.ar {
-	grid-area: ar;
-	background-color: gray;
-	border-radius: .8rem;
-}
-
-.dr {
-	grid-area: dr;
-	background-color: gray;
-	border-radius: .8rem;
-	height: min-content;
-}
-
-.ld {
-	grid-area: ld;
-	background-color: gray;
-	border-radius: .8rem;
-	align-items: center;
-	justify-items: center;
-	height: max-content;
-	padding-bottom: 20px;
-}
-
-.ss {
-	background-color: gray;
-	border-radius: .8rem;
-	padding: 10px;
-	grid-area: ss;
-	display: grid;
-	align-items: center;
-	justify-items: center;
 }
 
 .w100 {
@@ -427,14 +367,6 @@ table td {
 	grid-template-areas: ". ." ". ." ". .";
 }
 
-.passive_awak_container {
-	align-items: center;
-	display: grid;
-	grid-template-columns: 100px 250px 1fr;
-	gap: 5px 5px;
-	grid-template-areas: ". . ." ". . ." ". . .";
-}
-
 .leader_container {
 	display: flex;
 	align-items: center;
@@ -460,7 +392,7 @@ table td {
 
 .units {
 	background-color: #a3b6bb;
-	width: fit-content;
+	/* width: fit-content; */
 }
 
 .font-20 {
@@ -513,6 +445,8 @@ table td {
 	border-top-left-radius: 0.5rem;
 	border-top-right-radius: 0.5rem;
 	margin-bottom: 10px;
+	width: fit-content;
+	margin: auto;
 }
 
 .learned-item {
@@ -554,6 +488,7 @@ table td {
 	padding: 5px;
 	background-color: #9ee8f4;
 	display: flex;
+	justify-content: center;
 	border-radius: 0.3rem;
 	margin: 5px;
 	font-weight: bold;
@@ -621,26 +556,6 @@ table td {
 .text-4, .text-5 {
 	top: 15px !important;
 	right: 16px;
-}
-
-.frame-container-s {
-	display: grid;
-	gap: 5px 5px;
-}
-
-.prof-s {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	grid-area: 1/1;
-	width: 50px;
-	padding-left: 4px;
-	padding-bottom: 4px;
-	box-sizing: content-box;
-}
-
-.framez-s {
-	grid-area: 1/1;
 }
 
 [type=radio] {
@@ -735,4 +650,27 @@ body {
 
 .drop-bottom {
 	padding-left: 10px;
+}
+
+.enhance-level {
+	margin: auto;
+	margin-top: 10px;
+}
+
+.form-filter {
+	padding: 1px;
+	display: flex;
+	align-items: center;
+}
+
+.form-filter label {
+	padding: 2px;
+}
+
+.form-name {
+	padding: 2px;
+}
+
+#ailments-content, #buffs-content {
+	width: min-content;
 }
