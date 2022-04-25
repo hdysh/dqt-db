@@ -26,7 +26,11 @@
 </head>
 <body>
 
-	<div id="home-header">DQT database</div>
+	<div id="home-header">
+		<div>DQT database</div>
+		<div th:if="${version==0}">Japanese Version</div>
+		<div th:if="${version==1}">Global Version</div>
+	</div>
 
 	<div id="home-nav"
 		th:replace="~{fragments/app-fragments :: nav-default}">Home Nav

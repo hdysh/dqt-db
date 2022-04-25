@@ -1,0 +1,3 @@
+var ailment_desc_format_en = {"ailment.desc.1":"ailment desc 1","ailment.desc.2":"ailment desc 2","ailment.desc.3":"ailment desc 3"};
+var ailment_desc_format_ja = {"ailment.desc.1":"ailment desc 1","ailment.desc.2":"ailment desc 2","ailment.desc.3":"ailment desc 3"};
+var ailment_desc_format_fr = {"ailment.desc.1":"ailment desc 1","ailment.desc.2":"ailment desc 2","ailment.desc.3":"ailment desc 3"};

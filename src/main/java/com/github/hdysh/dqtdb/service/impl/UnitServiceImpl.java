@@ -10,9 +10,10 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
+
 import com.github.hdysh.dqtdb.model.AilmentRes;
 import com.github.hdysh.dqtdb.model.Element;
+import com.github.hdysh.dqtdb.model.EventArea;
 import com.github.hdysh.dqtdb.model.Master;
 import com.github.hdysh.dqtdb.model.ResistanceLevel;
 import com.github.hdysh.dqtdb.model.Stats;
@@ -91,5 +92,15 @@ public class UnitServiceImpl implements UnitService {
 	@Override
 	public List<Stats> findByCodezz(BigInteger id) {
 		return statsRepository.findByCodeOrderByRankAsc(id);
+	}
+
+	@Override
+	public List<EventArea> getBrArea(BigInteger code) {
+		return unitRepository.findBrByUnit(code);
+	}
+
+	@Override
+	public List<EventArea> getHeroQuest(BigInteger code) {
+		return unitRepository.findHeroQuest(code);
 	}
 }

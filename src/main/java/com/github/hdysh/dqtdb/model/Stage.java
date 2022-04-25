@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -29,6 +30,7 @@ public class Stage {
 	private List<Enemy> enemies;
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "code")
+	@OrderBy("slot")
 	private List<Drop> drops;
 	private int cp, stamina;
 

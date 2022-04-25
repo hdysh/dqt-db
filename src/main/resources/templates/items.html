@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #items-static-resources},
+                                                ~{:: #items-header},
+                                                ~{:: #items-nav},
+                                                ~{:: #items-content},  
+                                                ~{:: #items-footer}
+                                               )}">
+
+<head>
+<title>Item list</title>
+
+<th:block id="items-static-resources">
+	<script type="text/javascript" charset="utf8"
+		src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/colreorder/1.5.5/js/dataTables.colReorder.min.js"></script>
+
+	<link rel="stylesheet" type="text/css"
+		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.11.5/css/dataTables.jqueryui.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/colreorder/1.5.5/css/colReorder.dataTables.min.css">
+</th:block>
+</head>
+<body>
+
+	<div id="items-header">Item List</div>
+
+	<div id="items-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="items-content">
+		<div>
+			<div class="units">
+				<div>
+
+					<form name="frank" class="form-filter">
+						<div class="form-name">Rarity:</div>
+						<div class="form-radio">
+							<label><input type="radio" name="rank"
+								value="MonsterRankIcon_S"> <img title="S"
+									src="/img/icon/MonsterRankIcon_S.png"></label><label><input
+								type="radio" name="rank" value="MonsterRankIcon_A"> <img
+									title="A" src="/img/icon/MonsterRankIcon_A.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_B"> <img
+									title="B" src="/img/icon/MonsterRankIcon_B.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_C"> <img
+									title="C" src="/img/icon/MonsterRankIcon_C.png"></label> <label><input
+								type="radio" name="rank" value="MonsterRankIcon_D"> <img
+									title="D" src="/img/icon/MonsterRankIcon_D.png"></label><label><input
+								type="radio" name="rank" value="-" checked="checked"> <img
+									title="None" src="/img/icon/SpellIcon_Mu.png"></label><label><input
+								type="radio" name="rank" value="" checked="checked"> <img
+									title="All" src="/img/icon/all.png"></label>
+						</div>
+					</form>
+					<form name="ftype" class="form-filter">
+						<div class="form-name">Type:</div>
+						<div class="form-radio">
+
+							<label><input type="radio" name="itype" value="1">
+								<img title="consumable" src="/img/consumable.png"> </label> <label><input
+								type="radio" name="itype" value="2"> <img title="equip"
+									src="/img/equip.png"></label> <label><input type="radio"
+								name="itype" value="3"> <img title="icon"
+									src="/img/rankicon.png"></label> <label><input
+								type="radio" name="itype" value="" checked="checked"> <img
+									title="All" src="/img/icon/all.png"></label>
+						</div>
+					</form>
+					<div></div>
+					<table id="example" class="display nowrap" style="width: 100%">
+						<thead>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Rarity</th>
+								<th>Type</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Rarity</th>
+								<th>Type</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+		<script type="text/javascript" src="json/item_name.js"></script>
+		<script type="text/javascript" src="json/item_desc.js"></script>
+		<script>
+			var loc = "[[${#locale}]]";
+			$('#example')
+					.DataTable(
+							{
+								"paging" : true,
+								"order" : [ 1, "asc" ],
+								"pageLength" : 25,
+								"responsive" : true,
+								"ajax" : {
+									"url" : "/items/q",
+									"type" : "POST",
+									"dataType" : "json",
+									"dataSrc" : "",
+									"contentType" : "application/json",
+									"data" : function(d) {
+										return JSON.stringify(d);
+									}
+								},
+								"columnDefs" : [ {
+									"targets" : [ 4 ],
+									"visible" : false
+								} ],
+								"rowCallback" : function(row, data) {
+									let html = '<div class="skill-sub-item w50px"><img src="/img/icon/' + data.icon + '"></div>';
+									$('td:eq(0)', row).html(html);
+								},
+								"columns" : [
+										{
+											"data" : "icon",
+											"render" : function(data, type,
+													row, meta) {
+												if (type === "sort"
+														|| type === 'type'
+														|| type === 'filter') {
+													return '[' + data + ']';
+												}
+												return '<div></div>';
+											}
+
+										},
+										{
+											"data" : "code",
+											"render" : function(data, type,
+													row, meta) {
+												var item_name = '';
+												if (loc === 'ja') {
+													item_name = item_name_ja[row['name']];
+												} else if (loc === 'fr') {
+													item_name = item_name_fr[row['name']] ? item_name_fr[row['name']]
+															: item_name_ja[row['name']];
+												} else {
+													item_name = item_name_en[row['name']] ? item_name_en[row['name']]
+															: item_name_ja[row['name']];
+												}
+
+												return '<a href="/item/' + data + '">'
+														+ item_name + '</a>';
+											}
+										},
+										{
+											"data" : "description",
+											"render" : function(data, type,
+													row, meta) {
+												var item_desc = '';
+												if (loc === 'ja') {
+													item_desc = item_desc_ja[data];
+												} else if (loc === 'fr') {
+													item_desc = item_desc_fr[data] ? item_desc_fr[data]
+															: item_desc_ja[data];
+												} else {
+													item_desc = item_desc_en[data] ? item_desc_en[data]
+															: item_desc_ja[data];
+												}
+												return '<div>' + item_desc
+														+ '</div>';
+											}
+										},
+
+										{
+											"data" : "code",
+											"render" : function(data, type,
+													row, meta) {
+
+												let out = '-';
+												if (type === "sort"
+														|| type === 'type') {
+													if (row['type'] == 1) {
+														return row['rankItem']['icon'];
+													} else if (row['type'] == 2) {
+														return row['rankEquip']['icon'];
+													} else {
+														return data;
+													}
+												} else {
+													if (row['type'] == 1) {
+														out = '<div class="icon_container_very_small"><img src="/img/icon/' + row['rankItem']['icon'] + '" /></div>';
+													} else if (row['type'] == 2) {
+														out = '<div class="icon_container_very_small"><img src="/img/icon/' + row['rankEquip']['icon'] + '" /></div>'
+													}
+													return out;
+												}
+											}
+										}, {
+											"data" : "type"
+										} ],
+							});
+
+			$('input:radio[name=rank]').change(function() {
+				$('#example').DataTable().columns(3).search(this.value).draw();
+			});
+			$('input:radio[name=itype]').change(function() {
+				$('#example').DataTable().columns(4).search(this.value).draw();
+			});
+			window.onload = function() {
+				frank.reset();
+				ftype.reset();
+			}
+		</script>
+	</div>
+
+
+
+
+	<div id="items-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+
+
+</body>
+</html>

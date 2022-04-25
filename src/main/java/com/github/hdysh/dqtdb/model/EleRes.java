@@ -21,6 +21,7 @@ public class EleRes {
 	private int ele5;
 	private int ele6;
 	private int ele7;
+	private String name, description;
 
 	public EleRes add(EleRes res) {
 		if (res != null) {
@@ -33,5 +34,39 @@ public class EleRes {
 			this.ele7 += res.ele7;
 		}
 		return this;
+	}
+
+	public int getEleTalent() {
+		int val = getEleTalentRaw();
+		if (val > 99) {
+			return val / 100;
+		} else {
+			return val;
+		}
+	}
+
+	public int getEleTalentRaw() {
+		if (this.ele1 != 0) {
+			return this.ele1;
+		}
+		if (this.ele2 != 0) {
+			return this.ele2;
+		}
+		if (this.ele3 != 0) {
+			return this.ele3;
+		}
+		if (this.ele4 != 0) {
+			return this.ele4;
+		}
+		if (this.ele5 != 0) {
+			return this.ele5;
+		}
+		if (this.ele6 != 0) {
+			return this.ele6;
+		}
+		if (this.ele7 != 0) {
+			return this.ele7;
+		}
+		return 0;
 	}
 }

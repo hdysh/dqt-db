@@ -19,16 +19,19 @@
 		type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/unit.css}"
 		href="../static/css/unit.css" />
+
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
 	<script>
 		var pass  = [(${passAdd})]  ;
 		var stats = [(${stats})];
-		var rank = 7;
+		var rank = [(${maxRank})];
 		var awak = 0;
 		var awakAdd = [(${awaAdd})];
-		var awakMul = [(${awaMul})];
-		var masterStats = [(${master})];
+		var awakMul = [(${awaMul})]; 
 		var master = 0;
 		var talentStats = [(${talentStats})];
+		var talentAil = [(${talentAil})];
+		var talentEle = [(${talentEle})];
 		var awakening = [(${awakening})];
 		var fullTalent = false;
 
@@ -45,17 +48,52 @@
 		  
 		    for(let i=0;i<Object.keys(awakening).length;i++){
 		    	if(i<=awak){
-					setEleres(awakening[i] );  
+					setEleres(awakening[i],talentEle  );  
 				}
-		    }
+		    } 
+			setAilres(talentAil );  
+		 
+		  
 		}  
-		function setEleres(res ){ 
+		function setEleres(awak,talent ){ 
 			 for(let j=1;j<=7;j++){ 
 				let ele= $('#ele'+j ); 
-				let value=ele.data("val")+res["ele"+j];
-				ele.text(value);
-				console.log(value+" - "+resLevel(value));
+				let extra = 0;
+				if(fullTalent){
+					extra=talent["ele"+j];
+				} 
+				let value=ele.data("val")+awak["ele"+j]+extra;
+				
+				let percent="";
+				if(value!=0){
+					percent="%";
+				}
+				if(Math.abs(value)>100){
+					ele.text((value/100)+percent);
+				}else{
+					ele.text(value+percent);
+				}
 				 $('#imgele'+j ).attr('src','/img/icon/'+resLevel(value)); 
+			 }
+		} 
+		function setAilres(res ){ 
+			 for(let j=1;j<=13;j++){ 
+				let ail= $('#ail'+j ); 
+				let extra = 0;
+				if(fullTalent){
+					extra=res["ail"+j];
+				}
+				let value=ail.data("val")+extra;
+				let percent="";
+				if(value!=0){
+					percent="%";
+				}
+				if(Math.abs(value)>100){
+					ail.text((value/100)+percent);
+				}else{
+					ail.text(value+percent);
+				}
+				 $('#imgail'+j ).attr('src','/img/icon/'+resLevel(value)); 
 			 }
 		} 
 		function mul(val, mul1, mul2) {
@@ -63,47 +101,6 @@
 		}
 		function resLevel(val) {
 			let output;
-	    let res = [{
-	            "min": -2147483648,
-	            "max": -6666,
-	            "icon": "ResistanceLevel_ChouZyakuten.png"
-	        },
-	        {
-	            "min": -6666,
-	            "max": -3333,
-	            "icon": "ResistanceLevel_DaiZyakuten.png"
-	        },
-	        {
-	            "min": -3333,
-	            "max": 0,
-	            "icon": "ResistanceLevel_Zyakuten.png"
-	        },
-	        {
-	            "min": 0,
-	            "max": 1,
-	            "icon": "ResistanceLevel_Hutuu.png"
-	        },
-	        {
-	            "min": 1,
-	            "max": 3334,
-	            "icon": "ResistanceLevel_Keigen.png"
-	        },
-	        {
-	            "min": 3334,
-	            "max": 6667,
-	            "icon": "ResistanceLevel_Hangen.png"
-	        },
-	        {
-	            "min": 6667,
-	            "max": 10000,
-	            "icon": "ResistanceLevel_Gekigen.png"
-	        },
-	        {
-	            "min": 10000,
-	            "max": 2147483647,
-	            "icon": "ResistanceLevel_Mukou.png"
-	        }
-	    ]
 	    for (i = 0; i < res.length; i++) {
 	        if (val >= res[i].min && val < res[i].max) {
 	        	output=res[i].icon;
@@ -167,12 +164,12 @@
 						<div class="unit-profile">
 							<div
 								th:style="'display: flex;flex-direction: row; padding:4px 0;height: 30px;'">
-								<div>
+								<div th:title="#{${unit.family.name}}+' Family'">
 									<img th:src="@{${'/img/icon/' + unit.family.icon }}" />
 								</div>
-								<div>
+								<div th:title="#{${unit.role.name}}+' role'">
 									<img th:style="'height:30px;'"
-										th:src="@{${'/img/icon/' + unit.role.icon }}" />
+										th:src="@{${'/img/icon/' + unit.role.icon  }}" />
 								</div>
 							</div>
 							<div class="frame-container">
@@ -180,7 +177,8 @@
 									<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 								</div>
 								<div class="prof">
-									<img th:src="@{${'/img/icon/' + unit.icon }}" />
+									<img
+										th:src="@{${'/img/icon/' + #uris.escapePathSegment(unit.icon) }}" />
 
 								</div>
 								<div class="framez">
@@ -200,18 +198,40 @@
 					</div>
 				</div>
 				<div class="ld" th:if="${unit.leader}">
-					<div class="header bold">Leader Skill</div>
-					<a class="leader-item" th:href="@{${'/passive/' + unit.leader.code }}" th:text="#{${unit.leader.name}}"></a>
-					<div class="leader_container">
-						<img th:src="@{${'/img/icon/' + unit.leader.leadericon }}" />
+					<div class="leader-cont">
+						<div class="header bold">Leader Skill</div>
+						<div th:with="name=#{${unit.leader.name}}">
+							<a class="leader-item"
+								th:href="@{${'/passive/' + unit.leader.code }}"
+								th:text="${name.replaceAll('<.+?>', (unit.leader.var ) )}"></a>
+						</div>
+
+						<div class="leader_container">
+							<img th:src="@{${'/img/icon/' + unit.leader.leadericon }}" />
+						</div>
+						<div class="leader-item"
+							th:with="desc=#{${unit.leader.description}}">
+							<div th:text="${desc.replaceAll('<.+?>', (unit.leader.var ) )}"></div>
+						</div>
 					</div>
-					<div class="leader-item" th:text="#{${unit.leader.description}}"></div>
+					<div class="res-cont">
+						<div class="drops" th:if="${hero!=null && #lists.size(hero) > 0}">
+							<div th:each="h  : ${hero}" th:remove="tag">
+								<div class="drop-loc">
+									<div class="br-item bold">
+										<a th:href="${'/event/area/' + h.code}" th:text="#{${h.name}}"></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 
 				</div>
 				<div class="ss">
 
 					<div class="stats_item_cont bold">
-						<span class="stats_item">LVL</span>
+						<span class="stats_item">LV</span>
 						<span class="stats_item val" id="lvl"
 							th:text="${ ': '+ unit.stats[7].level}"></span>
 					</div>
@@ -246,17 +266,23 @@
 							th:text="${ ': '+ unit.stats[7].intelligence}"></span>
 					</div>
 					<div class="stats_item_cont bold">
-						<span class="stats_item">MOV</span>
+						<span class="stats_item">Move</span>
 						<span class="stats_item val" id="mov"
 							th:text="${ ': '+ unit.stats[7].mobility}"></span>
+					</div>
+					<div class="stats_item_cont bold">
+						<span class="stats_item">Weight</span>
+						<span class="stats_item val" id="mov"
+							th:text="${ ': '+ unit.weight}"></span>
 					</div>
 
 					<div class="form-group"></div>
 					<form name="form1" class="flex_center_row">
-						<div class="form-group">
+						<div class="form-group" th:with="rank=${maxRank}">
 							<select class="form-control" id="rankSelect">
-								<option th:each="i: ${#numbers.sequence(0, 7)}"
-									th:selected="${i == 7}" th:value="${i}" th:text="${'Rank '+i}"></option>
+								<option th:each="i: ${#numbers.sequence(0, rank)}"
+									th:selected="${i+'' ==  rank}" th:value="${i}"
+									th:text="${'Rank '+i}"></option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -266,9 +292,9 @@
 									th:text="${'Awakening '+i}"></option>
 							</select>
 						</div>
-						<div class="form-group">
+						<div class="form-group" th:with="maxter=${maxter}-1">
 							<select class="form-control" id="masterSelect">
-								<option th:each="i: ${#numbers.sequence(0, 60)}"
+								<option th:each="i: ${#numbers.sequence(0, maxter)}"
 									th:selected="${i == 0}" th:value="${i}"
 									th:text="${'Master Rank '+i}"></option>
 							</select>
@@ -296,11 +322,11 @@
 							</thead>
 							<tbody>
 								<tr th:each="us  : ${unit.skills}">
-									<td th:if="${us.level>-1}" th:text="${us.level}">level</td>
-									<td th:if="${us.level==-1}"><img th:style="'height:25px;'"
+									<td th:if="${us.level!=9999}" th:text="${us.level}">level</td>
+									<td th:if="${us.level==9999}"><img th:style="'height:25px;'"
 											title="Talent Blossom" src="/img/TrainingPointIcon.png" /></td>
 									<td>
-										<div
+										<div th:title="'Rank ' + #{${us.skill.rarity.name}}"
 											th:classappend="${us.skill.rarity.code==30} ? skill_frame : skill_frame2"
 											th:style="@{${'background-image: url(/img/icon/' + us.skill.button+');' }}">
 											<span class="skill_frame_centerer"></span>
@@ -349,17 +375,24 @@
 								<div class="passive_item bold passive-desc">Description</div>
 							</div>
 
-							<div th:each="up,iter : ${unit.passives}" class="passive-row">
-								<div class="passive_item passive-level" th:text="${up.level}"></div>
+							<div th:each="up,iter : ${unit.passives}" class="passive-row"
+								th:if="${up.level<9999}">
+								<div th:if="${up.level<99999}"
+									class="passive_item passive-level" th:text="${up.level} "></div>
+								<div th:if="${up.level==99999}"
+									class="passive_item passive-level">
+									<img th:style="'height:25px;'" title="Talent Blossom"
+										src="/img/TrainingPointIcon.png" />
+								</div>
 								<div th:with="desctr=#{${up.passive.name}}"
 									class="passive_item passive-name">
 									<a th:href="@{${'/passive/' + up.passive.code }}"
-										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) ).replaceAll('\+-', '-' )}"></a>
+										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var ) ).replaceAll('\+-', '-' )}"></a>
 								</div>
 								<div th:with="desctr=#{${up.passive.description}}"
 									class="passive_item passive-desc">
 									<div
-										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var/100) )}"></div>
+										th:text="${ desctr.replaceAll('<.+?>', (up.passive.var ) )}"></div>
 								</div>
 							</div>
 						</div>
@@ -375,12 +408,12 @@
 
 						<div class="passive_awak_container" th:if="${unit.awakenings}">
 							<div class="passive-row">
-								<div class="passive_item bold passive-awakening">Awakening</div>
+								<div class="passive_item bold passive-level">Level</div>
 								<div class="passive_item bold passive-name">Name</div>
 								<div class="passive_item bold passive-desc">Description</div>
 							</div>
 							<div th:each="ua,iter : ${unit.awakenings}" class="passive-row">
-								<div class="passive_item passive-awakening" th:text="${ua.level}"></div>
+								<div class="passive_item passive-level" th:text="${ua.level}"></div>
 								<div th:with="desctr=#{${ua.awakening.name}}"
 									class="passive_item passive-name">
 									<a th:href="@{${'/passive/' + ua.awakening.code }}"
@@ -398,29 +431,43 @@
 					</div>
 				</div>
 				<div class="er">
-					<div class="resistance">
-						<div class="header bold">Element Resistance</div>
-						<div th:each="re: ${eleres}" th:remove="tag">
-							<div class="res bold w300px res-grid">
-								<div class="h30px grid">
-									<img class="center self-center"
-										th:src="@{${'/img/icon/' +re.ele.icon }}" />
+					<div class="res-cont">
+						<div class="resistance">
+							<div class="header bold">Element Resistance</div>
+							<div th:each="re: ${eleres}" th:remove="tag">
+								<div class="res bold w300px res-grid">
+									<div class="h30px grid">
+										<img class="center self-center"
+											th:src="@{${'/img/icon/' +re.ele.icon }}" />
+									</div>
+									<div class="h30px grid">
+										<span class="center self-center" th:text="#{${re.ele.name }}"></span>
+									</div>
+									<div class="h30px grid">
+										<span class="center self-center" th:text="${re.value }"
+											th:id="${'ele'+re.ele.code}" th:attr="data-val=${re.value}"></span>
+									</div>
+									<div class="h30px grid">
+										<img class="center self-center"
+											th:src="@{${'/img/icon/' + re.icon  }}"
+											th:id="${'imgele'+re.ele.code}" />
+									</div>
 								</div>
-								<div class="h30px grid">
-									<span class="center self-center" th:text="#{${re.ele.name }}"></span>
-								</div>
-								<div class="h30px grid">
-									<span class="center self-center" th:text="${re.value }"
-										th:id="${'ele'+re.ele.code}" th:attr="data-val=${re.value}"></span>
-								</div>
-								<div class="h30px grid">
-									<img class="center self-center"
-										th:src="@{${'/img/icon/' + re.icon  }}"
-										th:id="${'imgele'+re.ele.code}" />
+							</div>
+
+						</div>
+					</div>
+					<div class="res-cont">
+						<div class="drops" th:if="${#lists.size(br) > 0}">
+							<div class="header bold">Battle road:</div>
+							<div th:each="b  : ${br}" th:remove="tag">
+								<div class="drop-loc">
+									<div class="br-item">
+										<a th:href="${'/event/area/' + b.code}" th:text="#{${b.name}}"></a>
+									</div>
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 				<div class="ar">
@@ -439,12 +486,11 @@
 								</div>
 								<div class="h30px grid">
 									<span class="center self-center"
-										th:text="${ailres[iter.index].value }"
-										th:id="${'ail'+ailment.get(awak).code}"
+										th:text="${ailres[iter.index].value }" th:id="${awak}"
 										th:attr="data-val=${ailres[iter.index].value}"></span>
 								</div>
 								<div class="h30px grid">
-									<img class="center self-center" th:id="${awak}"
+									<img class="center self-center" th:id="${'img'+awak}"
 										th:src="@{${'/img/icon/' +ailres[iter.index].icon }}" />
 								</div>
 							</div>
@@ -453,14 +499,14 @@
 					</div>
 				</div>
 
-				<div class="dr" th:if="${#lists.size(unit.drops) > 0}">
-					<div class="drops">
+				<div class="dr">
+					<div class="drops" th:if="${#lists.size(unit.drops) > 0}">
 						<div class="header bold">How to get:</div>
 						<div th:each="drop  : ${unit.drops}">
 							<div class="drop-loc">
 								<div class="drop-top">
 									<a
-										th:href="${(drop.portalSplit[0] == '1' ? '/event/' : '/event/group/' )+drop.portalSplit[1]}"
+										th:href="${(drop.portalSplit[0] == '1' ? '/event/' : (drop.portalSplit[0] == '2' ? '/event/group/' : '/event/area/' ))+drop.portalSplit[1]}"
 										th:text="#{${drop.portalSplit[2]}}"></a>
 								</div>
 								<div class="drop-bottom">
@@ -473,7 +519,139 @@
 					</div>
 
 				</div>
+				<div class="tb" th:if="${#lists.size(unit.talents) > 0}">
+					<div class="talent">
+						<div class="header bold">Talent Blossoming:</div>
+						<div class="passive-row">
+							<div class="passive_item bold tb-no">#</div>
+							<div class="passive_item bold passive-name">Name</div>
+							<div class="passive_item bold passive-desc">Description</div>
+						</div>
+						<div th:each="talent  : ${unit.talents}">
+							<div class="passive-row">
+								<div class="passive_item tb-no" th:text="${talent.no}"></div>
+								<div class="passive_item passive-name">
+									<th:block th:if="${talent.ailRes }">
+										<div th:with="name=#{${talent.ailRes.name}}"
+											th:if="${#messages.msgOrNull('__${talent.ailRes.name}__')}"
+											th:text="${ name.replaceAll('<.+?>', (talent.ailRes.ailTalent ) ).replaceAll('\+-', '-' )}"></div>
+									</th:block>
+									<div th:if="${talent.eleRes }"
+										th:with="name=#{${talent.eleRes.name}}">
+										<div
+											th:text="${name.replaceAll('<.+?>', (talent.eleRes.eleTalent ) ).replaceAll('\+-', '-' )}"></div>
+									</div>
+									<div th:if="${talent.skill }">
+										<a th:href="@{${'/skill/' + talent.skill.code }}"
+											th:text="#{${talent.skill.name}}"></a>
+									</div>
+									<div th:if="${talent.passive }"
+										th:with="name=#{${talent.passive.name}}">
+										<a th:href="@{${'/passive/' +talent.passive.code }}"
+											th:text="${name.replaceAll('<.+?>', (talent.passive.var ) ).replaceAll('\+-', '-' )}"></a>
+									</div>
+									<div th:if="${talent.increaseDamage }">
+										<div th:text="'passive: '+#{${talent.increaseDamage.name}}"></div>
+									</div>
+									<div th:if="${talent.skillTypeRes }">
+										<div th:text="'passive: '+#{${talent.skillTypeRes.name}}"></div>
+									</div>
+									<div th:if="${talent.damageCut }">
+										<div th:text="'passive: '+#{${talent.damageCut.name}}"></div>
+									</div>
+									<div th:if="${talent.reactionPassive }">
+										<div th:text="'passive: '+#{${talent.reactionPassive.name}}"></div>
+									</div>
+									<div th:if="${talent.skillAilment }">
+										<div
+											th:text="'passive: '+#{${talent.skillAilment.ailment.name}}"></div>
+									</div>
+									<div th:if="${talent.repetitiveEffect }">
+										<div th:text=" #{${talent.repetitiveEffect.name}}"></div>
+									</div>
+									<div th:if="${talent.stats }">
+										<div th:if="${talent.stats.hp!=0}"
+											th:text="'HP +'+${talent.stats.hp}"></div>
+										<div th:if="${talent.stats.mp!=0}"
+											th:text="'MP +'+${talent.stats.mp}"></div>
+										<div th:if="${talent.stats.attack!=0}"
+											th:text="'ATK +'+${talent.stats.attack}"></div>
+										<div th:if="${talent.stats.defense!=0}"
+											th:text="'DEF +'+${talent.stats.defense}"></div>
+										<div th:if="${talent.stats.intelligence!=0}"
+											th:text="'WIS +'+${talent.stats.intelligence}"></div>
+										<div th:if="${talent.stats.agility!=0}"
+											th:text="'AGL +'+${talent.stats.agility}"></div>
+										<div th:if="${talent.stats.mobility!=0}"
+											th:text="'Move +'+${talent.stats.mobility}"></div>
+									</div>
+								</div>
+								<div class="passive_item passive-desc">
+									<th:block th:if="${talent.ailRes }">
+										<div th:with="desc=#{${talent.ailRes.description}}"
+											th:if="${#messages.msgOrNull('__${talent.ailRes .description}__')}"
+											th:text="${desc.replaceAll('<.+?>', (talent.ailRes.ailTalent ) ).replaceAll('\+-', '-' )}"></div>
+									</th:block>
+									<div th:if="${talent.eleRes }"
+										th:with="desc=#{${talent.eleRes.description}}">
+										<div
+											th:text="${desc.replaceAll('<.+?>', (talent.eleRes.eleTalent ) ).replaceAll('\+-', '-' )}"></div>
+									</div>
+									<div th:if="${talent.skill }"
+										th:with="desc=#{${talent.skill.description}}">
+										<div
+											th:text="${desc.replaceAll('<damagePhysics>',talent.skill.strMul).replaceAll('<specialCoolTurn>',talent.skill.turn).replaceAll('<Turn1>',talent.skill.buff?.maxDur)}"></div>
+									</div>
+									<div th:if="${talent.passive }"
+										th:with="desc=#{${talent.passive.description}}">
+										<div
+											th:text="${desc.replaceAll('<.+?>', (talent.passive.var ) ).replaceAll('\+-', '-' )}"></div>
+									</div>
+									<div th:if="${talent.increaseDamage }">
+										<div
+											th:text="'passive: '+#{${talent.increaseDamage.description}}"></div>
+									</div>
+									<div th:if="${talent.skillTypeRes }">
+										<div
+											th:text="'passive: '+#{${talent.skillTypeRes.description}}"></div>
+									</div>
+									<div th:if="${talent.damageCut }">
+										<div th:text="'passive: '+#{${talent.damageCut.description}}"></div>
+									</div>
+									<div th:if="${talent.reactionPassive }">
+										<div
+											th:text="'passive: '+#{${talent.reactionPassive.description}}"></div>
+									</div>
+									<div th:if="${talent.skillAilment }">
+										<div
+											th:text="'passive: '+#{${talent.skillAilment.ailment.description}}"></div>
+									</div>
+									<div th:if="${talent.repetitiveEffect }">
+										<div th:text=" #{${talent.repetitiveEffect.description}}"></div>
+									</div>
+									<div th:if="${talent.stats }">
+										<div th:if="${talent.stats.hp!=0}"
+											th:text="'HP +'+${talent.stats.hp}"></div>
+										<div th:if="${talent.stats.mp!=0}"
+											th:text="'MP +'+${talent.stats.mp}"></div>
+										<div th:if="${talent.stats.attack!=0}"
+											th:text="'ATK +'+${talent.stats.attack}"></div>
+										<div th:if="${talent.stats.defense!=0}"
+											th:text="'DEF +'+${talent.stats.defense}"></div>
+										<div th:if="${talent.stats.intelligence!=0}"
+											th:text="'WIS +'+${talent.stats.intelligence}"></div>
+										<div th:if="${talent.stats.agility!=0}"
+											th:text="'AGL +'+${talent.stats.agility}"></div>
+										<div th:if="${talent.stats.mobility!=0}"
+											th:text="'Move +'+${talent.stats.mobility}"></div>
+									</div>
+								</div>
 
+							</div>
+						</div>
+					</div>
+
+				</div>
 			</div>
 
 			<div class="container">

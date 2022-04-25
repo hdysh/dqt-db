@@ -138,7 +138,7 @@
 		</div>
 
 
-		<script type="text/javascript" src="json/unit.js"></script>
+		<script type="text/javascript" src="json/profile.js"></script>
 		<script type="text/javascript" src="json/stage.js"></script>
 		<script type="text/javascript" src="json/event_group.js"></script>
 		<script type="text/javascript" src="json/event_portal.js"></script>
@@ -163,16 +163,18 @@
 								}, {
 									responsivePriority : 4,
 									targets : 5
-								}],
+								} ],
 								"ajax" : {
 									"url" : "/unitdrop/q",
-									"type" : "POST",
-									"dataType" : "json",
-									"dataSrc" : "",
-									"contentType" : "application/json",
-									"data" : function(d) {
-										return JSON.stringify(d);
-									}
+									"dataSrc" : ""
+								},
+								"rowCallback" : function(row, data) {
+									let html = '<div class="frame-container-s"><div class="framez-s">'
+											+ '<img src="/img/icon/MonsterIconBackGround_Ally.png" />'
+											+ '</div><div class="prof-s"><img src="/img/icon/'
+											+ encodeURIComponent(data.unitSplit[2])
+											+ '" /></div></div>';
+									$('td:eq(0)', row).html(html);
 								},
 								"columns" : [
 
@@ -185,8 +187,7 @@
 														|| type === 'type') {
 													return data[2];
 												} else {
-													return '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/MonsterIconBackGround_Ally.png" /></div><div class="prof-s"><img src="/img/icon/' + data[2]
-													+ '" /></div></div>';
+													return '<div></div>';
 												}
 
 											}
@@ -197,13 +198,13 @@
 													row, meta) {
 												var name = '';
 												if (loc === 'ja') {
-													name = unit_ja[data[1]];
+													name = profile_ja[data[1]];
 												} else if (loc === 'fr') {
-													name = unit_fr[data[1]] ? unit_fr[data[1]]
-															: unit_ja[data[1]];
+													name = profile_fr[data[1]] ? profile_fr[data[1]]
+															: profile_ja[data[1]];
 												} else {
-													name = unit_en[data[1]] ? unit_en[data[1]]
-															: unit_ja[data[1]];
+													name = profile_en[data[1]] ? profile_en[data[1]]
+															: profile_ja[data[1]];
 												}
 												return '<a href="/unit/' + data[0] + '">'
 														+ name + '</a>';
@@ -268,7 +269,7 @@
 													}
 													portalHtml = '<a href="/event/' + row["portalSplit"][1] + '">'
 															+ portal + '</a>'
-												} else {
+												} else if (row["portalSplit"][0] == 2) {
 													var group = '';
 													var gname = row["portalSplit"][2];
 													if (loc === 'ja') {
@@ -349,8 +350,7 @@
 							}); 
 							Object.entries(map).forEach(
 								    ([key, value]) => {
-
-								    	console.log(JSON.stringify(value));
+						
 								    }
 								);
 						 

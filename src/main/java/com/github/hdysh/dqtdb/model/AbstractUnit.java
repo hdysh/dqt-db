@@ -15,15 +15,12 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class AbstractUnit {
 	public @Id BigInteger code;
-	public String name;
-	@ManyToOne(targetEntity = Family.class)
-	@JoinColumn(name = "family")
-	public Family family;
-	@ManyToOne(targetEntity = Role.class)
-	@JoinColumn(name = "role")
-	public Role role;
+	@ManyToOne(targetEntity = Profile.class)
+	@JoinColumn(name = "profile")
+	public Profile profile;
 	@ManyToOne(targetEntity = Rarity.class)
 	@JoinColumn(name = "rarity")
 	public Rarity rarity;
-	public String icon;
+	private int weight;
+	private int talent;  
 }

@@ -31,6 +31,7 @@ public class UnitsController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<UnitMin>> getAll() {
 		List<UnitMin> units = unitService.getAll();
+		System.out.println();
 		return ResponseEntity.ok(units);
 	} 
 

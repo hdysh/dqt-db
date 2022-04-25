@@ -85,12 +85,46 @@
 										return JSON.stringify(d);
 									}
 								},
+								/* 	"rowCallback" : function(row, data) {
+										let name = '';
+										if (loc === 'ja') {
+											name = passive_name_ja[data.name];
+										} else if (loc === 'fr') {
+											name = passive_name_fr[data.name] ? passive_name_fr[data.name]
+													: skill_name_ja[data.name];
+										} else {
+											name = passive_name_en[data.name] ? passive_name_en[data.name]
+													: passive_name_ja[data.name];
+										}
+										name = name
+												.replaceAll(/<.+?>/g, row['var'])
+												.replaceAll('+-', '-');
+
+										let html_name = '<a href="/passive/' + data.code + '">'
+												+ name + '</a>';
+										var desc = '';
+										if (loc === 'ja') {
+											desc = passive_desc_ja[data.description];
+										} else if (loc === 'fr') {
+											desc = passive_desc_fr[data.description] ? passive_desc_fr[data.description]
+													: passive_desc_ja[data.description];
+										} else {
+											desc = passive_desc_en[data.description] ? passive_desc_en[data.description]
+													: passive_desc_ja[data.description];
+										}
+										desc = desc
+												.replaceAll(/<.+?>/g, row['var'])
+												.replaceAll('+-', '-');
+
+										$('td:eq(0)', row).html(html_name);
+										$('td:eq(1)', row).html(desc);
+									}, */
 								"columns" : [
 										{
 											"data" : "code",
 											"render" : function(data, type,
 													row, meta) {
-												let name = '';
+												let name = 'N/A';
 												if (loc === 'ja') {
 													name = passive_name_ja[row['name']];
 												} else if (loc === 'fr') {
@@ -100,11 +134,20 @@
 													name = passive_name_en[row['name']] ? passive_name_en[row['name']]
 															: passive_name_ja[row['name']];
 												}
-												name = name.replaceAll(
-														/<.+?>/g, row['var']);
-
-												return '<a href="/passive/' + data + '">'
-														+ name + '</a>';
+												let out;
+												if (name != undefined) {
+													name = name.replaceAll(
+															/<.+?>/g,
+															row['var'])
+															.replaceAll('+-',
+																	'-');
+													out = '<a href="/passive/' + data + '">'
+															+ name + '</a>';
+													;
+												} else {
+													out = 'N/A';
+												}
+												return out;
 											}
 										},
 										{
@@ -121,7 +164,17 @@
 													desc = passive_desc_en[row['description']] ? passive_desc_en[row['description']]
 															: passive_desc_ja[row['description']];
 												}
-
+												if (desc == undefined) {
+													desc = 'N/A';
+												}
+												if (desc != undefined
+														&& desc != '') {
+													desc = desc.replaceAll(
+															/<.+?>/g,
+															row['var'])
+															.replaceAll('+-',
+																	'-');
+												}
 												return desc;
 
 											}

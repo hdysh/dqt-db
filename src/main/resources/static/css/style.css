@@ -46,8 +46,8 @@ img {
 }
 
 .skill_frame {
-	width: 50px;
-	height: 50px;
+	width: 52px;
+	height: 52px;
 	text-align: center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -61,8 +61,8 @@ img {
 }
 
 .skill_frame2 {
-	width: 50px;
-	height: 50px;
+	width: 52px;
+	height: 52px;
 	text-align: center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -87,8 +87,8 @@ img {
 }
 
 .skill_frame>img, .skill_frame2>img {
-	width: 25px;
-	height: 25px;
+	width: 26px;
+	height: 26px;
 	vertical-align: middle;
 }
 
@@ -241,6 +241,10 @@ img {
 
 .w50 {
 	width: 50%;
+}
+
+.w40 {
+	width: 40%;
 }
 
 .w30 {
@@ -409,6 +413,7 @@ table td {
 	flex-wrap: wrap;
 	justify-content: center;
 	align-content: center;
+	/* 	align-items: center; */
 }
 
 .flex {
@@ -447,6 +452,7 @@ table td {
 	margin-bottom: 10px;
 	width: fit-content;
 	margin: auto;
+	margin-bottom: 5px;
 }
 
 .learned-item {
@@ -466,13 +472,16 @@ table td {
 }
 
 .skill-sub-item {
-	padding-top: 20px;
+	padding-top: 10px;
+	text-align: center;
+	text-align-last: center;
 }
 
 .drop-sub-item {
 	/* 	width: 50px;
  */
-	
+	text-align: center;
+	text-align-last: center;
 }
 
 .drop-item {
@@ -533,6 +542,10 @@ table td {
 
 .margin-10 {
 	margin: 10px;
+}
+
+.margin-5 {
+	margin: 5px;
 }
 
 .banner-container {
@@ -596,10 +609,21 @@ html * {
 
 .skill-long {
 	margin-right: auto;
-	background-color: silver;
 	border-radius: 0 .8rem .8rem 0;
 	padding-left: 17px;
 	margin-left: -15px;
+}
+
+.skill-long-10 {
+	background-color: #CD7F32;
+}
+
+.skill-long-20 {
+	background-color: silver;
+}
+
+.skill-long-30 {
+	background-color: #E3CF61;
 }
 
 .top1 {
@@ -673,4 +697,162 @@ body {
 
 #ailments-content, #buffs-content {
 	width: min-content;
+}
+
+.passive-long {
+	border-radius: .8rem;
+	background-color: silver;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+
+.item-loc {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	min-height: 30px;
+	background-color: #d0d0d0;
+	text-align: center;
+	align-self: normal;
+	margin: 2px;
+	padding: 5px;
+}
+
+.item-loc-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+}
+
+.item-loc-cont {
+	
+}
+
+.get {
+	background-color: gray;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+	margin: auto;
+	margin-bottom: 5px;
+	max-width: 70%;
+}
+
+.item-header {
+	background-color: transparent;
+}
+
+.width-fit {
+	width: fit-content;
+	margin: auto;
+	margin-top: 5px;
+}
+
+.required {
+	background-color: cyan;
+	border-radius: .3rem;
+	margin: 2px;
+	padding: 3px;
+}
+
+.item-img-cont {
+	height: 50px;
+	overflow: hidden;
+	position: relative;
+	border-radius: 0.5rem;
+}
+
+.item-img {
+	left: 50%;
+	margin-left: -25px;
+	position: absolute;
+}
+
+.slot-0 {
+	background-color: #54545b;
+}
+
+.slot-1 {
+	background-color: #958989;
+}
+
+.alchemy-cont {
+	display: inline-grid;
+	grid-template-columns: 60px auto;
+	width: 100%;
+	padding: 0 5px 0 5px;
+}
+
+.alchemy-draw {
+	display: flex;
+}
+
+.alchemy-rate {
+	
+}
+
+.alchemy-name {
+	justify-content: flex-start;
+}
+
+.equip-stats {
+	padding: 5px;
+}
+
+.img-alchemy {
+	width: 25px;
+	margin: 5px;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+#skill-header, #ailment-header, #buff-header {
+	align-items: center;
+}
+
+@media only screen and (max-width: 650px) {
+	.item-loc:nth-of-type(1):before {
+		content: "Stage : ";
+	}
+	.item-loc:nth-of-type(2):before {
+		content: "Stamina : ";
+	}
+	.item-loc:nth-of-type(3):before {
+		content: "Rate : ";
+	}
+	.item-loc:nth-of-type(4):before {
+		content: "Quantity : ";
+	}
+	.item-loc:nth-of-type(5):before {
+		content: "Stamina/Item : ";
+	}
+	.item-loc-cont .flex_center_row {
+		display: grid;
+		margin: 5px;
+	}
+	.item-loc-cont .flex_center_row_head {
+		display: none;
+	}
+	.item-loc-cont .item-loc {
+		display: initial;
+		width: auto;
+		border-bottom: 1px solid #4b37d6;
+		width: auto;
+		padding: 3px;
+		margin: 0;
+	}
+	.alchemy-cont {
+		grid-template-columns: 80px auto;
+	}
+	.alchemy-draw {
+		display: inherit;
+	}
+	.nav-header {
+		padding-left: 40px;
+	}
 }

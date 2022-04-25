@@ -32,4 +32,25 @@ public class UnitTalent {
 	@ManyToOne(targetEntity = Skill.class)
 	@JoinColumn(name = "skill")
 	private Skill skill;
+	@ManyToOne(targetEntity = Passive.class)
+	@JoinColumn(name = "passive")
+	private Passive passive;
+	@ManyToOne(targetEntity = IncreaseDamage.class)
+	@JoinColumn(name = "brilliant")
+	private IncreaseDamage increaseDamage;
+	@ManyToOne(targetEntity = ReactionPassive.class)
+	@JoinColumn(name = "reaction_passive")
+	private ReactionPassive reactionPassive;
+	@ManyToOne(targetEntity = SkillTypeRes.class)
+	@JoinColumn(name = "skill_type_res")
+	private SkillTypeRes skillTypeRes;
+	@ManyToOne(targetEntity = DamageCut.class)
+	@JoinColumn(name = "damage_cut")
+	private DamageCut damageCut;
+	@ManyToOne(targetEntity = SkillAilment.class)
+	@JoinColumn(name = "ailment")
+	private SkillAilment skillAilment;
+	@ManyToOne(targetEntity = RepetitiveEffect.class)
+	@JoinColumn(name = "repetitive_effect")
+	private RepetitiveEffect repetitiveEffect;
 }

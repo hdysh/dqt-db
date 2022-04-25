@@ -11,8 +11,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
-public class MvcConfigurer implements WebMvcConfigurer {
-
+public class MvcConfigurer implements WebMvcConfigurer {  
 	@Bean
 	public LocaleResolver localeResolver() {
 		return new CookieLocaleResolver();
@@ -36,5 +35,5 @@ public class MvcConfigurer implements WebMvcConfigurer {
 		messageSource.setBasename("messages");
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
-	}
+	}	 
 }

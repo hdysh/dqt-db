@@ -26,10 +26,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hdysh.dqtdb.model.AilmentResPair;
 import com.github.hdysh.dqtdb.model.EleRes;
 import com.github.hdysh.dqtdb.model.EleResPair;
+import com.github.hdysh.dqtdb.model.EventArea;
 import com.github.hdysh.dqtdb.model.Passive;
 import com.github.hdysh.dqtdb.model.Stats;
 import com.github.hdysh.dqtdb.model.StatsRank;
 import com.github.hdysh.dqtdb.model.Unit;
+import com.github.hdysh.dqtdb.model.UnitAilmentRes;
 import com.github.hdysh.dqtdb.model.UnitAwakening;
 import com.github.hdysh.dqtdb.model.UnitPassive;
 import com.github.hdysh.dqtdb.model.UnitTalent;
@@ -55,7 +57,7 @@ public class UnitController {
 		ModelAndView modelAndView = new ModelAndView("unit");
 		List<EleResPair> rl = new ArrayList<>();
 		List<AilmentResPair> al = new ArrayList<>();
-		Unit unit = unitService.getUnit(id); 
+		Unit unit = unitService.getUnit(id);
 		rl.add(calcEle(unit.getEleRes().getEle1(), "1"));
 		rl.add(calcEle(unit.getEleRes().getEle2(), "2"));
 		rl.add(calcEle(unit.getEleRes().getEle3(), "3"));
@@ -96,11 +98,15 @@ public class UnitController {
 			mapAwaMul.put(new BigInteger(String.valueOf(i)), new StatsRank(null));
 			mapAwaAdd.put(new BigInteger(String.valueOf(i)), new StatsRank(null));
 		}
+		int maxRank = 0;
 		for (Stats s : unit.getStats()) {
 			if (s.getRank() == 0) {
 				mapPassMul.put(new BigInteger(String.valueOf("1")), new StatsRank(null));
 				mapPassAdd.put(new BigInteger(String.valueOf("1")), new StatsRank(null));
 			} else {
+				if (s.getRank() > maxRank) {
+					maxRank = s.getRank();
+				}
 				mapPassMul.put(new BigInteger(String.valueOf(s.getLevel())), new StatsRank(null));
 				mapPassAdd.put(new BigInteger(String.valueOf(s.getLevel())), new StatsRank(null));
 			}
@@ -130,10 +136,14 @@ public class UnitController {
 		Map<BigInteger, StatsRank> sortedPassMul = mergeStats(mapPassMul);
 		Map<BigInteger, StatsRank> sortedPassAdd = mergeStats(mapPassAdd);
 		StatsRank talentStats = new StatsRank(null);
+		UnitAilmentRes talentAil = new UnitAilmentRes();
+		EleRes talentEle = new EleRes();
 		for (UnitTalent ut : unit.getTalents()) {
 			if (ut.getAilRes() != null) {
+				talentAil.add(ut.getAilRes());
 			}
 			if (ut.getEleRes() != null) {
+				talentEle.add(ut.getEleRes());
 			}
 			if (ut.getSkill() != null) {
 			}
@@ -141,20 +151,30 @@ public class UnitController {
 				talentStats.add(ut.getStats());
 			}
 		}
+
+		List<EventArea> br = unitService.getBrArea(id);
+		modelAndView.addObject("br", br);
+		if (unit.getProfile().getFamily().getCode().toString().equals("90")) {
+			List<EventArea> hero = unitService.getHeroQuest(id);
+			modelAndView.addObject("hero", hero);
+		}
 		try {
+			modelAndView.addObject("maxRank", mapper.writeValueAsString(maxRank));
 			modelAndView.addObject("awaAdd", mapper.writeValueAsString(sortedAwaAdd));
 			modelAndView.addObject("awaMul", mapper.writeValueAsString(sortedAwaMul));
 			modelAndView.addObject("passAdd", mapper.writeValueAsString(sortedPassAdd));
 			modelAndView.addObject("passMul", mapper.writeValueAsString(sortedPassMul));
 			modelAndView.addObject("talentStats", mapper.writeValueAsString(talentStats));
+			modelAndView.addObject("talentAil", mapper.writeValueAsString(talentAil));
+			modelAndView.addObject("talentEle", mapper.writeValueAsString(talentEle));
 			modelAndView.addObject("awakening", mapper.writeValueAsString(mergeEleRes(awakening)));
 			List<Stats> st = unitService.findByCodezz(id);
 			String stats = mapper.writeValueAsString(st);
 			modelAndView.addObject("stats", stats);
 			Map<BigInteger, StatsRank> master = unitService.getMasters();
 			master.put(new BigInteger("0"), new StatsRank());
-			String sm = mapper.writeValueAsString(master);
-			modelAndView.addObject("master", sm);
+			modelAndView.addObject("master", mapper.writeValueAsString(master));
+			modelAndView.addObject("maxter", mapper.writeValueAsString(master.size()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

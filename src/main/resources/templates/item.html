@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{main-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #item-static-resources},
+                                                ~{:: #item-header},
+                                                ~{:: #item-nav},
+                                                ~{:: #item-content},  
+                                                ~{:: #item-footer}
+                                               )}">
+
+<head>
+<title th:text="#{${item.name}}"></title>
+
+<th:block id="item-static-resources">
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+		type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/unit.css}"
+		href="../static/css/unit.css" />
+</th:block>
+
+</head>
+<body>
+
+	<div id="item-header" class="flex_center_row">
+		<div th:text="#{${item.name}}" class="pad-left-10"></div>
+	</div>
+
+	<div id="item-nav"
+		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
+
+	<div id="item-content">
+		<div class="flex_center_row pad-10">
+			<div class="skill-item bold flex-column pad-10"
+				th:if="${item.type==1}">
+				<span th:text="Rarity" class="header"></span>
+				<div class="skill-sub-item w50px ">
+					<img th:src="@{${'/img/icon/' + item.rankItem.icon}}" />
+				</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10"
+				th:if="${item.type==2}">
+				<span th:text="Rarity" class="header"></span>
+				<div class="skill-sub-item w50px ">
+					<img th:src="@{${'/img/icon/' + item.rankEquip.icon}}" />
+				</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Icon" class="header"></span>
+				<div class="skill-sub-item w50px ">
+					<img th:src="@{${'/img/icon/' + item.icon}}" />
+				</div>
+			</div>
+
+			<div class="skill-item bold flex-column pad-10">
+				<span th:text="Name" class="header"></span>
+				<div class="skill-sub-item">
+					<span th:text="#{${item.name}}">name</span>
+				</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10"
+				th:unless="${item.description==''}">
+				<span th:text="Description" class="header"></span>
+				<div th:text="#{${item.description}}" class="skill-sub-item">desc</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10" th:if="${item.skill}">
+				<span th:text="'Related Skill'" class="header"></span>
+				<a th:text="#{${item.skill.name}}" class="skill-sub-item"
+					th:href="@{${'/skill/' + item.skill.code}}">skill</a>
+			</div>
+
+		</div>
+		<div class="flex_center_row pad-10" th:if="${equip}">
+			<div class="skill-item    bold flex-column pad-10">
+				<span th:text="'Equip Stats'" class="header"></span>
+				<div class="flex">
+					<div class="equip-stats">
+						<div th:text="${'HP : '+equip.basePassive.stats.hp}"></div>
+						<div th:text="${'MP : '+equip.basePassive.stats.mp}"></div>
+						<div th:text="${'ATK : '+equip.basePassive.stats.attack}"></div>
+					</div>
+					<div class="equip-stats">
+						<div th:text="${'DEF : '+equip.basePassive.stats.defense}"></div>
+						<div th:text="${'WIS : '+equip.basePassive.stats.intelligence}"></div>
+						<div th:text="${'AGI : '+equip.basePassive.stats.agility}"></div>
+					</div>
+				</div>
+			</div>
+			<div class="skill-item bold flex-column pad-10"
+				th:if="${equip.uniquePassive}">
+				<div th:text="'Special Effect'" class="header"></div>
+				<img class="img-alchemy"
+					th:src="@{${'/img/icon/' +  equip.uniquePassive.icon}}" />
+				<a th:href="${'/passive/' + equip.uniquePassive.code}"
+					th:text="${'__#{${equip.uniquePassive.name}}__'.replaceAll('<.+?>', (equip.uniquePassive.var ) ).replaceAll('\+-', '-' )}"></a>
+			</div>
+			<div class="skill-item bold flex-column pad-10"
+				th:if="${equip.reactionPassive}">
+				<div th:text="'Special Effect'" class="header"></div>
+				<a th:href="${'/passive/' + equip.reactionPassive.code}"
+					th:text="${'__#{${equip.reactionPassive.name}}__'.replaceAll('<.+?>', (equip.reactionPassive.var ) ).replaceAll('\+-', '-' )}"></a>
+			</div>
+		</div>
+
+		<div class="flex-row pad-10 alchemy-draw" th:if="${equip}">
+			<div class="item-loc-cont" th:each="slot,iter  : ${equip.alchemy}">
+				<div th:text="${'Alchemy Draw Slot '+(iter.index+1)}"
+					class="header margin-5 bold"></div>
+				<div class="item-loc-cont alchemy-cont bold">
+					<div class="passive_item alchemy-rate justify-center"
+						th:text="Rate"></div>
+					<div class="passive_item alchemy-name justify-center"
+						th:text="Name"></div>
+				</div>
+				<div class="item-loc-cont alchemy-cont "
+					th:each="al : ${slot.alchemy}">
+					<div th:if="${al.passive}" class="passive_item alchemy-rate"
+						th:text="${al.rate/1000.0+'%'}"></div>
+					<div th:if="${al.passive}" class="passive_item alchemy-name">
+						<img class="img-alchemy"
+							th:src="@{${'/img/icon/' + al.passive.icon}}" />
+						<div
+							th:text="${'__#{${al.passive.name}}__'.replaceAll('<.+?>', (al.passive.var ) ).replaceAll('\+-', '-' )}"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="get">
+			<div class="item-loc-cont">
+				<div class="drop-header item-header">How to get:</div>
+				<div th:remove="tag" th:if="not ${#lists.isEmpty(itemLocs)}">
+					<div class="header bold width-fit">Clear Reward</div>
+					<div class="flex_center_row flex_center_row_head">
+						<div class="item-loc bold flex-column pad-5 w40">
+							<span th:text="stage" class="header w100"></span>
+						</div>
+						<div class="item-loc bold flex-column pad-5 w50px">
+							<span th:text="stam" class="header w100"></span>
+						</div>
+						<div class="item-loc bold flex-column pad-5 w50px">
+							<span th:text="rate" class="header w100"></span>
+						</div>
+						<div class="item-loc bold flex-column pad-5 w50px">
+							<span th:text="qty" class="header w100"></span>
+						</div>
+						<div class="item-loc bold flex-column pad-5 w100px">
+							<span th:text="'stam/item'" class="header w100"></span>
+						</div>
+					</div>
+					<div class="item-loc-cont" th:each="obj  : ${itemLocs }"
+						th:remove="tag">
+						<div class="flex_center_row  ">
+							<div class="item-loc bold flex-column pad-5 w40 ">
+								<a th:href="${'/stages/' + obj[0].code}"
+									th:text="#{${ obj[0].name}}"></a>
+							</div>
+							<div class="item-loc bold flex-column pad-5 w50px"
+								th:text="${ obj[0].stamina}"></div>
+							<div class="item-loc bold flex-column pad-5 w50px"
+								th:text="${ obj[1].rate+'%'}"></div>
+							<div class="item-loc bold flex-column pad-5 w50px"
+								th:text="${ obj[1].quantity}"></div>
+							<div class="item-loc bold flex-column pad-5 w100px"
+								th:text="${#numbers.formatDecimal(__${obj[0].stamina*100.0/obj[1].rate/obj[1].quantity}__, 1, 'WHITESPACE', 2, 'POINT' )}"></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div th:remove="tag" th:if="not ${#lists.isEmpty(itemLocsFirst)}">
+					<div class="header bold width-fit">First Clear Reward</div>
+					<div th:if="${#lists.isEmpty(itemLocs)}">
+						<div class="flex_center_row flex_center_row_head">
+							<div class="item-loc bold flex-column pad-5 w40">
+								<span th:text="stage" class="header w100"></span>
+							</div>
+							<div class="item-loc bold flex-column pad-5 w50px">
+								<span th:text="stam" class="header w100"></span>
+							</div>
+							<div class="item-loc bold flex-column pad-5 w50px">
+								<span th:text="rate" class="header w100"></span>
+							</div>
+							<div class="item-loc bold flex-column pad-5 w50px">
+								<span th:text="qty" class="header w100"></span>
+							</div>
+							<div class="item-loc bold flex-column pad-5 w100px">
+								<span th:text="'stam/item'" class="header w100"></span>
+							</div>
+						</div>
+					</div>
+					<div class="item-loc-cont" th:each="obj  : ${itemLocsFirst}"
+						th:remove="tag">
+						<div class="flex_center_row  " th:if="${obj[1].first}">
+							<div class="item-loc bold flex-column pad-5 w40 ">
+								<a th:href="${'/stages/' + obj[0].code}"
+									th:text="#{${ obj[0].name}}"></a>
+							</div>
+							<div class="item-loc bold flex-column pad-5 w50px"
+								th:text="${ obj[0].stamina}"></div>
+							<div class="item-loc bold flex-column pad-5 w50px"
+								th:text="${ obj[1].rate+'%'}"></div>
+							<div class="item-loc bold flex-column pad-5 w50px"
+								th:text="${ obj[1].quantity}"></div>
+							<div class="item-loc bold flex-column pad-5 w100px"
+								th:text="${#numbers.formatDecimal(__${obj[0].stamina*100.0/obj[1].rate/obj[1].quantity}__, 1, 'WHITESPACE', 2, 'POINT' )}"></div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+	<div id="item-footer"
+		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>
+</body>
+</html>

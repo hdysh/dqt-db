@@ -1,6 +1,7 @@
 package com.github.hdysh.dqtdb.model;
 
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -39,7 +40,7 @@ public class Skill {
 	private List<SkillAilment> ailments;
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "code")
-	private List<SkillEffect> effects; 
+	private List<SkillEffect> effects;
 	@Transient
 	private String strMul;
 	@Transient
@@ -49,6 +50,29 @@ public class Skill {
 	private int activeSkill;
 	private int activeSkillTarget;
 	private int damageCalculation;
+	private int minInt;
+
+	public double getConstant() {
+		return minDamage - (multiplier / 1000.0) * minInt;
+	}
+
+	public String getMaxInt() {
+		DecimalFormat format = new DecimalFormat("0.#");
+		return format.format(Math.ceil((maxDamage - minDamage) / (multiplier / 1000.0) + minInt));
+	}
+
+	public String getFormula() {
+		DecimalFormat format = new DecimalFormat("0.#");
+		String add = " ";
+		if (getConstant() > 0) {
+			add = " + ";
+		}
+		String stat = "WIS";
+		if (damageCalculation == 10) {
+			stat = "ATK";
+		}
+		return stat + " * " + (multiplier / 1000.0) + add + format.format(getConstant());
+	}
 
 	public String getStrMul() {
 		return multiplier / 10 + "";
@@ -56,6 +80,13 @@ public class Skill {
 
 	public String getStrMaxMul() {
 		return maxMul / 10 + "";
+	}
+
+	public SkillBuff getBuff() {
+		if (buffs.size() > 0)
+			return buffs.get(0);
+		else
+			return null;
 	}
 
 }

@@ -29,14 +29,21 @@ DROP TABLE IF EXISTS unit_drop;
 CREATE TABLE unit  ( 
 	id INTEGER PRIMARY KEY NOT NULL,
 	code INTEGER,
+	profile INTEGER,
+	rarity INTEGER,
+	ailres INTEGER,
+	leader INTEGER,  
+	weight INTEGER,	
+	talent INTEGER, 
+	unique(code)
+);
+CREATE TABLE profile  ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,
 	name TEXT,
 	family INTEGER,
 	role INTEGER,
-	rarity INTEGER,
 	icon TEXT,
-	ailres INTEGER,
-	leader ,  
-weight INTEGER,	
 	unique(code)
 );
  CREATE TABLE stats (
@@ -52,7 +59,7 @@ weight INTEGER,
     mobility INTEGER,
     rank INTEGER, 
 	move INTEGER,
-    stype TEXT,    
+    stype TEXT,   
     unique(code,rank)
 ); 
 CREATE TABLE skill ( 
@@ -80,6 +87,7 @@ CREATE TABLE skill (
 	active_skill INTEGER, 
 	active_skill_target INTEGER,  
 	damage_calculation INTEGER,
+	min_int INTEGER,
 	unique(code)
 );
 
@@ -99,6 +107,23 @@ CREATE TABLE skill_rarity (
 	name TEXT,
 	icon TEXT, 
 	background TEXT,
+	unique(code)
+);
+CREATE TABLE item_rarity ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,
+	name TEXT,
+	icon TEXT, 
+	background TEXT,
+	unique(code)
+);
+CREATE TABLE equip_rarity ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,
+	name TEXT,
+	icon TEXT, 
+	background TEXT,
+	material TEXT,
 	unique(code)
 );
 
@@ -158,6 +183,8 @@ CREATE TABLE level_status (
 );
 CREATE TABLE ele_res ( 
  id INTEGER PRIMARY KEY NOT NULL,
+	name TEXT,
+	description TEXT,
     code INTEGER,
     ele1 INTEGER, 
     ele2 INTEGER, 
@@ -171,6 +198,8 @@ CREATE TABLE ele_res (
 CREATE TABLE unit_ail_res ( 
  id INTEGER PRIMARY KEY NOT NULL,
     code INTEGER,
+	name TEXT,
+	description TEXT,
     ail1 INTEGER,
     ail2 INTEGER,
     ail3 INTEGER,
@@ -194,6 +223,13 @@ CREATE TABLE passive (
 	description TEXT,
 	stats INTEGER,
 	eleres INTEGER,
+	ailment INTEGER,
+	skill INTEGER,
+	boost INTEGER,
+	buff INTEGER,
+	main_effect INTEGER,
+	repetitive_effect INTEGER,
+	trigger INTEGER,
 	leadericon TEXT,
 	var TEXT,
 	unique(code)
@@ -246,20 +282,12 @@ CREATE TABLE drops_map (
 ); 
 
 CREATE TABLE enemy ( 
- id INTEGER PRIMARY KEY NOT NULL,
-   code INTEGER,
-    name TEXT, 
-    icon TEXT, 
-    rarity TEXT, 
-    resfrizz INTEGER,
-    ressizz INTEGER,
-    rescrack INTEGER,
-    reswosh INTEGER,
-    resbang INTEGER,
-    reszap INTEGER,
-    reszam INTEGER,
-    ailres INTEGER,   
-    base INTEGER,
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	eleres INTEGER,
+	ailres INTEGER,   
+	profile INTEGER,  
+	rate INTEGER,
 	unique(code)
 ); 
 CREATE TABLE enemies_map ( 
@@ -275,7 +303,11 @@ CREATE TABLE item (
     name TEXT,
     description TEXT,
     icon TEXT,
-    rank INTEGER,
+    consumable_rank INTEGER,
+    equip_rank INTEGER,
+	max INTEGER,
+	skill INTEGER,
+	type INTEGER,
 	unique(code)
 ); 
 CREATE TABLE event_area ( 
@@ -332,7 +364,7 @@ CREATE TABLE mission_list (
 CREATE TABLE unit_drop ( 
  id INTEGER PRIMARY KEY NOT NULL,
     code INTEGER,  
-    uid INTEGER,    
+    base INTEGER,    
     unit TEXT, 
     stage TEXT, 
     portal TEXT, 
@@ -393,13 +425,21 @@ CREATE TABLE unit_talent (
 	ele_res INTEGER,
 	skill INTEGER,
 	stats INTEGER,   
+	passive INTEGER, 
+	skill_type_res INTEGER,
+	reaction_passive INTEGER,
+	damage_cut INTEGER,
+	brilliant INTEGER,
+	ailment INTEGER,
+	repetitive_effect INTEGER,
 	unique(code,no)
 );
 CREATE TABLE lang ( 
-	id INTEGER ,
-	name TEXT PRIMARY KEY NOT NULL,
-	en TEXT,
-	ja TEXT 
+	id INTEGER PRIMARY KEY NOT NULL,
+	locale TEXT,
+	name TEXT, 
+	val TEXT,
+	unique(locale,name)
 );
 CREATE TABLE buff ( 
 	id INTEGER PRIMARY KEY NOT NULL,
@@ -450,5 +490,162 @@ CREATE TABLE enhancement (
 	id INTEGER PRIMARY KEY NOT NULL,
 	code INTEGER, 
 	value TEXT,
+	unique(code)
+);  
+CREATE TABLE increase_damage ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER, 
+	name TEXT,
+	description TEXT,
+	damage INTEGER,
+	element INTEGER,
+	atype INTEGER,
+	family INTEGER,
+	unique(code)
+);  
+CREATE TABLE reaction_passive ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER, 
+	name TEXT,
+	description TEXT,
+	accuracy INTEGER,
+	skill INTEGER, 
+	unique(code)
+); 
+CREATE TABLE skill_type_res ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER, 
+	name TEXT,
+	description TEXT,
+	atype INTEGER,
+	element INTEGER, 
+	rate INTEGER, 
+	unique(code)
+);  
+CREATE TABLE damage_cut ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	name TEXT,
+	description TEXT,
+	damage INTEGER,  
+	unique(code)
+); 
+CREATE TABLE increase_brilliant ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER, 
+	name TEXT,
+	description TEXT,
+	damage INTEGER,
+	atype INTEGER, 
+	element INTEGER,  
+	family INTEGER, 
+	unique(code)
+); 
+CREATE TABLE repetitive_effect ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER, 
+	name TEXT,
+	description TEXT,
+	message TEXT,
+	probability INTEGER, 
+	attenuation INTEGER,  
+	times INTEGER, 
+	unique(code)
+);  
+CREATE TABLE boost ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	damage_increase INTEGER,
+	healing_increase INTEGER, 
+	mp_damage_increase INTEGER,  
+	mp_healing_increase INTEGER, 
+	required_mp_reduction INTEGER, 
+	active_element INTEGER,  
+	element INTEGER,   
+	active_type INTEGER,   
+	skill_type INTEGER,  
+	family INTEGER,  
+	match_skill INTEGER,  
+	skill INTEGER,  
+	unique(code,family)
+); 
+CREATE TABLE skill_type ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	name TEXT,
+	icon TEXT,  
+	adjective TEXT,   
+	unique(code)
+); 
+CREATE TABLE br_member ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	unit INTEGER,
+	required INTEGER,   
+	unique(code,unit)
+); 
+CREATE TABLE hero_quest ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	unit INTEGER,
+	required INTEGER,   
+	unique(code,unit)
+); 
+CREATE TABLE main_effect ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	guts_prob INTEGER,  
+	guts_add_prob INTEGER,
+	enhanc_add INTEGER,   
+	unique(code)
+); 
+CREATE TABLE trigger ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	upper_hp INTEGER,  
+	lower_hp INTEGER,
+	probability INTEGER,  
+	timing INTEGER,  
+	param_type INTEGER,   
+	unique(code)
+);  
+CREATE TABLE turn_trigger ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	start INTEGER,  
+	repeat INTEGER,
+	interval INTEGER,   
+	unique(code,start,repeat,interval)
+); 
+CREATE TABLE alchemy ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	no INTEGER,  
+	rate INTEGER,  
+	passive INTEGER,
+	reaction INTEGER,   
+	first INTEGER,   
+	alchemy_type INTEGER,   
+	unique(code,no)
+); 
+CREATE TABLE alchemy_slot ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	slot INTEGER,   
+	unique(code,slot)
+); 
+CREATE TABLE equip ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	item INTEGER,  
+	base_passive INTEGER,
+	unique_passive INTEGER,   
+	reaction_passive INTEGER,   
+	unique(code)
+); 
+CREATE TABLE alchemy_icon ( 
+	id INTEGER PRIMARY KEY NOT NULL,
+	code INTEGER,  
+	icon TEXT,     
 	unique(code)
 ); 

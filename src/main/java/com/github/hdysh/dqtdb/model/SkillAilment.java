@@ -15,8 +15,8 @@ import lombok.Data;
 @Table(name = "skill_ailment")
 @Data
 public class SkillAilment {
-	private @Id BigInteger id;
-	private BigInteger code;
+	private BigInteger id;
+	private @Id  BigInteger code;
 	@ManyToOne(targetEntity = Ailment.class)
 	@JoinColumn(name = "ailment")
 	private Ailment ailment;

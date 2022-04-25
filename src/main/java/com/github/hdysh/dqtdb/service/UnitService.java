@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import com.github.hdysh.dqtdb.model.AilmentRes;
 import com.github.hdysh.dqtdb.model.Element;
+import com.github.hdysh.dqtdb.model.EventArea;
 import com.github.hdysh.dqtdb.model.ResistanceLevel;
 import com.github.hdysh.dqtdb.model.Stats;
 import com.github.hdysh.dqtdb.model.StatsRank;
@@ -26,4 +27,8 @@ public interface UnitService {
 	TreeMap<BigInteger, String> getCalcRes();
 
 	Map<BigInteger, StatsRank> getMasters();
+
+	List<EventArea> getBrArea(BigInteger code);
+
+	List<EventArea> getHeroQuest(BigInteger code);
 }

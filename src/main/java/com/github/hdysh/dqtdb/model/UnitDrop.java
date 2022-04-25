@@ -15,7 +15,7 @@ import lombok.Data;
 public class UnitDrop {
 
 	private @Id BigInteger code;
-	private BigInteger uid;
+	private BigInteger base;
 	private String unit;
 	private String stage;
 	private String portal;

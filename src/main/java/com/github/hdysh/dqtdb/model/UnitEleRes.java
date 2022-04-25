@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
- 
+
 @Entity
 @Table(name = "unit_ele_res")
 @Data
@@ -21,4 +21,14 @@ public class UnitEleRes {
 	private int bang;
 	private int zap;
 	private int zam;
+
+	public void add(UnitEleRes ue) {
+		this.frizz += ue.getFrizz();
+		this.sizz += ue.getSizz();
+		this.crack += ue.getCrack();
+		this.woosh += ue.getWoosh();
+		this.bang += ue.getBang();
+		this.zap += ue.getZap();
+		this.zam += ue.getZam();
+	}
 }

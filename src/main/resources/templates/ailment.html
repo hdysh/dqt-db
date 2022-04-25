@@ -55,7 +55,7 @@
 			</div>
 		</div>
 
-		<div class="learned">
+		<div class="learned" th:if="not ${#lists.isEmpty(skills)}">
 			<div class="header bold">Skills with this status ailment:</div>
 			<div class="skill-status">
 				<div th:each="skill : ${skills}" th:remove="tag">
@@ -67,7 +67,8 @@
 							<span class="skill_frame_centerer"></span>
 							<img th:src="@{${'/img/icon/' + skill.icon }}" />
 						</div>
-						<div class="pad5 skill-long">
+						<div class="pad5 skill-long"
+							th:classappend="${'skill-long-'+skill.rarity.code } ">
 							<a class="" th:href="@{${'/skill/' + skill.code}}"
 								th:text="#{${skill.name}}"> </a>
 						</div>
@@ -75,7 +76,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="learned">
+		<div class="learned" th:if="not ${#lists.isEmpty(units)}">
 			<div class="header bold">Learned by:</div>
 			<div class="flex_center_row">
 				<div th:each="unit : ${units}" th:remove="tag">
@@ -84,7 +85,7 @@
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>
 						<div class="prof">
-							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+							<img th:src="@{${'/img/icon/' +#uris.escapePathSegment(unit.icon)}}" />
 
 						</div>
 						<div class="framez">
@@ -99,6 +100,19 @@
 					</div>
 					<!-- 	<a class="learned-item" th:href="@{${'/unit/' + unit.code}}"><img
 						th:src="@{${'/img/icon/' + unit.icon }}" /></a> -->
+				</div>
+			</div>
+		</div>
+		<div class="learned" th:if="not ${#lists.isEmpty(passives)}">
+			<div class="header bold">Passives with this status ailment:</div>
+			<div class="skill-status">
+				<div th:each="passive : ${passives}" th:remove="tag">
+					<div class="flex-center">
+						<div class="pad5 passive-long">
+							<a class="" th:href="@{${'/passive/' + passive.code}}"
+								th:text="#{${passive.name}}"> </a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

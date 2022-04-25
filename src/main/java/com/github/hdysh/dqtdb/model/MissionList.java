@@ -1,6 +1,8 @@
 package com.github.hdysh.dqtdb.model;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,4 +26,12 @@ public class MissionList {
 	@OneToOne(targetEntity = Mission.class)
 	@JoinColumn(name = "mission3")
 	private Mission mission3;
+
+	public List<Mission> missions() {
+		List<Mission> list = new ArrayList<>();
+		list.add(mission1);
+		list.add(mission2);
+		list.add(mission3);
+		return list;
+	}
 }

@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.hdysh.dqtdb.model.Item;
+import com.github.hdysh.dqtdb.model.Passive;
 import com.github.hdysh.dqtdb.model.Skill;
 import com.github.hdysh.dqtdb.model.UnitMin;
+import com.github.hdysh.dqtdb.service.PassiveService;
 import com.github.hdysh.dqtdb.service.SkillService;
 
 @Controller
@@ -24,6 +27,8 @@ public class SkillController {
 
 	@Autowired
 	private SkillService skillService;
+	@Autowired
+	private PassiveService passiveService;
 
 	@GetMapping("")
 	@ResponseBody
@@ -42,6 +47,10 @@ public class SkillController {
 		modelAndView.addObject("units", units);
 		String enhancement = skillService.getEnhancement(id);
 		modelAndView.addObject("enhancement", enhancement);
+		List<Passive> passives = passiveService.getPassiveBySkill(id);
+		modelAndView.addObject("passives", passives);
+		Item scroll = skillService.getSkillScroll(id);
+		modelAndView.addObject("scroll", scroll);
 		return modelAndView;
 	}
 }

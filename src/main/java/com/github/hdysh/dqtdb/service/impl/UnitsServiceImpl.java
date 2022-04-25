@@ -31,7 +31,7 @@ public class UnitsServiceImpl implements UnitsService {
 
 	@Override
 	public List<UnitMin> getUnits(List<BigInteger> codes) {
-		List<UnitMin> u = unitsRepository.findAllById(codes);
+		List<UnitMin> u = unitsRepository.findAllById(codes); 
 		Collections.sort(u, new UnitMinComparator());
 		return u;
 	}

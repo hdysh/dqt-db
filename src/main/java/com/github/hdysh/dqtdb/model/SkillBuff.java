@@ -22,7 +22,7 @@ public class SkillBuff {
 	@JoinColumn(name = "buff")
 	@Id
 	private Buff buff;
-	private int accuracy;
+	private BigInteger accuracy;
 	private int level;
 	private int minDur;
 	private int maxDur;
@@ -40,9 +40,9 @@ public class SkillBuff {
 			turn += "s";
 		}
 		if (minDur == maxDur) {
-			return minDur + turn;
+			return minDur+1 + turn;
 		} else {
-			return minDur + "-" + maxDur + turn;
+			return minDur+1 + "-" + maxDur + turn;
 		}
 	}
 

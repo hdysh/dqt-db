@@ -26,55 +26,32 @@
 	    var defMp = $('#mp').data("val");
 	    var defMul = $('#mul').data("val") / 10;
 	    var defAddBase = $('#baseDamage').data("val");
-	    var defAilAcc = $('#ailAcc').data("val");
-	    var defBuffAcc = $('#buffAcc').data("val");
 	    var index = val.val();
+	    var mp = val.val() == 0 ? 0 : enh[index].mp;
+	    var mul = 0;
+	    if (index > 0 && enh[index].damage_mul != 0) {
+	        mul = enh[index].damage_mul;
+	    }
+	    if (index > 0 && enh[index].healing_mul != 0) {
+	        mul = enh[index].healing_mul;
+	    }
+	    var add = val.val() == 0 ? 0 : enh[index].mp_healing_add;
+	    var ailAcc = val.val() == 0 ? 0 : enh[index].ail_acc;
+	    var buffAcc = val.val() == 0 ? 0 : enh[index].buff_acc;
+	    $('#mp').text((defMp - mp));
+	    if (mul != 0) {
+	        $('#mul').text(((defMul * mul / 100) + defMul) + "%");
+	        $('#baseDamage').text(((defAddBase * mul / 100) + defAddBase));
+	    }
+	    if (add != 0) {
+	        $('#baseDamage').text((defAddBase + add));
+	    }
+
+	    $('.ailAcc').text($('.ailAcc').data("val") + ailAcc);
+	    $('.buffAcc').text($('.buffAcc').data("val") + buffAcc);
 	    if (val.val() == 0) {
-	        $('#mp').text(defMp);
 	        $('#mul').text(($('#mul').data("val") / 10) + "%");
 	        $('#baseDamage').text(($('#baseDamage').data("val")));
-	        $('#ailAcc').text(($('#ailAcc').data("val")));
-	        $('#buffAcc').text(($('#buffAcc').data("val")));
-	    } else {
-	        var mp = enh[index].mp;
-	        var mul = 0;
-	        var add = 0;
-	        var ailAcc = 0;
-	        var buffAcc = 0;
-	        if (enh[index].damage_mul != 0) {
-	            mul = enh[index].damage_mul;
-	        }
-	        if (enh[index].healing_mul != 0) {
-	            mul = enh[index].healing_mul;
-	        }
-	        if (enh[index].healing_mul != 0) {
-	            mul = enh[index].healing_mul;
-	        }
-	        if (enh[index].mp_healing_add != 0) {
-	            add = enh[index].mp_healing_add;
-	        }
-	        if (enh[index].ail_acc != 0) {
-	            ailAcc = enh[index].ail_acc;
-	        }
-	        if (enh[index].buff_acc != 0) {
-	            buffAcc = enh[index].buff_acc;
-	        }
-	        if (mp != 0) {
-	            $('#mp').text((defMp - mp));
-	        }
-	        if (mul != 0) {
-	            $('#mul').text(((defMul * mul / 100) + defMul) + "%");
-	            $('#baseDamage').text(((defAddBase * mul / 100) + defAddBase));
-	        }
-	        if (add != 0) {
-	            $('#baseDamage').text((defAddBase + add));
-	        }
-	        if (ailAcc != 0) {
-	            $('#ailAcc').text((defAilAcc + ailAcc));
-	        }
-	        if (buffAcc != 0) {
-	            $('#buffAcc').text((defBuffAcc + buffAcc));
-	        }
 	    }
 	}
 	$(document).ready(function() {
@@ -111,7 +88,7 @@
 		th:replace="~{fragments/app-fragments :: nav-default}">Nav</div>
 
 	<div id="skill-content" class="grid">
-		<div  class="enhance-level">
+		<div class="enhance-level">
 			<form name="enhance" class="form-group">
 				<select class="form-control" id="enhancement">
 					<option th:each="i: ${#numbers.sequence(0, 10)}"
@@ -170,6 +147,17 @@
 				<div th:text="${skill.maxDamage}" class="skill-sub-item"
 					id="maxDamage">max dmg</div>
 			</div>
+			<div th:if="${skill.activeSkill==4 && skill.minInt!=0}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="${skill.damageCalculation==10?'ATK Cap':'WIS Cap'}" class="header"></span>
+				<div th:text="${skill.maxInt}" class="skill-sub-item">wis
+					cap</div>
+			</div>
+			<div th:if="${skill.activeSkill==4 && skill.minInt!=0}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Formula'" class="header"></span>
+				<div th:text="${skill.formula}" class="skill-sub-item">formula</div>
+			</div>
 			<div th:if="${skill.accuracy}"
 				class="skill-item bold flex-column pad-10">
 				<span th:text="'Hit Rate'" class="header"></span>
@@ -196,7 +184,7 @@
 				<div th:each="sb,iter : ${skill.buffs}" th:remove="tag">
 					<div class="skill-sub-item" th:with=desc=#{${sb.buff.descFormat}}>
 						<div>
-							<span th:text="${sb.accuracy}" id="buffAcc"
+							<span th:text="${sb.accuracy}" class="buffAcc"
 								th:attr="data-val=${sb.accuracy}"></span>
 							<span th:text="'% chance'"></span>
 						</div>
@@ -226,7 +214,7 @@
 				<div th:each="sa,iter : ${skill.ailments}" th:remove="tag">
 					<div class="skill-sub-item">
 						<div>
-							<span th:text=" ${sa.accuracy} " id="ailAcc"
+							<span th:text=" ${sa.accuracy} " class="ailAcc"
 								th:attr="data-val=${sa.accuracy}"></span>
 							<span th:text="'% chance'"></span>
 						</div>
@@ -272,14 +260,20 @@
 						<div th:if="${#lists.isEmpty(skill.buffs)}">
 							<div th:text="${desc2}" class="skill-sub-item">desc</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
 
+			<div th:if="${scroll}" class="skill-item bold flex-column pad-10">
+				<span th:text="Learnable" class="header"></span>
+				<a class="skill-sub-item" th:href="@{${'/item/' + scroll.code}}">
+					<img class="icon_container_small"
+						th:src="@{${'/img/icon/' + scroll.icon }}" />
+				</a>
+			</div>
 		</div>
 
-		<div class="learned">
+		<div class="learned" th:if="not ${#lists.isEmpty(units)}">
 			<div class="header bold">Learned by:</div>
 			<div class="flex_center_row">
 				<div th:each="unit : ${units}" th:remove="tag">
@@ -288,7 +282,7 @@
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>
 						<div class="prof">
-							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+							<img th:src="@{${'/img/icon/' + #uris.escapePathSegment(unit.icon) }}" />
 
 						</div>
 						<div class="framez">
@@ -303,6 +297,19 @@
 					</div>
 					<!-- 	<a class="learned-item" th:href="@{${'/unit/' + unit.code}}"><img
 						th:src="@{${'/img/icon/' + unit.icon }}" /></a> -->
+				</div>
+			</div>
+		</div>
+		<div class="learned" th:if="not ${#lists.isEmpty(passives)}">
+			<div class="header bold">Passives with this skill:</div>
+			<div class="skill-status">
+				<div th:each="passive : ${passives}" th:remove="tag">
+					<div class="flex-center">
+						<div class="pad5 passive-long">
+							<a class="" th:href="@{${'/passive/' + passive.code}}"
+								th:text="#{${passive.name}}"> </a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

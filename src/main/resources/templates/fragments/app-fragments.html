@@ -12,8 +12,15 @@
 		<a id="openbtn" href="javascript:void(0)" class="closebtn"
 			onclick="closeNav()">&times;</a>
 		<ul id="nav-list">
+			<li><div class="banner">
+					<a th:href="@{/}" th:if="${version==0}">DQT JAPAN</a>
+					<a th:href="@{/}" th:if="${version==1}">DQT GLOBAL</a>
+				</div></li>
 			<li><div class="nav-list">
 					<a th:href="@{/units}">UNITS</a>
+				</div></li>
+			<li><div class="nav-list">
+					<a th:href="@{/items}">ITEMS</a>
 				</div></li>
 			<li><div class="nav-list">
 					<a th:href="@{/skills}">SKILLS</a>
@@ -53,6 +60,11 @@
 					<a th:href="@{''(lang=ja)}">ja</a>
 					/
 					<a th:href="@{''(lang=fr)}">fr</a>
+				</div></li>
+			<li><div
+					style="padding: 5px; background-color: #fcfffa; border-radius: 0.3rem; margin: 5px;">
+					<a th:if="${version==0}" th:href="${gb}">global version</a>
+					<a th:if="${version==1}" th:href="${jp}">japanese version</a>
 				</div></li>
 		</ul>
 	</div>

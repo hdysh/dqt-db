@@ -27,17 +27,9 @@ import lombok.ToString;
 @SecondaryTable(name = "unit_rate", pkJoinColumns = @PrimaryKeyJoinColumn(name = "code", referencedColumnName = "code"))
 public class Unit extends AbstractUnit {
 	private @Id BigInteger code;
-	private String name;
-	@ManyToOne(targetEntity = Family.class)
-	@JoinColumn(name = "family")
-	private Family family;
-	@ManyToOne(targetEntity = Role.class)
-	@JoinColumn(name = "role")
-	private Role role;
 	@ManyToOne(targetEntity = Rarity.class)
 	@JoinColumn(name = "rarity")
 	private Rarity rarity;
-	private String icon;
 
 	@OneToOne(targetEntity = EleRes.class)
 	@JoinColumn(name = "code")
@@ -71,7 +63,22 @@ public class Unit extends AbstractUnit {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "code")
 	private List<UnitTalent> talents;
-	@OneToMany(mappedBy = "uid")
+	@OneToMany(mappedBy = "base")
 	private List<UnitDrop> drops;
 
+	public String getName() {
+		return profile.getName();
+	}
+
+	public Role getRole() {
+		return profile.getRole();
+	}
+
+	public Family getFamily() {
+		return profile.getFamily();
+	}
+
+	public String getIcon() {
+		return profile.getIcon();
+	}
 }

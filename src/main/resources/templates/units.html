@@ -107,14 +107,19 @@
 									src="/img/icon/all.png"></label>
 						</div>
 					</form>
+
+					<form name="ftb" style="padding: 1px">
+						<label><input type="checkbox" name="family" id="talent"
+							value="1">Show only units with talent blossoming</label>
+					</form>
 					<table id="example" class="display nowrap" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Icon</th>
 								<th>Name</th>
 								<th>Rarity</th>
-								<th>Familly</th>
-								<th>Level</th>
+								<th>Family</th>
+								<th>Lv</th>
 								<th>HP</th>
 								<th>MP</th>
 								<th>ATK</th>
@@ -122,6 +127,9 @@
 								<th>WIS</th>
 								<th>AGI</th>
 								<th>MOV</th>
+								<th>WEI</th>
+								<th><img th:style="'height:15px;'" title="Talent Blossom"
+										src="/img/TrainingPointIcon.png" /></th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -129,8 +137,8 @@
 								<th>Icon</th>
 								<th>Name</th>
 								<th>Rarity</th>
-								<th>Familly</th>
-								<th>Level</th>
+								<th>Family</th>
+								<th>Lv</th>
 								<th>HP</th>
 								<th>MP</th>
 								<th>ATK</th>
@@ -138,6 +146,9 @@
 								<th>WIS</th>
 								<th>AGI</th>
 								<th>MOV</th>
+								<th>WEI</th>
+								<th><img th:style="'height:15px;'" title="Talent Blossom"
+										src="/img/TrainingPointIcon.png" /></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -145,7 +156,7 @@
 			</div>
 		</div>
 
-		<script type="text/javascript" src="json/unit.js"></script>
+		<script type="text/javascript" src="json/profile.js"></script>
 		<script>
 			var loc = "[[${#locale}]]";
 			$('#example')
@@ -155,6 +166,18 @@
 								"pageLength" : 25,
 								"order" : [ 1, "asc" ],
 								"responsive" : true,
+								"columnDefs" : [ {
+									"targets" : [ 13 ],
+									"visible" : false
+								} ],
+								"rowCallback" : function(row, data) {
+									let html = '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/' +
+								        data.rarity['background'] + '" /></div><div class="prof-s"><img src="/img/icon/'
+											+ encodeURIComponent(data.icon)
+											+ '" /></div><div class="framez-s"><img src="/img/icon/' + data.rarity['frame'] +
+								        '" /></div></div>';
+									$('td:eq(0)', row).html(html);
+								},
 								"ajax" : {
 									"url" : "/units/q",
 									"type" : "POST",
@@ -174,10 +197,7 @@
 														|| type === 'type') {
 													return data;
 												} else {
-													return '<div class="frame-container-s"><div class="framez-s"><img src="/img/icon/' 
-													+ row.rarity['background'] + '" /></div><div class="prof-s"><img src="/img/icon/' 
-													+ data + '" /></div><div class="framez-s"><img src="/img/icon/' 
-													+ row.rarity['frame'] + '" /></div></div>';
+													return '<div></div>';
 												}
 											}
 										},
@@ -188,13 +208,13 @@
 													row, meta) {
 												var name = '';
 												if (loc === 'ja') {
-													name = unit_ja[row['name']];
+													name = profile_ja[row['name']];
 												} else if (loc === 'fr') {
-													name = unit_fr[row['name']] ? unit_fr[row['name']]
-															: unit_ja[row['name']];
+													name = profile_fr[row['name']] ? profile_fr[row['name']]
+															: profile_ja[row['name']];
 												} else {
-													name = unit_en[row['name']] ? unit_en[row['name']]
-															: unit_ja[row['name']];
+													name = profile_en[row['name']] ? profile_en[row['name']]
+															: profile_ja[row['name']];
 												}
 												return '<a href="/unit/' + data + '">'
 														+ name + '</a>';
@@ -226,28 +246,24 @@
 											}
 										}, {
 											"data" : "stats[0].level",
-											"width" : "10px"
 										}, {
 											"data" : "stats[0].hp",
-											"width" : "10px"
 										}, {
 											"data" : "stats[0].mp",
-											"width" : "10px"
 										}, {
 											"data" : "stats[0].attack",
-											"width" : "10px"
 										}, {
 											"data" : "stats[0].defense",
-											"width" : "10px"
 										}, {
 											"data" : "stats[0].intelligence",
-											"width" : "10px"
 										}, {
 											"data" : "stats[0].agility",
-											"width" : "10px"
 										}, {
 											"data" : "stats[0].mobility",
-											"width" : "10px"
+										}, {
+											"data" : "weight",
+										}, {
+											"data" : "talent",
 										} ],
 							});
 			$('input:radio[name=rank]').change(function() {
@@ -257,9 +273,19 @@
 			$('input:radio[name=family]').change(function() {
 				$('#example').DataTable().columns(3).search(this.value).draw();
 			});
+
+			$('#talent').change(function() {
+				if ($(this).is(':checked')) {
+					console.log(this.value);
+					$('#example').DataTable().columns(13).search("1").draw();
+				} else {
+					$('#example').DataTable().columns(13).search("").draw();
+				}
+			});
 			window.onload = function() {
 				frank.reset();
 				ffam.reset();
+				ftb.reset();
 			}
 		</script>
 	</div>

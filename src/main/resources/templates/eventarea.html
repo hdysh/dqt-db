@@ -29,7 +29,7 @@
 
 	<div id="area-header" class="flex flex-column">
 
-		<div th:if="${portal}" class="flex flex-row pad-left-10 font-20">
+		<div th:if="${portal}" class="nav-header flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/event/'  }}">Event</a>
 			</div>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="pad-left-5">/</div>
 		</div>
-		<div th:if="${group} and ${group.category}==4"
+		<div th:if="${group} and not ${portal} and ${group.category}==4"
 			class="flex flex-row pad-left-10 font-20">
 			<div class="pad-left-5">
 				<a th:href="@{${'/battleroad'  }}">Battle Road</a>
@@ -104,8 +104,30 @@
 	</div>
 
 	<div id="area-main-content">
-		<div class="event flex-wrap">
+		<div th:if="${area.brMember}" class="flex_center_row pad5">
+			<div th:each="br,iter : ${area.brMember}" th:remove="tag">
+				<div class="frame-container" th:title="#{${br.unit.name}}"
+					th:classappend="${br.required==1} ? required: pad5">
+					<div class="framez">
+						<img th:src="@{${'/img/icon/' + br.unit.rarity.background }}" />
+					</div>
+					<div class="prof">
+						<img th:src="@{${'/img/icon/' + #uris.escapePathSegment(br.unit.icon) }}" />
 
+					</div>
+					<div class="framez">
+						<a th:href="@{${'/unit/' + br.unit.code}}">
+							<img th:src="@{${'/img/icon/' + br.unit.rarity.frame }}" />
+						</a>
+					</div>
+					<div class="rarity">
+						<img th:src="@{${'/img/icon/' + br.unit.rarity.icon }}" />
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="event flex-wrap">
 			<div th:each="ev,iter : ${stages}"
 				class="event-banner drop-item bold margin-10 pad-10">
 				<a th:href="@{${'/stages/' + ev.code}}" class="banner-container">

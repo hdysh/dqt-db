@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
-  
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.util.FileCopyUtils;
@@ -18,7 +18,7 @@ import com.github.hdysh.dqtdb.model.ResistanceLevel;
 import com.github.hdysh.dqtdb.repository.ResLevelRepository;
 
 public class ResLevelLoader {
- 
+
 	@Autowired
 	private ResLevelRepository repository;
 
@@ -44,4 +44,8 @@ public class ResLevelLoader {
 			throw new UncheckedIOException(e);
 		}
 	}
+
+	
+
+	 
 }

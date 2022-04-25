@@ -19,6 +19,6 @@ public class Drop {
 	@OneToOne(targetEntity = Item.class)
 	@JoinColumn(name = "item")
 	private Item item;
-	private int minroll, maxroll, rate, quantity;
+	private int minroll, maxroll, rate, quantity, slot;
 	private boolean first;
 }

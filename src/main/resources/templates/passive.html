@@ -12,6 +12,7 @@
                                                )}">
 
 <head>
+
 <title
 	th:text="${'__#{${passive.name}}__'.replaceAll('<.+?>', (passive.var ) ).replaceAll('\+-', '-' )}"></title>
 
@@ -36,7 +37,8 @@
 
 	<div id="passive-content" th:with=name=#{${passive.name}}>
 		<div class="flex_center_row pad-10">
-			<div th:if="${passive.leadericon}" class="skill-item bold flex-column pad-10">
+			<div th:if="${passive.leadericon}"
+				class="skill-item bold flex-column pad-10">
 				<span th:text="Area" class="header"></span>
 				<div class="skill-sub-item">
 					<img th:src="@{${'/img/icon/' + passive.leadericon}}" />
@@ -55,7 +57,125 @@
 					th:text="${'__#{${passive.description}}__'.replaceAll('<.+?>', (passive.var ) ).replaceAll('\+-', '-' )}">desc</div>
 
 			</div>
+			<div th:if="${passive.skill}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Related Skill'" class="header"></span>
+				<a class="skill-sub-item"
+					th:href="@{${'/skill/' +passive.skill.code }}"
+					th:text="#{${passive.skill.name}}">skill </a>
+			</div>
+			<div th:if="${passive.ailment}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Status Ailment'" class="header"></span>
+				<div class="skill-sub-item">
+					<div>
+						<span th:text=" ${passive.ailment.accuracy} " class="ailAcc"
+							th:attr="data-val=${passive.ailment.accuracy}"></span>
+						<span th:text="'% chance'"></span>
+					</div>
+					<div th:text="${passive.ailment.duration} "></div>
+					<a th:href="@{${'/ailment/' + passive.ailment.ailment.code }}"
+						th:text="#{${passive.ailment.ailment.name}} ">status ailment</a>
+				</div>
+			</div>
+			<div th:if="${passive.repetitiveEffect}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Echoes'" class="header"></span>
+				<div class="skill-sub-item">
+					<div
+						th:text=" ${passive.repetitiveEffect.probability/100+'% chance'} "
+						class="ailAcc"></div>
+					<div th:if="${passive.repetitiveEffect.attenuation!=0}"
+						th:text="${passive.repetitiveEffect.attenuation/100+'% damage/healing'} "></div>
+					<div
+						th:text="${passive.repetitiveEffect.times+'x extra instance'} ">echoes</div>
+				</div>
+			</div>
+			<div th:if="${passive.mainEffect}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Effect'" class="header"></span>
+				<div class="skill-sub-item">
+					<div th:if="${passive.mainEffect.gutsProb!=0}"
+						th:text="${passive.mainEffect.gutsProb/100} +'% chance to withstand lethal damage at 1 HP'"></div>
+					<div th:if="${passive.mainEffect.gutsAddProb!=0}"
+						th:text="${passive.mainEffect.gutsAddProb/100} +'%'"></div>
+				</div>
+			</div>
+		<!-- 	<div th:if="${passive.trigger}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Trigger'" class="header"></span>
+				<div class="skill-sub-item">
+					<div th:if="${passive.trigger.probability<1000}"
+						th:text="${ passive.trigger.probability/10+'% chance'} "></div>
+					<div
+						th:unless="${passive.trigger.lowerHp==0 and passive.trigger.upperHp==100}"
+						th:text="${'When HP is ' +passive.trigger.lowerHp+'-'+passive.trigger.upperHp+'%'} "></div>
+					<div th:each="turn,iter : ${passive.trigger.turns}" th:remove="tag">
+						<div th:if="${turn.repeat==0}" th:text="${'Turn '+turn.start}"></div>
+						<div th:if="${turn.repeat==1}">
+							<div th:text="${'Starting at turn '+turn.start }"></div>
+							<div th:text="${'Every '+turn.interval+' turns'}"></div>
+						</div>
+					</div>
 
+				</div>
+			</div> -->
+			<div th:if="not ${#lists.isEmpty(passive.buffs)}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Status Change'" class="header"></span>
+				<div th:each="sb,iter : ${passive.buffs}" th:remove="tag">
+					<div class="skill-sub-item" th:with=desc=#{${sb.buff.descFormat}}>
+						<div>
+							<span th:text="${sb.accuracy/10 +'% chance'}" class="buffAcc"
+								th:attr="data-val=${sb.accuracy}"></span>
+						</div>
+						<div th:text="${sb.duration}"></div>
+						<div th:with=name=#{${sb.buff.name}}>
+							<div th:with=suffix=#{${sb.suffix}}>
+								<div th:with=val=${sb.buff.level[sb.level]}>
+									<span
+										th:with="desc=${#strings.replace(desc,'<effectValue>', val)}">
+										<span
+											th:with="desc=${#strings.replace(desc,'<statusChangeTo>', suffix)}">
+											<a th:href="@{${'/buff/' + sb.buff.code }}"
+												th:text="${#strings.replace(desc,'<statusName>', name)}"
+												class="skill-sub-item">Status Change</a>
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div th:if="${passive.boost}"
+				class="skill-item bold flex-column pad-10">
+				<span th:text="'Effect'" class="header"></span>
+				<div class="skill-sub-item">
+					<div>
+						<span th:text="'For '"></span>
+						<span th:if="${passive.boost.activeElement==1}"
+							th:text="#{${passive.boost.element.name}}+'-type'"></span>
+						<span th:if="${passive.boost.family}"
+							th:text="#{${passive.boost.family.name?:''}}"></span>
+						<span th:if="${passive.boost.activeType==1}"
+							th:text="${passive.boost.skillType.adjective?:''}"></span>
+						<a th:if="${passive.boost.skill}"
+							th:href="@{${'/skill/' + passive.boost.skill.code}}"
+							th:text="#{${passive.boost.skill.name?:''}}"></a>
+						<span th:text="' ability:'"></span>
+					</div>
+					<div th:if="${passive.boost.mpReduction!='0'}"
+						th:text="${'Lower MP cost by '+passive.boost.mpReduction+'%' }"></div>
+					<div th:if="${passive.boost.damageIncrease!='0'}"
+						th:text="${'Raises damage potency by '+passive.boost.damageIncrease+'%'}"></div>
+					<div th:if="${passive.boost.healingIncrease!='0'}"
+						th:text="${'Raises hp restore potency by '+passive.boost.healingIncrease+'%'}"></div>
+					<div th:if="${passive.boost.mpHealingIncrease!='0'}"
+						th:text="${'Raises mp restore potency by '+passive.boost.mpHealingIncrease+'%'}"></div>
+				</div>
+			</div>
 		</div>
 		<div class="learned" th:if="not ${#lists.isEmpty(unitsLead)}">
 			<div class="header bold">Unit(s) with this leader skill:</div>
@@ -66,7 +186,8 @@
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>
 						<div class="prof">
-							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+							<img
+								th:src="@{${'/img/icon/' + #uris.escapePathSegment(unit.icon) }}" />
 
 						</div>
 						<div class="framez">
@@ -91,7 +212,8 @@
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>
 						<div class="prof">
-							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+							<img
+								th:src="@{${'/img/icon/' + #uris.escapePathSegment(unit.icon) }}" />
 
 						</div>
 						<div class="framez">
@@ -116,7 +238,8 @@
 							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
 						</div>
 						<div class="prof">
-							<img th:src="@{${'/img/icon/' + unit.icon }}" />
+							<img
+								th:src="@{${'/img/icon/' + #uris.escapePathSegment(unit.icon) }}" />
 
 						</div>
 						<div class="framez">
@@ -132,7 +255,32 @@
 				</div>
 			</div>
 		</div>
+		<div class="learned" th:if="not ${#lists.isEmpty(unitsTalent)}">
+			<div class="header bold">Unit(s) with this talent blossoming:</div>
+			<div class="flex_center_row">
+				<div th:each="unit : ${unitsTalent}" th:remove="tag">
+					<div class="frame-container" th:title="#{${unit.name}}">
+						<div class="framez">
+							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
+						</div>
+						<div class="prof">
+							<img
+								th:src="@{${'/img/icon/' + #uris.escapePathSegment(unit.icon) }}" />
 
+						</div>
+						<div class="framez">
+							<a th:href="@{${'/unit/' + unit.code}}">
+								<img th:src="@{${'/img/icon/' + unit.rarity.frame }}" />
+							</a>
+						</div>
+						<div class="rarity">
+							<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div id="passive-footer"

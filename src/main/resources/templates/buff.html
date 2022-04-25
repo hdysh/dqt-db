@@ -31,7 +31,7 @@
 			<img th:src="@{${'/img/icon/' + buff.iconUp }}" />
 		</div>
 		<div th:text="#{${buff.name}}" class="pad-left-10"></div>
-		
+
 		<div th:if="${not #strings.isEmpty(buff.iconDown)}"
 			class="pad-left-10">
 			<img th:src="@{${'/img/icon/' + buff.iconDown  }}" />
@@ -77,48 +77,68 @@
 					</div>
 
 				</div>
-
-				<div class="learned">
-					<div class="header bold">Skills with this status ailment:</div>
-					<div class="skill-status" th:with="skillarr=${skills[iter.index]}">
-						<div th:each="skill : ${skillarr}" th:remove="tag">
-							<div class="flex-center">
-								<div
-									th:classappend="${skill.rarity==30} ? skill_frame : skill_frame2"
-									class="top1"
-									th:style="@{${'background-image: url(/img/icon/' + skill.button+');' }}">
-									<span class="skill_frame_centerer"></span><img
-										th:src="@{${'/img/icon/' + skill.icon }}" />
-								</div>
-								<div class="pad5 skill-long">
-									<a class="" th:href="@{${'/skill/' + skill.code}}"
-										th:text="#{${skill.name}}"> </a>
+				<div th:with="skillarr=${skills[iter.index]}" th:remove="tag">
+					<div class="learned" th:if="not ${#lists.isEmpty(skillarr)}">
+						<div class="header bold"
+							th:text="'Skills with this '+${iter.index==0?'buff:':'debuff:'}"></div>
+						<div class="skill-status">
+							<div th:each="skill : ${skillarr}" th:remove="tag">
+								<div class="flex-center">
+									<div
+										th:classappend="${skill.rarity==30} ? skill_frame : skill_frame2"
+										class="top1"
+										th:style="@{${'background-image: url(/img/icon/' + skill.button+');' }}">
+										<span class="skill_frame_centerer"></span>
+										<img th:src="@{${'/img/icon/' + skill.icon }}" />
+									</div>
+									<div class="pad5 skill-long"
+										th:classappend="${'skill-long-'+skill.rarity.code }">
+										<a class="" th:href="@{${'/skill/' + skill.code}}"
+											th:text="#{${skill.name}}"> </a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="learned">
-					<div class="header bold">Learned by:</div>
-					<div class="flex_center_row" th:with="unitarr=${units[iter.index]}">
-						<div th:each="unit : ${unitarr}" th:remove="tag">
-							<div class="frame-container" th:title="#{${unit.name}}">
-								<div class="framez">
-									<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
-								</div>
-								<div class="prof">
-									<img th:src="@{${'/img/icon/' + unit.icon }}" />
+
+				<div th:with="unitarr=${units[iter.index]}" th:remove="tag">
+					<div class="learned" th:if="not ${#lists.isEmpty(unitarr)}">
+						<div class="header bold">Learned by:</div>
+						<div class="flex_center_row">
+							<div th:each="unit : ${unitarr}" th:remove="tag">
+								<div class="frame-container" th:title="#{${unit.name}}">
+									<div class="framez">
+										<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
+									</div>
+									<div class="prof">
+										<img th:src="@{${'/img/icon/' + #uris.escapePathSegment(unit.icon)}}" />
+
+									</div>
+									<div class="framez">
+										<a th:href="@{${'/unit/' + unit.code}}">
+											<img th:src="@{${'/img/icon/' + unit.rarity.frame }}" />
+										</a>
+									</div>
+									<div class="rarity">
+										<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
+									</div>
 
 								</div>
-								<div class="framez">
-									<a th:href="@{${'/unit/' + unit.code}}"> <img
-										th:src="@{${'/img/icon/' + unit.rarity.frame }}" /></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="learned" th:if="not ${#lists.isEmpty(passives)}">
+					<div class="header bold">Passives with this buff:</div>
+					<div class="skill-status">
+						<div th:each="passive : ${passives}" th:remove="tag">
+							<div class="flex-center">
+								<div class="pad5 passive-long">
+									<a class="" th:href="@{${'/passive/' + passive.code}}"
+										th:text="#{${passive.name}}"> </a>
 								</div>
-								<div class="rarity">
-									<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
-								</div>
-
 							</div>
 						</div>
 					</div>
@@ -129,81 +149,6 @@
 
 
 	</div>
-	<!-- <div id="skill-content" class="grid" th:with=name=#{${buff.name}}>
-		<div class="flex_center_row pad-10" th:with=up=#{${buff.suffixUp}}>
-			<div class="skill-item bold flex-column pad-10">
-				<span th:text="Icon" class="header"></span>
-				<div class="skill-sub-item">
-					<img th:src="@{${'/img/icon/' + buff.iconUp  }}" />
-				</div>
-			</div>
-
-			<div class="skill-item bold flex-column pad-10"
-				th:with=up=#{${buff.suffixUp}}>
-				<span th:text="Name" class="header"></span>
-				<div th:text="${name+' '+up}" class="skill-sub-item">reach</div>
-			</div>
-			<div class="skill-item bold flex-column pad-10"
-				th:with=desc=#{${buff.descFormat}}>
-				<span th:text="Description" class="header"></span>
-				<div th:with="desc=${#strings.replace(desc,'<effectValue>', '')}">
-					<div
-						th:with="desc=${#strings.replace(desc,'<statusChangeTo>', up)}">
-						<div th:text="${#strings.replace(desc,'<statusName>', name)}"
-							class="skill-sub-item">base dmg</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="learned">
-			<div class="header bold">Skills with this status ailment:</div>
-			<div class="skill-status">
-				<div th:each="skill : ${skills}" th:remove="tag">
-					<div class="flex-center">
-						<div
-							th:classappend="${skill.rarity==30} ? skill_frame : skill_frame2"
-							class="top1"
-							th:style="@{${'background-image: url(/img/icon/' + skill.button+');' }}">
-							<span class="skill_frame_centerer"></span><img
-								th:src="@{${'/img/icon/' + skill.icon }}" />
-						</div>
-						<div class="pad5 skill-long">
-							<a class="" th:href="@{${'/skill/' + skill.code}}"
-								th:text="#{${skill.name}}"> </a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="learned">
-			<div class="header bold">Learned by:</div>
-			<div class="flex_center_row">
-				<div th:each="unit : ${units}" th:remove="tag">
-					<div class="frame-container" th:title="#{${unit.name}}">
-						<div class="framez">
-							<img th:src="@{${'/img/icon/' + unit.rarity.background }}" />
-						</div>
-						<div class="prof">
-							<img th:src="@{${'/img/icon/' + unit.icon }}" />
-
-						</div>
-						<div class="framez">
-							<a th:href="@{${'/unit/' + unit.code}}"> <img
-								th:src="@{${'/img/icon/' + unit.rarity.frame }}" /></a>
-						</div>
-						<div class="rarity">
-							<img th:src="@{${'/img/icon/' + unit.rarity.icon }}" />
-						</div>
-
-					</div>
-						<a class="learned-item" th:href="@{${'/unit/' + unit.code}}"><img
-						th:src="@{${'/img/icon/' + unit.icon }}" /></a>
-				</div>
-			</div>
-		</div>
-	</div> -->
 
 	<div id="buff-footer"
 		th:replace="~{fragments/app-fragments :: copyright}">Footer</div>

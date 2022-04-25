@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.hdysh.dqtdb.model.Item;
 import com.github.hdysh.dqtdb.model.Skill;
 import com.github.hdysh.dqtdb.model.UnitMin;
 import com.github.hdysh.dqtdb.repository.SkillRepository;
@@ -33,6 +34,11 @@ public class SkillServiceImpl implements SkillService {
 	@Override
 	public List<UnitMin> getUnits(BigInteger id) {
 		return unitsRepository.findAllUnit(id);
+	}
+
+	@Override
+	public Item getSkillScroll(BigInteger id) { 
+		return skillRepository.findSkillScroll(id);
 	}
 
 }
